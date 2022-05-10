@@ -27,6 +27,8 @@ typedef uint64_t u64;
 typedef int64_t s64;
 typedef float f32;
 typedef double f64;
+// copied from wasm_simd128.h header 
+typedef int32_t v128_t __attribute__((__vector_size__(16), __aligned__(16)));
 
 #ifndef WASM_DONT_EXPORT_FUNCS
 # if defined(_WIN32)
