@@ -28,6 +28,8 @@ const char SECTION_NAME(top)[] =
 "typedef int64_t s64;\n"
 "typedef float f32;\n"
 "typedef double f64;\n"
+"// copied from wasm_simd128.h header \n"
+"typedef int32_t v128_t __attribute__((__vector_size__(16), __aligned__(16)));\n"
 "\n"
 "#ifndef WASM_DONT_EXPORT_FUNCS\n"
 "# if defined(_WIN32)\n"
