@@ -1,4 +1,5 @@
 #include <wasm_simd128.h>
+#include <stdio.h>
 
 void multiply_4x4_arrays(int x) {
   int in_a[4] = {x, x, x, x};

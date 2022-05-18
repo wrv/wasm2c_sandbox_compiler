@@ -1,4 +1,3 @@
-## This is LLVM15 - most up to date version
 llvm_path=clang 
 
 ## WASI-SDK included clang
@@ -9,10 +8,9 @@ wasm_llvm=$wasiclang_SOURCE_DIR/bin/clang
 wasm2c_folder=../../wasm2c
 bin_folder=../../bin
 
-
 curfile="wasm_simd_intrinsics_lib"
+
 echo "[X] Build $curfile.c"
-# if we add -O3 to the command below then it'll transform multiple_arrays2 into its SIMD version as well
 echo " - [X] Compiling to WASM with wasi-clang"
 $wasm_llvm --sysroot ${wasiclang_SOURCE_DIR}/share/wasi-sysroot/ \
                             -O3                         \
