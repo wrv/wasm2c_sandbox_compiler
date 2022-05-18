@@ -87,6 +87,7 @@ typedef enum {
   WASM_RT_I64,
   WASM_RT_F32,
   WASM_RT_F64,
+  WASM_RT_V128, // Added for SIMD support
 } wasm_rt_type_t;
 
 /** A function type for all `funcref` functions in a Table. All functions are
