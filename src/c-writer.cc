@@ -678,7 +678,7 @@ void CWriter::Write(Type type) {
     case Type::I64: Write("u64"); break;
     case Type::F32: Write("f32"); break;
     case Type::F64: Write("f64"); break;
-    case Type::V128: Write("__m128"); break; // TODO: change this based on SIMD target
+    case Type::V128: Write("v128"); break; // TODO: change this based on SIMD target
     default:
       printf("issue with Type %s\n", type.GetName()); 
       WABT_UNREACHABLE;
@@ -777,8 +777,8 @@ void CWriter::Write(const Const& const_) {
 
     case Type::V128: {
       // TODO: figure out this case >.< 
-      printf("Gotta figure out Type::V128\n"); 
-      WABT_UNREACHABLE;
+      Writef("I32X4_SPLAT(%u)", static_cast<v128>(const_.vec128()));
+      break;
     }
 
     default:

@@ -722,6 +722,10 @@ STUB_IMPORT_IMPL(u32,
                  (),
                  WASI_DEFAULT_ERROR);
 STUB_IMPORT_IMPL(u32,
+                 Z_wasi_snapshot_preview1Z_sched_yieldZ_iv,
+                 (),
+                 WASI_DEFAULT_ERROR);
+STUB_IMPORT_IMPL(u32,
                  Z_wasi_snapshot_preview1Z_sock_recvZ_iiiiiii,
                  (u32 a, u32 b, u32 c, u32 d, u32 e, u32 f),
                  WASI_DEFAULT_ERROR);

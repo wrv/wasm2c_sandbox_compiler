@@ -211,13 +211,13 @@ DEFINE_STORE(i64_store8, u8, u64);
 DEFINE_STORE(i64_store16, u16, u64);
 DEFINE_STORE(i64_store32, u32, u64);
 
+// <SIMD>
 // TODO: specify different SIMD libraries: x86 SSE or ARM NEON
-#include <xmmintrin.h>
 
 #define DEFINE_SIMD_LOAD(name, t1, t2, t3)                                          \
   static inline t3 name(wasm_rt_memory_t* mem, u64 addr, const char* func_name) {   \
     MEMCHECK(mem, addr, t1);                                                        \
-    t1 result = _mm_load_ps((const float *) MEM_ACCESS_REF(mem, addr));             \
+    t1 result = _mm_loadu_si128((__m128i*) MEM_ACCESS_REF(mem, addr));              \
     WASM2C_SHADOW_MEMORY_LOAD(mem, func_name, addr, sizeof(t1));                    \
     return (t3)(t2)result;                                                          \
   }
@@ -226,27 +226,29 @@ DEFINE_STORE(i64_store32, u32, u64);
   static inline void name(wasm_rt_memory_t* mem, u64 addr, t2 value, const char* func_name) { \
     MEMCHECK(mem, addr, t1);                                                                  \
     t1 wrapped = (t1)value;                                                                   \
-    _mm_store_ps(MEM_ACCESS_REF(mem, addr), wrapped);                                        \
+    _mm_storeu_si128((__m128i*) MEM_ACCESS_REF(mem, addr), wrapped);                          \
     WASM2C_SHADOW_MEMORY_STORE(mem, func_name, addr, sizeof(t1));                             \
   }
 
-DEFINE_SIMD_LOAD(v128_load, __m128, __m128, __m128);
-DEFINE_SIMD_STORE(v128_store, __m128, __m128); // TODO: figure out right type
+DEFINE_SIMD_LOAD(v128_load, __m128i, __m128i, __m128i);
+DEFINE_SIMD_STORE(v128_store, __m128i, __m128i); // TODO: figure out right type
 
 // arithmetic operations 
 
-static inline __m128 I32X4_MUL(__m128 v1, __m128 v2) {
-  return _mm_mul_ps(v1, v2);
+static inline __m128i I32X4_MUL(__m128i v1, __m128i v2) {
+  return _mm_mullo_epi32(v1, v2);
 }
 
-static inline __m128 I32X4_ADD(__m128 v1, __m128 v2) {
-  return _mm_add_ps(v1, v2);
+static inline __m128i I32X4_ADD(__m128i v1, __m128i v2) {
+  return  _mm_add_epi32(v1, v2);
 }
 
 // splat operations 
-static inline __m128 I32X4_SPLAT(float v1) {
+static inline __m128i I32X4_SPLAT(float v1) {
   return _mm_set_ps1(v1);
 }
+
+// </SIMD>
 
 #if defined(_MSC_VER)
 #include <intrin.h>
