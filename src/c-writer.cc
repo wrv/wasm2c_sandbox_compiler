@@ -776,7 +776,6 @@ void CWriter::Write(const Const& const_) {
     }
 
     case Type::V128: {
-      // TODO: figure out this case >.< 
       Writef("I32X4_SPLAT(%u)", static_cast<v128>(const_.vec128()));
       break;
     }

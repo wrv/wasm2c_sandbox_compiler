@@ -13,8 +13,9 @@ curfile="wasm_simd_intrinsics_lib"
 
 echo "[X] Build $curfile.c"
 echo " - [X] Compiling to WASM with wasi-clang"
+# compile with -O0 for now
 $wasm_llvm --sysroot ${wasiclang_SOURCE_DIR}/share/wasi-sysroot/ \
-                            -O3                         \
+                            -O0                         \
                             -Wl,--export-all            \
                             -Wl,--no-entry              \
                             -Wl,--growable-table        \
@@ -30,7 +31,7 @@ if [ $? -eq 0 ]; then
     rm $curfile.wasm2c.wat 2> /dev/null
 
     $bin_folder/wasm2wat $curfile.wasm > $curfile.wasm2c.wat
-    
+    read -p "Press enter to continue"
     echo " - [X] Running wasm2c"
     # clean up previous files
     rm $curfile.wasm2c.c 2> /dev/null
@@ -38,6 +39,12 @@ if [ $? -eq 0 ]; then
 
     $bin_folder/wasm2c $curfile.wasm -vv -o $curfile.wasm2c.c &> $curfile.wasm2c.verbose_log.txt
     if [ $? -eq 0 ]; then
+        read -p "Press enter to continue"
+        # Replace this line before building in $curfile.wasm2c.c
+        # v128 w2c_l20 = 0, w2c_l24 = 0, w2c_l25 = 0, w2c_l26 = 0, w2c_l27 = 0, w2c_l28 = 0, w2c_l29 = 0, w2c_l30 = 0, 
+        #    w2c_l33 = 0;
+        # v128 w2c_l20, w2c_l24, w2c_l25, w2c_l26, w2c_l27, w2c_l28, w2c_l29, w2c_l30, w2c_l33;
+
         echo " - [X] Building wasm2c output"
         $llvm_path -I$wasm2c_folder -o $curfile.wasm2c.out -mavx \
                     $curfile.main.c                  \
@@ -47,6 +54,7 @@ if [ $? -eq 0 ]; then
                     $wasm2c_folder/wasm-rt-os-win.c  \
                     $wasm2c_folder/wasm-rt-wasi.c
         if [ $? -eq 0 ]; then
+            read -p "Press enter to continue"
             echo " - [X] Running Output with param $1"
             echo ./$curfile.wasm2c.out $1
             ./$curfile.wasm2c.out $1

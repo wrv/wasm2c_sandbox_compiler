@@ -53,14 +53,7 @@ int main(int argc, char** argv) {
   /* Create a sandbox instance */
   wasm2c_sandbox_t* sbx_instance = (wasm2c_sandbox_t*) sbx_details.create_wasm2c_sandbox(max_wasm_page);
 
-  /* Call `fac`, using the mangled name. */
   w2c_multiply_4x4_arrays(sbx_instance, x);
-
-  /* Print the result. */
-  //printf("w2c_multiply_4x4_arrays(%u %u %u %u x %u %u %u %u) = (%d %d %d %d)\n", 
-  //      x, x, x, x, 
-  //      2*x, 2*x, 2*x, 2*x, 
-  //      out[0], out[1], out[2], out[3]);
 
   /* Destroy the sandbox instance */
   sbx_details.destroy_wasm2c_sandbox(sbx_instance);
