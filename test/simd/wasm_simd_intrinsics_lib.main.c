@@ -15,6 +15,7 @@ int main(int argc, char** argv) {
   }
 
   s32 x = atoi(argv[1]);
+  int size = 4;
   s32 in_a[4] = {x, x, x, x}; 
   s32 in_b[4] = {2*x, 2*x, 2*x, 2*x}; 
   s32* out;
@@ -53,14 +54,19 @@ int main(int argc, char** argv) {
     /* Create a sandbox instance */
     wasm2c_sandbox_t* sbx_instance = (wasm2c_sandbox_t*) sbx_details.create_wasm2c_sandbox(max_wasm_page);
 
-    /* Call `fac`, using the mangled name. */
-    w2c_multiply_4x4_arrays(sbx_instance, x);
+    /* Pass in in_a and in_b pointers to sandbox memory */
+    u32 sbx_in_a = w2c_malloc(sbx_instance, size*sizeof(x));
+    printf("Malloc'ing input b in Sandbox memory\n");
+    u32 sbx_in_b = w2c_malloc(sbx_instance, size*sizeof(x));
 
-    /* Print the result. */
-    //printf("w2c_multiply_4x4_arrays(%u %u %u %u x %u %u %u %u) = (%d %d %d %d)\n", 
-    //      x, x, x, x, 
-    //      2*x, 2*x, 2*x, 2*x, 
-    //      out[0], out[1], out[2], out[3]);
+    printf("Copying values into malloced memory\n");
+    for (int i = 0; i < size; i++) {
+      w2c_memset(sbx_instance, sbx_in_a + sizeof(x) * i,   x, 1);
+      w2c_memset(sbx_instance, sbx_in_b + sizeof(x) * i, 2*x, 1);
+    }
+    
+    printf("Calling sandboxed memory\n");
+    w2c_multiply_4x4_arrays(sbx_instance, sbx_in_a, sbx_in_b);
 
     /* Destroy the sandbox instance */
     sbx_details.destroy_wasm2c_sandbox(sbx_instance);

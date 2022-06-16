@@ -678,7 +678,7 @@ void CWriter::Write(Type type) {
     case Type::I64: Write("u64"); break;
     case Type::F32: Write("f32"); break;
     case Type::F64: Write("f64"); break;
-    case Type::V128: Write("v128"); break; // TODO: change this based on SIMD target
+    case Type::V128: Write("v128"); break;
     default:
       printf("issue with Type %s\n", type.GetName()); 
       WABT_UNREACHABLE;
@@ -691,7 +691,7 @@ void CWriter::Write(TypeEnum type) {
     case Type::I64: Write("WASM_RT_I64"); break;
     case Type::F32: Write("WASM_RT_F32"); break;
     case Type::F64: Write("WASM_RT_F64"); break;
-    case Type::V128: Write("WASM_RT_V128"); break; // TODO: change this based on SIMD target
+    case Type::V128: Write("WASM_RT_V128"); break;
     default:
       printf("issue with TypeEnum %s\n", type.type.GetName()); 
       WABT_UNREACHABLE;
@@ -1563,8 +1563,11 @@ void CWriter::WriteLocals(const std::vector<std::string>& index_to_name) {
             Write(Newline());
         }
 
-        Write(DefineLocalScopeName(index_to_name[num_params + local_index]),
-              " = 0");
+        Write(DefineLocalScopeName(index_to_name[num_params + local_index]));
+        // skip initializing vector types
+        if (type != Type::V128) {
+          Write(" = 0");
+        }
         ++count;
       }
       ++local_index;
@@ -2688,7 +2691,6 @@ Result WriteC(Stream* c_stream,
               const Module* module,
               const WriteCOptions& options) {
   CWriter c_writer(c_stream, h_stream, header_name, options);
-  printf("Calling CWriter WriteModule\n");
   return c_writer.WriteModule(*module);
 }
 
