@@ -11,6 +11,17 @@ bin_folder=../../../bin
 
 curfile="wasm_simd_intrinsics_lib"
 
+param=37
+if [[ $1 ]]
+  then
+    echo "Using supplied parameter $1"
+    param=$1
+else 
+    echo "Using default parameter $param"
+fi
+
+
+
 echo "[X] Build $curfile.c"
 echo " - [X] Compiling to WASM with wasi-clang"
 # compile with -O0 for now
@@ -55,21 +66,24 @@ if [ $? -eq 0 ]; then
                     $wasm2c_folder/wasm-rt-wasi.c
         if [ $? -eq 0 ]; then
             # read -p "Press enter to continue"
-            echo " - [X] Running Output with param $1"
-            echo ./$curfile.wasm2c.out $1
-            ./$curfile.wasm2c.out $1
+            echo " - [X] Saving objdump of binary"
+            objdump -d $curfile.wasm2c.out > $curfile.wasm2c.out.objdump.txt
+
+            echo " - [X] Running Output with param $param"
+            echo ./$curfile.wasm2c.out $param
+            ./$curfile.wasm2c.out $param
             if [ $? -eq 0 ]; then
                 echo " "
             else 
                 echo " - [ERROR] Issue running Output"
-                echo "Command: $curfile.wasm2c.out $1"
+                echo "Command: $curfile.wasm2c.out $param"
             fi
         else 
             echo " - [ERROR] Error building shared library for $curfile"
             echo "Command: $llvm_path -I$wasm2c_folder -o $curfile.wasm2c.out -mavx $curfile.main.c $curfile.wasm2c.c $wasm2c_folder/wasm-rt-impl.c $wasm2c_folder/wasm-rt-os-unix.c $wasm2c_folder/wasm-rt-os-win.c $wasm2c_folder/wasm-rt-wasi.c"
         fi
     else 
-        echo " - [ERROR] Error with wasm2c - check log: $curfile.wasm2c.verbose_log.txt"
+        echo " - [ERROR] Error with wasm2c - check log: ./$curfile.wasm2c.verbose_log.txt"
         echo "   Command: $bin_folder/wasm2c $curfile.wasm -vv -o $curfile.wasm2c.c "
     fi
 else 

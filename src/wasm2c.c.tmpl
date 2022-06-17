@@ -235,12 +235,41 @@ DEFINE_SIMD_STORE(v128_store, __m128i, __m128i);
 
 // arithmetic operations 
 
-static inline __m128i I32X4_MUL(__m128i v1, __m128i v2) {
-  return _mm_mullo_epi32(v1, v2);
+static inline __m128i I32X4_ABS(__m128i v1) {
+  return  _mm_abs_epi32(v1);
 }
 
 static inline __m128i I32X4_ADD(__m128i v1, __m128i v2) {
   return  _mm_add_epi32(v1, v2);
+}
+
+static inline __m128i I32X4_MUL(__m128i v1, __m128i v2) {
+  return _mm_mullo_epi32(v1, v2);
+}
+
+static inline __m128i I32X4_NEG(__m128i v1) {
+  return _mm_sub_epi32(_mm_set1_epi32(0.0),v1);
+}
+
+static inline __m128i I32X4_SUB(__m128i v1, __m128i v2) {
+  return  _mm_sub_epi32(v1, v2);
+}
+
+// bit-wise operations 
+static inline __m128i V128_AND(__m128i v1, __m128i v2) {
+  return  _mm_and_si128(v1, v2);
+}
+
+static inline __m128i V128_OR(__m128i v1, __m128i v2) {
+  return  _mm_or_si128(v1, v2);
+}
+
+static inline __m128i V128_XOR(__m128i v1, __m128i v2) {
+  return  _mm_xor_si128(v1, v2);
+}
+
+static inline __m128i V128_NOT(__m128i v1) {
+  return  _mm_xor_si128(v1, _mm_set1_epi32(-1));
 }
 
 // splat operations 

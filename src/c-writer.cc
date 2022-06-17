@@ -2134,12 +2134,29 @@ void CWriter::Write(const BinaryExpr& expr) {
       WritePrefixBinaryExpr(expr.opcode, "copysign");
       break;
 
+    
+    case Opcode::I32X4Add:
+      WritePrefixBinaryExpr(expr.opcode, "I32X4_ADD");
+      break;
+    
     case Opcode::I32X4Mul:
       WritePrefixBinaryExpr(expr.opcode, "I32X4_MUL");
       break;
 
-    case Opcode::I32X4Add:
-      WritePrefixBinaryExpr(expr.opcode, "I32X4_ADD");
+    case Opcode::I32X4Sub:
+      WritePrefixBinaryExpr(expr.opcode, "I32X4_SUB");
+      break;
+
+    case Opcode::V128And:
+      WritePrefixBinaryExpr(expr.opcode, "V128_AND");
+      break;
+
+    case Opcode::V128Or:
+      WritePrefixBinaryExpr(expr.opcode, "V128_OR");
+      break;
+
+    case Opcode::V128Xor:
+      WritePrefixBinaryExpr(expr.opcode, "V128_XOR");
       break;
 
     default:
@@ -2533,8 +2550,20 @@ void CWriter::Write(const UnaryExpr& expr) {
       WriteSimpleUnaryExpr(expr.opcode, "(u64)(s64)(s32)(u32)");
       break;
 
-    case Opcode::I32X4Splat:
-      WriteSimpleUnaryExpr(expr.opcode, "I32X4_SPLAT");
+    //case Opcode::I32X4Splat:
+    //  WriteSimpleUnaryExpr(expr.opcode, "I32X4_SPLAT");
+    //  break;
+    
+    case Opcode::I32X4Abs:
+      WriteSimpleUnaryExpr(expr.opcode, "I32X4_ABS");
+      break;
+
+    case Opcode::I32X4Neg:
+      WriteSimpleUnaryExpr(expr.opcode, "I32X4_NEG");
+      break;
+
+    case Opcode::V128Not:
+      WriteSimpleUnaryExpr(expr.opcode, "V128_NOT");
       break;
 
     default:
