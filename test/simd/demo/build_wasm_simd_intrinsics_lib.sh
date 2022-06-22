@@ -85,6 +85,7 @@ if [ $? -eq 0 ]; then
     else 
         echo " - [ERROR] Error with wasm2c - check log: ./$curfile.wasm2c.verbose_log.txt"
         echo "   Command: $bin_folder/wasm2c $curfile.wasm -vv -o $curfile.wasm2c.c "
+        $bin_folder/wasm2c $curfile.wasm -vv -o $curfile.wasm2c.c
     fi
 else 
     echo " - [ERROR] Error compiling to WASM with wasi-clang"

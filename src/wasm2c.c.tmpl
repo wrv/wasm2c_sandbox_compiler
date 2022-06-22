@@ -260,6 +260,10 @@ static inline __m128i V128_AND(__m128i v1, __m128i v2) {
   return  _mm_and_si128(v1, v2);
 }
 
+static inline __m128i V128_ANDNOT(__m128i v1, __m128i v2) {
+  return  _mm_andnot_si128(v1, v2);
+}
+
 static inline __m128i V128_OR(__m128i v1, __m128i v2) {
   return  _mm_or_si128(v1, v2);
 }
@@ -272,9 +276,23 @@ static inline __m128i V128_NOT(__m128i v1) {
   return  _mm_xor_si128(v1, _mm_set1_epi32(-1));
 }
 
+// comparison operations
+static inline __m128i I32X4_EQ(__m128i v1, __m128i v2) {
+  return  _mm_cmpeq_epi32(v1, v2);
+}
+
+static inline __m128i I32X4_GT_S(__m128i v1, __m128i v2) {
+  return  _mm_cmpgt_epi32(v1, v2);
+}
+
+
+static inline __m128i I32X4_LT_S(__m128i v1, __m128i v2) {
+  return  _mm_cmplt_epi32(v1, v2);
+}
+
 // splat operations 
 static inline __m128i I32X4_SPLAT(float v1) {
-  return _mm_set_ps1(v1);
+  return _mm_set1_epi32(v1);
 }
 
 // </SIMD>

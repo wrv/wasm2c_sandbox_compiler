@@ -2150,6 +2150,9 @@ void CWriter::Write(const BinaryExpr& expr) {
     case Opcode::V128And:
       WritePrefixBinaryExpr(expr.opcode, "V128_AND");
       break;
+    case Opcode::V128Andnot:
+      WritePrefixBinaryExpr(expr.opcode, "V128_ANDNOT");
+      break;
 
     case Opcode::V128Or:
       WritePrefixBinaryExpr(expr.opcode, "V128_OR");
@@ -2158,6 +2161,7 @@ void CWriter::Write(const BinaryExpr& expr) {
     case Opcode::V128Xor:
       WritePrefixBinaryExpr(expr.opcode, "V128_XOR");
       break;
+
 
     default:
       printf("issue with BinaryExpr %s\n", expr.opcode.GetName()); 
@@ -2227,6 +2231,21 @@ void CWriter::Write(const CompareExpr& expr) {
     case Opcode::F32Ge:
     case Opcode::F64Ge:
       WriteInfixBinaryExpr(expr.opcode, ">=", AssignOp::Disallowed);
+      break;
+
+    case Opcode::I32X4Eq:
+      WritePrefixBinaryExpr(expr.opcode, "I32X4_EQ");
+      break;
+    
+    case Opcode::I32X4Ne:
+      WritePrefixBinaryExpr(expr.opcode, "I32X4_NE");
+      break;
+
+    case Opcode::I32X4GtS:
+      WritePrefixBinaryExpr(expr.opcode, "I32X4_GT_S");
+      break;
+    case Opcode::I32X4LtS:
+      WritePrefixBinaryExpr(expr.opcode, "I32X4_LT_S");
       break;
 
     default:
