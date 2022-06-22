@@ -78,6 +78,20 @@ void and_v128(int* in_a, int* in_b) {
       out[0], out[1], out[2], out[3]);
 }
 
+void andnot_v128(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+  v128_t prod = wasm_v128_andnot(a, b);
+  wasm_v128_store(out, prod);
+  fprintf(stderr, "Andnot arrays: !(%d %d %d %d) & (%d %d %d %d) = (%d %d %d %d) \n", 
+      in_a[0], in_a[1], in_a[2], in_a[3], 
+      in_b[0], in_b[1], in_b[2], in_b[3], 
+      out[0], out[1], out[2], out[3]);
+}
+
+
+
 void or_v128(int* in_a, int* in_b) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);
@@ -109,5 +123,59 @@ void not_v128(int* in_a) {
   wasm_v128_store(out, prod);
   fprintf(stderr, "Not array: !(%d %d %d %d) = (%d %d %d %d) \n", 
       in_a[0], in_a[1], in_a[2], in_a[3], 
+      out[0], out[1], out[2], out[3]);
+}
+
+
+/* Comparison operators */
+// eq, ge, gt, le, lt, ne
+
+void eq_i32x4(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+  v128_t prod = wasm_i32x4_eq(a, b);
+  wasm_v128_store(out, prod);
+  fprintf(stderr, "Equal arrays: (%d %d %d %d) == (%d %d %d %d)? = (%d %d %d %d) \n", 
+      in_a[0], in_a[1], in_a[2], in_a[3], 
+      in_b[0], in_b[1], in_b[2], in_b[3], 
+      out[0], out[1], out[2], out[3]);
+}
+
+// requires _mmask{8, 16, 32, 64} type
+//void ne_i32x4(int* in_a, int* in_b) {
+//  int out[4];
+//  v128_t a = wasm_v128_load(in_a);
+//  v128_t b = wasm_v128_load(in_b);
+//  v128_t prod = wasm_i32x4_ne(a, b);
+//  wasm_v128_store(out, prod);
+//  fprintf(stderr, "Equal arrays: (%d %d %d %d) == (%d %d %d %d)? = (%d %d %d %d) \n", 
+//      in_a[0], in_a[1], in_a[2], in_a[3], 
+//      in_b[0], in_b[1], in_b[2], in_b[3], 
+//      out[0], out[1], out[2], out[3]);
+//}
+
+void gt_i32x4(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+  v128_t prod = wasm_i32x4_gt(a, b);
+  wasm_v128_store(out, prod);
+  fprintf(stderr, "GT arrays: (%d %d %d %d) > (%d %d %d %d)? = (%d %d %d %d) \n", 
+      in_a[0], in_a[1], in_a[2], in_a[3], 
+      in_b[0], in_b[1], in_b[2], in_b[3], 
+      out[0], out[1], out[2], out[3]);
+}
+
+
+void lt_i32x4(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+  v128_t prod = wasm_i32x4_lt(a, b);
+  wasm_v128_store(out, prod);
+  fprintf(stderr, "LT arrays: (%d %d %d %d) < (%d %d %d %d)? = (%d %d %d %d) \n", 
+      in_a[0], in_a[1], in_a[2], in_a[3], 
+      in_b[0], in_b[1], in_b[2], in_b[3], 
       out[0], out[1], out[2], out[3]);
 }
