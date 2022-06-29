@@ -5,3 +5,4 @@ wasm_simd_intrinsics_lib.wasm2c.out
 wasm_simd_intrinsics_lib.wasm2c.out.objdump.txt
 wasm_simd_intrinsics_lib.wasm2c.verbose_log.txt
 wasm_simd_intrinsics_lib.wasm2c.wat
+*.ll

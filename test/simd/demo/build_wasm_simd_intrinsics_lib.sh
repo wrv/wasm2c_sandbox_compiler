@@ -56,6 +56,16 @@ if [ $? -eq 0 ]; then
         #    w2c_l33 = 0;
         # v128 w2c_l20, w2c_l24, w2c_l25, w2c_l26, w2c_l27, w2c_l28, w2c_l29, w2c_l30, w2c_l33;
 
+        echo " - [X] Emitting LLVM IR"
+
+        $llvm_path -I$wasm2c_folder -S -emit-llvm -mavx \
+                    $curfile.main.c                  \
+                    $curfile.wasm2c.c                \
+                    $wasm2c_folder/wasm-rt-impl.c    \
+                    $wasm2c_folder/wasm-rt-os-unix.c \
+                    $wasm2c_folder/wasm-rt-os-win.c  \
+                    $wasm2c_folder/wasm-rt-wasi.c
+        
         echo " - [X] Building wasm2c output"
         $llvm_path -I$wasm2c_folder -o $curfile.wasm2c.out -mavx \
                     $curfile.main.c                  \
