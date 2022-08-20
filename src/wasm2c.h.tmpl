@@ -6,11 +6,9 @@ extern "C" {
 
 #include <stdint.h>
 
-// <SIMD INCLUDES>
-// TODO: specify different SIMD libraries: x86 AVX or ARM NEON
-#include <immintrin.h>
-// </SIMD INCLUDES>
 #include "wasm-rt.h"
+/* SIMD support through SIMD-everywhere */
+#include "simde/wasm/simd128.h" 
 
 #ifndef WASM_RT_MODULE_PREFIX
 #define WASM_RT_MODULE_PREFIX
@@ -31,8 +29,7 @@ typedef uint64_t u64;
 typedef int64_t s64;
 typedef float f32;
 typedef double f64;
-// copied from wasm_simd128.h header 
-typedef int32_t v128 __attribute__((__vector_size__(16), __aligned__(16)));
+typedef simde_v128_t v128;
 
 #ifndef WASM_DONT_EXPORT_FUNCS
 # if defined(_WIN32)

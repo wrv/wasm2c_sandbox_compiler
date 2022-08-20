@@ -225,7 +225,7 @@ DEFINE_STORE(i64_store32, u32, u64);
 #define DEFINE_SIMD_LOAD(name, t1, t2, t3)                                          \
   static inline t3 name(wasm_rt_memory_t* mem, u64 addr, const char* func_name) {   \
     MEMCHECK(mem, addr, t1);                                                        \
-    t1 result = _mm_loadu_si128((__m128i*) MEM_ACCESS_REF(mem, addr));              \
+    t1 result = simde_wasm_v128_load((simde_v128_t*) MEM_ACCESS_REF(mem, addr));              \
     WASM2C_SHADOW_MEMORY_LOAD(mem, func_name, addr, sizeof(t1));                    \
     return (t3)(t2)result;                                                          \
   }
@@ -234,120 +234,13 @@ DEFINE_STORE(i64_store32, u32, u64);
   static inline void name(wasm_rt_memory_t* mem, u64 addr, t2 value, const char* func_name) { \
     MEMCHECK(mem, addr, t1);                                                                  \
     t1 wrapped = (t1)value;                                                                   \
-    _mm_storeu_si128((__m128i*) MEM_ACCESS_REF(mem, addr), wrapped);                          \
+    simde_wasm_v128_store((simde_v128_t*) MEM_ACCESS_REF(mem, addr), wrapped);                          \
     WASM2C_SHADOW_MEMORY_STORE(mem, func_name, addr, sizeof(t1));                             \
   }
 
-DEFINE_SIMD_LOAD(v128_load, __m128i, __m128i, __m128i);
-DEFINE_SIMD_STORE(v128_store, __m128i, __m128i); 
+DEFINE_SIMD_LOAD(v128_load, simde_v128_t, simde_v128_t, simde_v128_t);
+DEFINE_SIMD_STORE(v128_store, simde_v128_t, simde_v128_t); 
 
-/* I32X4 AVX Operations */
-static inline __m128i I32X4_ABS(__m128i v1) {
-  return  _mm_abs_epi32(v1);
-}
-
-static inline __m128i I32X4_ADD(__m128i v1, __m128i v2) {
-  return  _mm_add_epi32(v1, v2);
-}
-
-//static inline int I32X4_ALLTRUE(__m128i v1) {
-//  // v1 AND 0xFFF..FFF then tested for all_zeros
-//  //return _mm_and_si128(v1, _mm_set1_epi32(-1));
-//}
-
-static inline int I32X4_BITMASK(__m128i v1) {
-  return _mm_movemask_ps((__m128) v1);
-}
-
-static inline __m128i I32X4_DOTI16X8S(__m128i v1, __m128i v2) {
-  return _mm_madd_epi16(v1, v2);
-}
-
-static inline __m128i I32X4_EXTADD_PAIRWISE_I16X8_S(__m128i v1) {
-  return _mm_madd_epi16(v1, v1); 
-}
-
-static inline __m128i I32X4_EQ(__m128i v1, __m128i v2) {
-  return  _mm_cmpeq_epi32(v1, v2);
-}
-
-static inline __m128i I32X4_GE_S(__m128i v1, __m128i v2) {
-  return (__m128i) _mm_cmpge_ps((__m128)v1, (__m128)v2);
-}
-
-static inline __m128i I32X4_GT_S(__m128i v1, __m128i v2) {
-  return  _mm_cmpgt_epi32(v1, v2);
-}
-
-static inline __m128i I32X4_LE_S(__m128i v1, __m128i v2) {
-  return (__m128i) _mm_cmple_ps((__m128)v1, (__m128)v2);
-}
-
-static inline __m128i I32X4_LT_S(__m128i v1, __m128i v2) {
-  return  _mm_cmplt_epi32(v1, v2);
-}
-
-static inline __m128i I32X4_MAX_S(__m128i v1, __m128i v2) {
-  return _mm_max_epi32(v1, v2);
-}
-
-static inline __m128i I32X4_MIN_S(__m128i v1, __m128i v2) {
-  return _mm_min_epi32(v1, v2);
-}
-
-static inline __m128i I32X4_MUL(__m128i v1, __m128i v2) {
-  return _mm_mullo_epi32(v1, v2);
-}
-
-static inline __m128i I32X4_NE(__m128i v1, __m128i v2) {
-  return (__m128i) _mm_cmpneq_ps((__m128) v1, (__m128) v2);
-}
-
-static inline __m128i I32X4_NEG(__m128i v1) {
-  return _mm_sub_epi32(_mm_set1_epi32(0.0),v1);
-}
-
-static inline __m128i I32X4_SHL(__m128i v1, int imm8) {
-  return _mm_slli_epi32(v1, imm8);
-}
-
-static inline __m128i I32X4_SHR_S(__m128i v1, int imm8) {
-  return _mm_srai_epi32(v1, imm8);
-}
-
-static inline __m128i I32X4_SPLAT(float v1) {
-  return _mm_set1_epi32(v1);
-}
-
-static inline __m128i I32X4_SUB(__m128i v1, __m128i v2) {
-  return  _mm_sub_epi32(v1, v2);
-}
-
-
-
-/* V128 AVX Operations */
-static inline __m128i V128_AND(__m128i v1, __m128i v2) {
-  return  _mm_and_si128(v1, v2);
-}
-
-static inline __m128i V128_ANDNOT(__m128i v1, __m128i v2) {
-  return  _mm_andnot_si128(v1, v2);
-}
-
-static inline __m128i V128_OR(__m128i v1, __m128i v2) {
-  return  _mm_or_si128(v1, v2);
-}
-
-static inline __m128i V128_NOT(__m128i v1) {
-  return  _mm_xor_si128(v1, _mm_set1_epi32(-1));
-}
-
-static inline __m128i V128_XOR(__m128i v1, __m128i v2) {
-  return  _mm_xor_si128(v1, v2);
-}
-
-
-// </AVX_SIMD>
 
 #if defined(_MSC_VER)
 #include <intrin.h>

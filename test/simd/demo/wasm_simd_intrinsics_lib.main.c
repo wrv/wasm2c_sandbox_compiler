@@ -312,13 +312,13 @@ int main(int argc, char** argv) {
   }
   
   printf("- Arithmetic Operations\n");
-  w2c_abs_i32x4(sbx_instance, sbx_in_a);
-  w2c_abs_i32x4(sbx_instance, sbx_in_a_neg);
-  w2c_add_i32x4(sbx_instance, sbx_in_a, sbx_in_b);
-  w2c_multiply_i32x4(sbx_instance, sbx_in_a, sbx_in_b);
-  w2c_neg_i32x4(sbx_instance, sbx_in_a);
-  w2c_neg_i32x4(sbx_instance, sbx_in_a_neg);
-  w2c_sub_i32x4(sbx_instance, sbx_in_a, sbx_in_b);
+  //w2c_abs_i32x4(sbx_instance, sbx_in_a);
+  //w2c_abs_i32x4(sbx_instance, sbx_in_a_neg);
+  //w2c_add_i32x4(sbx_instance, sbx_in_a, sbx_in_b);
+  //w2c_multiply_i32x4(sbx_instance, sbx_in_a, sbx_in_b);
+  //w2c_neg_i32x4(sbx_instance, sbx_in_a);
+  //w2c_neg_i32x4(sbx_instance, sbx_in_a_neg);
+  //w2c_sub_i32x4(sbx_instance, sbx_in_a, sbx_in_b);
 
 
   printf("- Bit-wise Operations\n");
@@ -329,20 +329,19 @@ int main(int argc, char** argv) {
   w2c_not_v128(sbx_instance, sbx_in_a);
 
   printf("- Comparison Operations\n");
-  w2c_eq_i32x4(sbx_instance, sbx_in_a, sbx_in_b);
-  w2c_eq_i32x4(sbx_instance, sbx_in_a, sbx_in_a);
-  w2c_eq_i32x4(sbx_instance, sbx_in_a, sbx_in_a_alt);
+  //w2c_eq_i32x4(sbx_instance, sbx_in_a, sbx_in_b);
+  //w2c_eq_i32x4(sbx_instance, sbx_in_a, sbx_in_a);
+  //w2c_eq_i32x4(sbx_instance, sbx_in_a, sbx_in_a_alt);
   //w2c_ne_i32x4(sbx_instance, sbx_in_a, sbx_in_b);
   //w2c_ne_i32x4(sbx_instance, sbx_in_a, sbx_in_a);
   //w2c_ne_i32x4(sbx_instance, sbx_in_a, sbx_in_a_alt);
 
-  w2c_gt_i32x4(sbx_instance, sbx_in_b, sbx_in_a);
-  w2c_gt_i32x4(sbx_instance, sbx_in_a, sbx_in_a);
-  w2c_gt_i32x4(sbx_instance, sbx_in_a_alt, sbx_in_a);
-
-  w2c_lt_i32x4(sbx_instance, sbx_in_b, sbx_in_a);
-  w2c_lt_i32x4(sbx_instance, sbx_in_a, sbx_in_a);
-  w2c_lt_i32x4(sbx_instance, sbx_in_a_alt, sbx_in_a);
+  //w2c_gt_i32x4(sbx_instance, sbx_in_b, sbx_in_a);
+  //w2c_gt_i32x4(sbx_instance, sbx_in_a, sbx_in_a);
+  //w2c_gt_i32x4(sbx_instance, sbx_in_a_alt, sbx_in_a);
+  //w2c_lt_i32x4(sbx_instance, sbx_in_b, sbx_in_a);
+  //w2c_lt_i32x4(sbx_instance, sbx_in_a, sbx_in_a);
+  //w2c_lt_i32x4(sbx_instance, sbx_in_a_alt, sbx_in_a);
   
   
   /* Destroy the sandbox instance */

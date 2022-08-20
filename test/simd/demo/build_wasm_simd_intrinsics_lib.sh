@@ -7,7 +7,7 @@ wasm_llvm=$wasiclang_SOURCE_DIR/bin/clang
 ## WASM2C Folder
 wasm2c_folder=../../../wasm2c
 bin_folder=../../../bin
-
+simde_folder=../../../third_party/simde
 
 curfile="wasm_simd_intrinsics_lib"
 
@@ -58,7 +58,7 @@ if [ $? -eq 0 ]; then
 
         echo " - [X] Emitting LLVM IR"
 
-        $llvm_path -I$wasm2c_folder -S -emit-llvm -mavx \
+        $llvm_path -I$wasm2c_folder -I$simde_folder -S -emit-llvm -mavx \
                     $curfile.main.c                  \
                     $curfile.wasm2c.c                \
                     $wasm2c_folder/wasm-rt-impl.c    \
@@ -67,7 +67,7 @@ if [ $? -eq 0 ]; then
                     $wasm2c_folder/wasm-rt-wasi.c
         
         echo " - [X] Building wasm2c output"
-        $llvm_path -I$wasm2c_folder -o $curfile.wasm2c.out -mavx \
+        $llvm_path -I$wasm2c_folder -I$simde_folder -o $curfile.wasm2c.out -mavx \
                     $curfile.main.c                  \
                     $curfile.wasm2c.c                \
                     $wasm2c_folder/wasm-rt-impl.c    \
@@ -90,7 +90,7 @@ if [ $? -eq 0 ]; then
             fi
         else 
             echo " - [ERROR] Error building shared library for $curfile"
-            echo "Command: $llvm_path -I$wasm2c_folder -o $curfile.wasm2c.out -mavx $curfile.main.c $curfile.wasm2c.c $wasm2c_folder/wasm-rt-impl.c $wasm2c_folder/wasm-rt-os-unix.c $wasm2c_folder/wasm-rt-os-win.c $wasm2c_folder/wasm-rt-wasi.c"
+            echo "Command: $llvm_path -I$wasm2c_folder -I$simde_folder -o $curfile.wasm2c.out -mavx $curfile.main.c $curfile.wasm2c.c $wasm2c_folder/wasm-rt-impl.c $wasm2c_folder/wasm-rt-os-unix.c $wasm2c_folder/wasm-rt-os-win.c $wasm2c_folder/wasm-rt-wasi.c"
         fi
     else 
         echo " - [ERROR] Error with wasm2c - check log: ./$curfile.wasm2c.verbose_log.txt"
