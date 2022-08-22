@@ -874,3 +874,60 @@ void all_the_i32x4(int* in_a, int* in_b) {
   fprintf(stderr, "All i32x4 Operations results = (%d %d %d %d) \n", 
       out[0], out[1], out[2], out[3]);
 }
+
+
+void all_the_i64x2(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  v128_t res = wasm_i64x2_abs(a);
+  res = wasm_i64x2_add(b, res);
+  bool alltrue = wasm_i64x2_all_true(res);
+  int bitmask = wasm_i64x2_bitmask(res);
+  res = wasm_i64x2_const(23, 78);
+  res = wasm_i64x2_const_splat(22);
+  res = wasm_i64x2_eq(a, res);
+  res = wasm_i64x2_extend_high_i32x4(res);
+  res = wasm_i64x2_extend_low_i32x4(res);
+  res = wasm_i64x2_extmul_high_i32x4(b, res);
+  res = wasm_i64x2_extmul_low_i32x4(a, res);
+  int extracted = wasm_i64x2_extract_lane(res, 0);
+  res = wasm_i64x2_ge(a, res);
+  res = wasm_i64x2_gt(a, res);
+  res = wasm_i64x2_le(a, res);
+  res = wasm_i64x2_load32x2(in_b);
+  res = wasm_i64x2_lt(a, res);
+  res = wasm_i64x2_make(bitmask, extracted);
+  res = wasm_i64x2_mul(a, res);
+  res = wasm_i64x2_ne(a, res);
+  res = wasm_i64x2_neg(res);
+  res = wasm_i64x2_replace_lane(res, 1, extracted);
+  res = wasm_i64x2_shl(res, 1);
+  res = wasm_i64x2_shr(res, 1);
+  res = wasm_i64x2_shuffle(a, res, 1, 0);
+  res = wasm_i64x2_splat(223);
+  res = wasm_i64x2_sub(a, res);
+
+  wasm_v128_store(out, res);
+  fprintf(stderr, "All i64x2 Operations results = (%d %d %d %d) \n", 
+      out[0], out[1], out[2], out[3]);
+}
+
+
+void all_the_u64x2(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  v128_t res = wasm_u64x2_load32x2(in_b);
+  res = wasm_u64x2_extend_high_u32x4(res);
+  res = wasm_u64x2_extend_low_u32x4(res);
+  res = wasm_u64x2_extmul_high_u32x4(b, res);
+  res = wasm_u64x2_extmul_low_u32x4(a, res);
+  res = wasm_u64x2_shr(res, 1);
+
+  wasm_v128_store(out, res);
+  fprintf(stderr, "All u64x2 Operations results = (%d %d %d %d) \n", 
+      out[0], out[1], out[2], out[3]);
+}

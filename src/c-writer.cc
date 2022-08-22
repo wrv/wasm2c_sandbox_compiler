@@ -2272,9 +2272,35 @@ void CWriter::Write(const BinaryExpr& expr) {
       break;
 
     /* SIMD I64X2 Binary Opcodes */
+    case Opcode::I64X2Add:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_add");
+      break;
+
+    case Opcode::I64X2ExtmulHighI32X4S:
+    case Opcode::I64X2ExtmulHighI32X4U:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_extmul_high_i32x4");
+      break;
+
+    case Opcode::I64X2ExtmulLowI32X4S:
+    case Opcode::I64X2ExtmulLowI32X4U:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_extmul_low_i32x4");
+      break;
+
+    case Opcode::I64X2Mul:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_mul");
+      break;
+
+    case Opcode::I64X2Shl:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_shl");
+      break;
+
     case Opcode::I64X2ShrS:
     case Opcode::I64X2ShrU:
       WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_shr");
+      break;
+
+    case Opcode::I64X2Sub:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_sub");
       break;
 
     /* SIMD F32x4 Binary Opcodes */
@@ -2488,6 +2514,32 @@ void CWriter::Write(const CompareExpr& expr) {
     case Opcode::I32X4Ne:
       WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i32x4_ne");
       break;
+
+    /* SIMD I64X2 Compare Opcodes */
+    case Opcode::I64X2Eq:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_eq");
+      break;
+
+    case Opcode::I64X2GeS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_ge");
+      break;
+
+    case Opcode::I64X2GtS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_gt");
+      break;
+
+    case Opcode::I64X2LeS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_le");
+      break;
+
+    case Opcode::I64X2LtS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_lt");
+      break;
+
+    case Opcode::I64X2Ne:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i64x2_ne");
+      break;
+
 
     /* F32x4 opcodes */
     case Opcode::F32X4Eq:
@@ -2966,6 +3018,22 @@ void CWriter::Write(const UnaryExpr& expr) {
       break;
 
     /* SIMD I64X2 Unary Opcodes */
+    case Opcode::I64X2Abs:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i64x2_abs");
+      break;
+
+    case Opcode::I64X2AllTrue:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i64x2_all_true");
+      break;
+
+    case Opcode::I64X2Bitmask:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i64x2_bitmask");
+      break;
+
+    case Opcode::I64X2Neg:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i64x2_neg");
+      break;
+
     case Opcode::I64X2Splat:
       WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i64x2_splat");
       break;
