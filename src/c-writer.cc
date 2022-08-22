@@ -2686,11 +2686,13 @@ void CWriter::Write(const ConvertExpr& expr) {
     /* SIMD I32X4 Convert Opcodes */
 
     case Opcode::I32X4TruncSatF32X4S:
-      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i32x4_trunc_sat_f32x4");
-      break;
-    
     case Opcode::I32X4TruncSatF32X4U:
       WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i32x4_trunc_sat_f32x4");
+      break;
+
+    case Opcode::I32X4TruncSatF64X2SZero:
+    case Opcode::I32X4TruncSatF64X2UZero:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i32x4_trunc_sat_f64x2_zero");
       break;
 
     /* SIMD F32X4 Convert Opcodes */

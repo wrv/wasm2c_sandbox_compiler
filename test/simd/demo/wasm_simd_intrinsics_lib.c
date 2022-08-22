@@ -829,3 +829,48 @@ void all_the_i16x8(int* in_a, int* in_b) {
   fprintf(stderr, "All i16x8 Operations results = (%d %d %d %d) \n", 
       out[0], out[1], out[2], out[3]);
 }
+
+
+void all_the_i32x4(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  v128_t res = wasm_i32x4_abs(a);
+  res = wasm_i32x4_add(b, res);
+  bool alltrue = wasm_i32x4_all_true(res);
+  int bitmask = wasm_i32x4_bitmask(res);
+  res = wasm_i32x4_const(1, 2, 4, 8);
+  res = wasm_i32x4_const_splat(1337);
+  res = wasm_i32x4_dot_i16x8(a, res);
+  res = wasm_i32x4_eq(a, res);
+  res = wasm_i32x4_extadd_pairwise_i16x8(res);
+  res = wasm_i32x4_extend_high_i16x8(res);
+  res = wasm_i32x4_extend_low_i16x8(res);
+  res = wasm_i32x4_extmul_high_i16x8(a, res);
+  res = wasm_i32x4_extmul_low_i16x8(a, res);
+  int extracted = wasm_i32x4_extract_lane(a, 3);
+  res = wasm_i32x4_ge(a, res);
+  res = wasm_i32x4_gt(a, res);
+  res = wasm_i32x4_le(a, res);
+  res = wasm_i32x4_load16x4(in_b);
+  res = wasm_i32x4_lt(a, res);
+  res = wasm_i32x4_make(bitmask, extracted, 23, 19);
+  res = wasm_i32x4_max(a, res);
+  res = wasm_i32x4_min(a, res);
+  res = wasm_i32x4_mul(a, res);
+  res = wasm_i32x4_ne(a, res);
+  res = wasm_i32x4_neg(res);
+  res = wasm_i32x4_replace_lane(res, 3, extracted);
+  res = wasm_i32x4_shl(a, 2);
+  res = wasm_i32x4_shr(a, 3);
+  res = wasm_i32x4_shuffle(a, res, 1, 2, 3, 0);
+  res = wasm_i32x4_splat(1337);
+  res = wasm_i32x4_sub(a, res);
+  res = wasm_i32x4_trunc_sat_f32x4(res);
+  res = wasm_i32x4_trunc_sat_f64x2_zero(res);
+
+  wasm_v128_store(out, res);
+  fprintf(stderr, "All i32x4 Operations results = (%d %d %d %d) \n", 
+      out[0], out[1], out[2], out[3]);
+}
