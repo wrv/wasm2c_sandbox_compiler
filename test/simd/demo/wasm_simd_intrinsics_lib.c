@@ -29,7 +29,7 @@ void andnot_v128(int* in_a, int* in_b) {
       out[0], out[1], out[2], out[3]);
 }
 
-/*
+
 void anytrue_v128(int* in_a) {
   v128_t a = wasm_v128_load(in_a);
   bool prod = wasm_v128_any_true(a);
@@ -37,9 +37,9 @@ void anytrue_v128(int* in_a) {
       in_a[0], in_a[1], in_a[2], in_a[3], 
       prod);
 }
-*/
 
-/*
+
+
 void bitselect_v128(int* in_a, int* in_b, int* in_mask) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);
@@ -53,10 +53,10 @@ void bitselect_v128(int* in_a, int* in_b, int* in_mask) {
       in_mask[0], in_mask[1], in_mask[2], in_mask[3], 
       out[0], out[1], out[2], out[3]);
 }
-*/
+
 
 /*
-// requries SimdLoadLaneExpr
+// requires SimdLoadLaneExpr
 void load16_lane_1_v128(int* in_a, int* in_b) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);
@@ -77,9 +77,9 @@ void load16_splat_v128(int* in_a) {
   fprintf(stderr, "Load16 Splat from (%d %d %d %d) = (%d %d %d %d) \n", 
       in_a[0], in_a[1], in_a[2], in_a[3], 
       out[0], out[1], out[2], out[3]);
-}
+}*/
 
-
+/*
 void load32_lane_1_v128(int* in_a, int* in_b) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);
@@ -299,7 +299,7 @@ void add_i32x4(int* in_a, int* in_b) {
       out[0], out[1], out[2], out[3]);
 }
 
-/*
+
 void alltrue_i32x4(int* in_a) {
   v128_t a = wasm_v128_load(in_a);
   bool out = wasm_i32x4_all_true(a);
@@ -307,7 +307,7 @@ void alltrue_i32x4(int* in_a) {
       in_a[0], in_a[1], in_a[2], in_a[3], 
       out);
 }
-*/
+
 
 void bitmask_i32x4(int* in_a) {
   v128_t a = wasm_v128_load(in_a);
@@ -386,7 +386,7 @@ void extadd_pairwise_i16x8_i32x4(int* in_a) {
       out[0], out[1], out[2], out[3]);
 }
 
-/*
+
 // Extends the high values into i16x8 types
 void extend_high_i16x8_i32x4(int* in_a) {
   int out[4];
@@ -434,7 +434,7 @@ void extmul_low_i16x8_i32x4(int* in_a, int* in_b) {
       in_b[0], in_b[1], in_b[2], in_b[3], 
       out[0], out[1], out[2], out[3]);
 }
-*/
+
 
 void extract_lane_2_i32x4(int* in_a) {
   v128_t a = wasm_v128_load(in_a);
@@ -654,7 +654,7 @@ void sub_i32x4(int* in_a, int* in_b) {
       out[0], out[1], out[2], out[3]);
 }
 
-/*
+
 // floating point to integer conversion 
 void trunc_sat_f32x4_i32x4(int* in_a) {
   int out[4];
@@ -665,7 +665,7 @@ void trunc_sat_f32x4_i32x4(int* in_a) {
       in_a[0], in_a[1], in_a[2], in_a[3], 
       out[0], out[1], out[2], out[3]);
 }
-*/
+
 
 /*
 // Requires SimdStoreLaneExpr
@@ -681,3 +681,54 @@ void trunc_sat_f64x2_zero_i32x4(int* in_a) {
 */
 
 
+void all_the_f32x4(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  float f0 = 2.1;
+  float f1 = 3.7;
+  float f2 = 12.0;
+  float f3 = 0.4;
+
+  v128_t res = wasm_f32x4_abs(a);
+  res = wasm_f32x4_add(a, res);
+  res = wasm_f32x4_ceil(res);
+  res = wasm_f32x4_const(2, 4, 8, 16);
+  res = wasm_f32x4_const_splat(2);
+  res = wasm_f32x4_convert_i32x4(res);
+  res = wasm_f32x4_convert_u32x4(res);
+  res = wasm_f32x4_demote_f64x2_zero(res);
+  res = wasm_f32x4_div(res, b);
+  res = wasm_f32x4_eq(a, res);
+  f3 = wasm_f32x4_extract_lane(res, 3);
+  res = wasm_f32x4_floor(res);
+  res = wasm_f32x4_ge(a, res);
+  res = wasm_f32x4_gt(a, res);
+  res = wasm_f32x4_le(a, res);
+  res = wasm_f32x4_lt(a, res);
+  res = wasm_f32x4_make(f0, f1, f2, f3);
+  res = wasm_f32x4_max(a, res);
+  res = wasm_f32x4_min(res, b);
+  res = wasm_f32x4_mul(a, res);
+  res = wasm_f32x4_ne(a, res);
+
+  // this instruction had some issues with linking to roundf
+  res = wasm_f32x4_nearest(a);
+
+  res = wasm_f32x4_neg(a);
+  res = wasm_f32x4_pmax(res, b);
+  res = wasm_f32x4_pmin(res, b);
+  res = wasm_f32x4_replace_lane(res, 0, f3);
+  
+  res = wasm_f32x4_splat(f0);
+  res = wasm_f32x4_sqrt(res);
+  res = wasm_f32x4_sub(a, res);
+  res = wasm_f32x4_trunc(res);
+
+  wasm_v128_store(out, res);
+  fprintf(stderr, "(%d %d %d %d) - (%d %d %d %d) = (%d %d %d %d) \n", 
+      in_a[0], in_a[1], in_a[2], in_a[3], 
+      in_b[0], in_b[1], in_b[2], in_b[3], 
+      out[0], out[1], out[2], out[3]);
+}

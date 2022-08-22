@@ -26,7 +26,7 @@ echo "[X] Build $curfile.c"
 echo " - [X] Compiling to WASM with wasi-clang"
 # compile with -O0 for now
 $wasm_llvm --sysroot ${wasiclang_SOURCE_DIR}/share/wasi-sysroot/ \
-                            -O3                         \
+                            -O0                         \
                             -Wl,--export-all            \
                             -Wl,--no-entry              \
                             -Wl,--growable-table        \
@@ -67,7 +67,7 @@ if [ $? -eq 0 ]; then
                     $wasm2c_folder/wasm-rt-wasi.c
         
         echo " - [X] Building wasm2c output"
-        $llvm_path -I$wasm2c_folder -I$simde_folder -o $curfile.wasm2c.out -mavx \
+        $llvm_path -I$wasm2c_folder -I$simde_folder -lm -o $curfile.wasm2c.out -mavx \
                     $curfile.main.c                  \
                     $curfile.wasm2c.c                \
                     $wasm2c_folder/wasm-rt-impl.c    \
