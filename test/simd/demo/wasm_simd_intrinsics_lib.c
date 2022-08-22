@@ -727,8 +727,105 @@ void all_the_f32x4(int* in_a, int* in_b) {
   res = wasm_f32x4_trunc(res);
 
   wasm_v128_store(out, res);
-  fprintf(stderr, "(%d %d %d %d) - (%d %d %d %d) = (%d %d %d %d) \n", 
-      in_a[0], in_a[1], in_a[2], in_a[3], 
-      in_b[0], in_b[1], in_b[2], in_b[3], 
+  fprintf(stderr, "All F32x4 Operations results = (%d %d %d %d) \n", 
+      out[0], out[1], out[2], out[3]);
+}
+
+
+
+void all_the_f64x2(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  float f0 = 2.1;
+  float f1 = 3.7;
+  float f2 = 12.0;
+  float f3 = 0.4;
+
+  v128_t res = wasm_f64x2_abs(a);
+  res = wasm_f64x2_add(a, res);
+  res = wasm_f64x2_ceil(res);
+  res = wasm_f64x2_const(2.3, 13.37);
+  res = wasm_f64x2_const_splat(2);
+  res = wasm_f64x2_convert_low_i32x4(res);
+  res = wasm_f64x2_convert_low_u32x4(res);
+  res = wasm_f64x2_div(res, b);
+  res = wasm_f64x2_eq(a, res);
+  f3 = wasm_f64x2_extract_lane(res, 3);
+  res = wasm_f64x2_floor(res);
+  res = wasm_f64x2_ge(a, res);
+  res = wasm_f64x2_gt(a, res);
+  res = wasm_f64x2_le(a, res);
+  res = wasm_f64x2_lt(a, res);
+  res = wasm_f64x2_make(f0, f1);
+  res = wasm_f64x2_max(a, res);
+  res = wasm_f64x2_min(res, b);
+  res = wasm_f64x2_mul(a, res);
+  res = wasm_f64x2_ne(a, res);
+
+  // this instruction had some issues with linking to roundf
+  res = wasm_f64x2_nearest(a);
+
+  res = wasm_f64x2_neg(a);
+  res = wasm_f64x2_pmax(res, b);
+  res = wasm_f64x2_pmin(res, b);
+  res = wasm_f64x2_promote_low_f32x4(res);
+  res = wasm_f64x2_replace_lane(res, 0, f3);
+  
+  res = wasm_f64x2_splat(f0);
+  res = wasm_f64x2_sqrt(res);
+  res = wasm_f64x2_sub(a, res);
+  res = wasm_f64x2_trunc(res);
+
+  wasm_v128_store(out, res);
+  fprintf(stderr, "All F64x2 Operations results = (%d %d %d %d) \n", 
+      out[0], out[1], out[2], out[3]);
+}
+
+
+
+void all_the_i16x8(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  v128_t res = wasm_i16x8_abs(a);
+  res = wasm_i16x8_add(res, a);
+  res = wasm_i16x8_add_sat(res, a);
+  bool alltrue = wasm_i16x8_all_true(res);
+  int mask = wasm_i16x8_bitmask(res);
+  res = wasm_i16x8_const(1, 2, 4, 8, 16, 32, 64, 128);
+  res = wasm_i16x8_const_splat(22);
+  res = wasm_i16x8_eq(res, a);
+  res = wasm_i16x8_extadd_pairwise_i8x16(res);
+  res = wasm_i16x8_extend_high_i8x16(res);
+  res = wasm_i16x8_extend_low_i8x16(res);
+  res = wasm_i16x8_extmul_high_i8x16(res, b);
+  res = wasm_i16x8_extmul_low_i8x16(res, b);
+  int extracted = wasm_i16x8_extract_lane(res, 2);
+  res = wasm_i16x8_ge(res, a);
+  res = wasm_i16x8_gt(res, a);
+  res = wasm_i16x8_le(res, a);
+  res = wasm_i16x8_load8x8(in_a);
+  res = wasm_i16x8_lt(res, b);
+  res = wasm_i16x8_make(1, 2, 4, 8, 16, 32, 64, 128);
+  res = wasm_i16x8_max(res, a);
+  res = wasm_i16x8_min(res, a);
+  res = wasm_i16x8_mul(res, a);
+  res = wasm_i16x8_narrow_i32x4(res, a);
+  res = wasm_i16x8_ne(res, a);
+  res = wasm_i16x8_neg(res);
+  res = wasm_i16x8_q15mulr_sat(res, a);
+  res = wasm_i16x8_replace_lane(res, 0, mask);
+  res = wasm_i16x8_shl(res, extracted);
+  res = wasm_i16x8_shr(res, extracted);
+  res = wasm_i16x8_shuffle(res, a, 1, 2, 3, 4, 5, 6, 7, 0);
+  res = wasm_i16x8_splat(22);
+  res = wasm_i16x8_sub(res, a);
+  res = wasm_i16x8_sub_sat(res, a);
+
+  wasm_v128_store(out, res);
+  fprintf(stderr, "All i16x8 Operations results = (%d %d %d %d) \n", 
       out[0], out[1], out[2], out[3]);
 }
