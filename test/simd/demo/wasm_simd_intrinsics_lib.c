@@ -830,6 +830,36 @@ void all_the_i16x8(int* in_a, int* in_b) {
       out[0], out[1], out[2], out[3]);
 }
 
+void all_the_u16x8(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  v128_t res = wasm_u16x8_add_sat(b, a);
+  res = wasm_u16x8_avgr(res, b);
+  res = wasm_u16x8_extadd_pairwise_u8x16(res);
+  res = wasm_u16x8_extend_high_u8x16(res);
+  res = wasm_u16x8_extend_low_u8x16(res);
+  res = wasm_u16x8_extmul_high_u8x16(res, b);
+  res = wasm_u16x8_extmul_low_u8x16(res, b);
+  int extracted = wasm_u16x8_extract_lane(res, 2);
+  res = wasm_u16x8_ge(res, a);
+  res = wasm_u16x8_gt(res, a);
+  res = wasm_u16x8_le(res, a);
+  res = wasm_u16x8_load8x8(in_a);
+  res = wasm_u16x8_lt(res, b);
+  res = wasm_u16x8_max(res, a);
+  res = wasm_u16x8_min(res, a);
+  res = wasm_u16x8_narrow_i32x4(res, a);
+  res = wasm_u16x8_shr(res, extracted);
+  res = wasm_u16x8_sub_sat(res, a);
+
+  wasm_v128_store(out, res);
+  fprintf(stderr, "All u16x8 Operations results = (%d %d %d %d) \n", 
+      out[0], out[1], out[2], out[3]);
+}
+
+
 
 void all_the_i32x4(int* in_a, int* in_b) {
   int out[4];
@@ -872,6 +902,32 @@ void all_the_i32x4(int* in_a, int* in_b) {
 
   wasm_v128_store(out, res);
   fprintf(stderr, "All i32x4 Operations results = (%d %d %d %d) \n", 
+      out[0], out[1], out[2], out[3]);
+}
+
+void all_the_u32x4(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  v128_t res = wasm_u32x4_extadd_pairwise_u16x8(a);
+  res = wasm_u32x4_extend_high_u16x8(res);
+  res = wasm_u32x4_extend_low_u16x8(res);
+  res = wasm_u32x4_extmul_high_u16x8(a, res);
+  res = wasm_u32x4_extmul_low_u16x8(a, res);
+  res = wasm_u32x4_ge(a, res);
+  res = wasm_u32x4_gt(a, res);
+  res = wasm_u32x4_le(a, res);
+  res = wasm_u32x4_load16x4(in_b);
+  res = wasm_u32x4_lt(a, res);
+  res = wasm_u32x4_max(a, res);
+  res = wasm_u32x4_min(a, res);
+  res = wasm_u32x4_shr(a, 3);
+  res = wasm_u32x4_trunc_sat_f32x4(res);
+  res = wasm_u32x4_trunc_sat_f64x2_zero(res);
+
+  wasm_v128_store(out, res);
+  fprintf(stderr, "All u32x4 Operations results = (%d %d %d %d) \n", 
       out[0], out[1], out[2], out[3]);
 }
 
@@ -931,3 +987,4 @@ void all_the_u64x2(int* in_a, int* in_b) {
   fprintf(stderr, "All u64x2 Operations results = (%d %d %d %d) \n", 
       out[0], out[1], out[2], out[3]);
 }
+
