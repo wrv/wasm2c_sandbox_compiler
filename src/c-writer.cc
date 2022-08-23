@@ -3258,6 +3258,14 @@ void CWriter::Write(const UnaryExpr& expr) {
       WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i64x2_bitmask");
       break;
 
+    case Opcode::I64X2ExtendHighI32X4U:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i64x2_extend_high_i32x4");
+      break;
+
+    case Opcode::I64X2ExtendLowI32X4U:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i64x2_extend_low_i32x4");
+      break;
+
     case Opcode::I64X2Neg:
       WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i64x2_neg");
       break;
@@ -3471,12 +3479,32 @@ void CWriter::Write(const SimdLoadLaneExpr& expr) {
 }
 
 void CWriter::Write(const SimdStoreLaneExpr& expr) {
-  Type result_type = expr.opcode.GetResultType();
-  printf("issue with SimdStoreLaneExpr opcode %s\n", expr.opcode.GetName());
-  
-  UNIMPLEMENTED("SimdStoreLaneExpr - SIMD support");
+  const char* func = nullptr;
+  // wasm_v128_store16_lane(in_a, res, 2);
+  switch (expr.opcode) {
+  case Opcode::V128Store8Lane: func = "v128_store8_lane"; break;
+  case Opcode::V128Store16Lane: func = "v128_store16_lane"; break;
+  case Opcode::V128Store32Lane: func = "v128_store32_lane"; break;
+  case Opcode::V128Store64Lane: func = "v128_store64_lane"; break;
+  default:
+      printf("issue with SimdStoreLaneExpr opcode %s \n", expr.opcode.GetName());
+      WABT_UNREACHABLE;
+  }
+  Memory* memory = module_->memories[module_->GetMemoryIndex(expr.memidx)];
 
-  PushType(result_type);
+  Write(func, "(&(sbx->", ExternalRef(memory->name),
+        "), (u64)(", StackVar(1), ")");
+
+  if (expr.offset != 0)
+    Write(" + ", expr.offset, "u");
+
+  Write(", ", StackVar(0), ", ", expr.val );
+
+
+  Write(", \"", GetGlobalName(func_->name), "\"");
+  Write(");", Newline());
+
+  DropTypes(2);
 }
 
 void CWriter::Write(const SimdShuffleOpExpr& expr) {

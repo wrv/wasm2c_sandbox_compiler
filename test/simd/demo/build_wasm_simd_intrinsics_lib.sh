@@ -26,7 +26,7 @@ echo "[X] Build $curfile.c"
 echo " - [X] Compiling to WASM with wasi-clang"
 # compile with -O0 for now
 $wasm_llvm --sysroot ${wasiclang_SOURCE_DIR}/share/wasi-sysroot/ \
-                            -O0                         \
+                            -O3                         \
                             -Wl,--export-all            \
                             -Wl,--no-entry              \
                             -Wl,--growable-table        \
