@@ -345,6 +345,9 @@ int main(int argc, char** argv) {
   w2c_all_the_f32x4(sbx_instance, sbx_in_a, sbx_in_b);
   w2c_all_the_f64x2(sbx_instance, sbx_in_a, sbx_in_b);
 
+  w2c_all_the_i8x16(sbx_instance, sbx_in_a, sbx_in_b);
+  w2c_all_the_u8x16(sbx_instance, sbx_in_a, sbx_in_b);
+
   w2c_all_the_i16x8(sbx_instance, sbx_in_a, sbx_in_b);
   w2c_all_the_u16x8(sbx_instance, sbx_in_a, sbx_in_b);
 

@@ -252,6 +252,7 @@ const char SECTION_NAME(declarations)[] =
 "\n"
 "DEFINE_SIMD_LOAD(v128_load, simde_v128_t, simde_v128_t, simde_v128_t);\n"
 "DEFINE_SIMD_STORE(v128_store, simde_v128_t, simde_v128_t); \n"
+"DEFINE_SIMD_LOAD_FUNC(v128_load8_splat, simde_wasm_v128_load8_splat, simde_v128_t, simde_v128_t, simde_v128_t);\n"
 "DEFINE_SIMD_LOAD_FUNC(v128_load16_splat, simde_wasm_v128_load16_splat, simde_v128_t, simde_v128_t, simde_v128_t);\n"
 "DEFINE_SIMD_LOAD_FUNC(v128_load32_splat, simde_wasm_v128_load32_splat, simde_v128_t, simde_v128_t, simde_v128_t);\n"
 "DEFINE_SIMD_LOAD_FUNC(v128_load64_splat, simde_wasm_v128_load64_splat, simde_v128_t, simde_v128_t, simde_v128_t);\n"

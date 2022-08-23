@@ -2156,13 +2156,73 @@ void CWriter::Write(const BinaryExpr& expr) {
       WritePrefixBinaryExpr(expr.opcode, "copysign");
       break;
 
-    /* SIMD I16X8 Binary Opcodes */
+    /* SIMD I8X16 Binary Opcodes */
+    case Opcode::I8X16Add:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_add");
+      break;
+
+    case Opcode::I8X16AddSatS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_add_sat");
+      break;
+    
+    case Opcode::I8X16AddSatU:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_add_sat");
+      break;
+
+    case Opcode::I8X16AvgrU:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_avgr");
+      break;
+
+    case Opcode::I8X16MaxS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_max");
+      break;
+
+    case Opcode::I8X16MaxU:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_max");
+      break;
+
+    case Opcode::I8X16MinS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_min");
+      break;
+
+    case Opcode::I8X16MinU:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_min");
+      break;
+
     case Opcode::I8X16NarrowI16X8S:
       WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_narrow_i16x8");
       break;
 
     case Opcode::I8X16NarrowI16X8U:
       WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_narrow_i16x8");
+      break;
+
+    case Opcode::I8X16Shl:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_shl");
+      break;
+
+    case Opcode::I8X16ShrS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_shr");
+      break;
+
+    case Opcode::I8X16ShrU:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_shr");
+      break;
+
+    case Opcode::I8X16Sub:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_sub");
+      break;
+    
+    case Opcode::I8X16SubSatS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_sub_sat");
+      break;
+
+    case Opcode::I8X16SubSatU:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_sub_sat");
+      break;
+
+    case Opcode::I8X16Swizzle:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_swizzle");
       break;
 
 
@@ -2511,6 +2571,46 @@ void CWriter::Write(const CompareExpr& expr) {
       WriteInfixBinaryExpr(expr.opcode, ">=", AssignOp::Disallowed);
       break;
 
+    /* SIMD I8X16 Compare Opcodes */
+    case Opcode::I8X16Eq:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_eq");
+      break;
+
+    case Opcode::I8X16GeS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_ge");
+      break;
+
+    case Opcode::I8X16GeU:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_ge");
+      break;
+
+    case Opcode::I8X16GtS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_gt");
+      break;
+
+    case Opcode::I8X16GtU:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_gt");
+      break;
+
+    case Opcode::I8X16LeS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_le");
+      break;
+
+    case Opcode::I8X16LeU:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_le");
+      break;
+
+    case Opcode::I8X16LtS:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_lt");
+      break;
+
+    case Opcode::I8X16LtU:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_u8x16_lt");
+      break;
+
+    case Opcode::I8X16Ne:
+      WritePrefixBinaryExpr(expr.opcode, "simde_wasm_i8x16_ne");
+      break;
 
     /* SIMD I16X8 Compare Opcodes */
     case Opcode::I16X8Eq:
@@ -3030,6 +3130,31 @@ void CWriter::Write(const UnaryExpr& expr) {
       WriteSimpleUnaryExpr(expr.opcode, "(u64)(s64)(s32)(u32)");
       break;
     
+    /* SIMD I8X16 Unary Opcodes */
+    case Opcode::I8X16Abs:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i8x16_abs");
+      break;    
+    
+    case Opcode::I8X16AllTrue:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i8x16_all_true");
+      break;
+
+    case Opcode::I8X16Bitmask:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i8x16_bitmask");
+      break;
+
+    case Opcode::I8X16Neg:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i8x16_neg");
+      break;
+    
+    case Opcode::I8X16Popcnt:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i8x16_popcnt");
+      break;
+
+    case Opcode::I8X16Splat:
+      WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i8x16_splat");
+      break;
+
     /* SIMD I16x8 Unary Opcodes */
     case Opcode::I16X8Abs:
       WriteSimpleUnaryExpr(expr.opcode, "simde_wasm_i16x8_abs");
@@ -3382,6 +3507,7 @@ void CWriter::Write(const LoadSplatExpr& expr) {
 
   const char* func = nullptr;
   switch (expr.opcode) {
+    case Opcode::V128Load8Splat: func = "v128_load8_splat"; break;
     case Opcode::V128Load16Splat: func = "v128_load16_splat"; break;
     case Opcode::V128Load32Splat: func = "v128_load32_splat"; break;
     case Opcode::V128Load64Splat: func = "v128_load64_splat"; break;

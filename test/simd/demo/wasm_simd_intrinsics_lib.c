@@ -680,6 +680,67 @@ void trunc_sat_f64x2_zero_i32x4(int* in_a) {
 }
 */
 
+void all_the_i8x16(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  v128_t res = wasm_i8x16_abs(a);
+  res = wasm_i8x16_add(res, a);
+  res = wasm_i8x16_add_sat(res, a);
+  bool alltrue = wasm_i8x16_all_true(res);
+  int bitmask = wasm_i8x16_bitmask(res);
+  res = wasm_i8x16_const(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+  res = wasm_i8x16_const_splat(99);
+  res = wasm_i8x16_eq(res, a);
+  int extracted = wasm_i8x16_extract_lane(res, 7);
+  res = wasm_i8x16_ge(res, a);
+  res = wasm_i8x16_gt(res, a);
+  res = wasm_i8x16_le(res, a);
+  res = wasm_i8x16_lt(res, a);
+  res = wasm_i8x16_make(1, 2, 3, 4, 5, 6, 7, 8, extracted, 10, bitmask, 12, 13, 14, 15, 16);
+  res = wasm_i8x16_max(res, a);
+  res = wasm_i8x16_min(res, a);
+  res = wasm_i8x16_narrow_i16x8(res, a);
+  res = wasm_i8x16_ne(res, a);
+  res = wasm_i8x16_neg(res);
+  res = wasm_i8x16_popcnt(res);
+  res = wasm_i8x16_replace_lane(res, 3, 100);
+  res = wasm_i8x16_shl(res, 2);
+  res = wasm_i8x16_shr(res, 7);
+  res = wasm_i8x16_shuffle(res, a, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0);
+  res = wasm_i8x16_splat(22);
+  res = wasm_i8x16_sub(res, a);
+  res = wasm_i8x16_sub_sat(res, a);
+  res = wasm_i8x16_swizzle(res, a);
+
+  wasm_v128_store(out, res);
+  fprintf(stderr, "All i8x16 Operations results = (%d %d %d %d) \n", 
+      out[0], out[1], out[2], out[3]);
+}
+
+void all_the_u8x16(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  v128_t res = wasm_u8x16_add_sat(b, a);
+  int extracted = wasm_u8x16_extract_lane(res, 7);
+  res = wasm_u8x16_ge(res, a);
+  res = wasm_u8x16_avgr(res, a);
+  res = wasm_u8x16_gt(res, a);
+  res = wasm_u8x16_le(res, a);
+  res = wasm_u8x16_lt(res, a);
+  res = wasm_u8x16_max(res, a);
+  res = wasm_u8x16_min(res, a);
+  res = wasm_u8x16_narrow_i16x8(res, a);
+  res = wasm_u8x16_shr(res, 7);
+  res = wasm_u8x16_sub_sat(res, a);
+
+  wasm_v128_store(out, res);
+  fprintf(stderr, "All u8x16 Operations results = (%d %d %d %d) \n", 
+      out[0], out[1], out[2], out[3]);
+}
 
 void all_the_f32x4(int* in_a, int* in_b) {
   int out[4];
@@ -731,8 +792,6 @@ void all_the_f32x4(int* in_a, int* in_b) {
       out[0], out[1], out[2], out[3]);
 }
 
-
-
 void all_the_f64x2(int* in_a, int* in_b) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);
@@ -782,8 +841,6 @@ void all_the_f64x2(int* in_a, int* in_b) {
   fprintf(stderr, "All F64x2 Operations results = (%d %d %d %d) \n", 
       out[0], out[1], out[2], out[3]);
 }
-
-
 
 void all_the_i16x8(int* in_a, int* in_b) {
   int out[4];
@@ -859,8 +916,6 @@ void all_the_u16x8(int* in_a, int* in_b) {
       out[0], out[1], out[2], out[3]);
 }
 
-
-
 void all_the_i32x4(int* in_a, int* in_b) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);
@@ -931,7 +986,6 @@ void all_the_u32x4(int* in_a, int* in_b) {
       out[0], out[1], out[2], out[3]);
 }
 
-
 void all_the_i64x2(int* in_a, int* in_b) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);
@@ -970,7 +1024,6 @@ void all_the_i64x2(int* in_a, int* in_b) {
       out[0], out[1], out[2], out[3]);
 }
 
-
 void all_the_u64x2(int* in_a, int* in_b) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);
@@ -987,4 +1040,3 @@ void all_the_u64x2(int* in_a, int* in_b) {
   fprintf(stderr, "All u64x2 Operations results = (%d %d %d %d) \n", 
       out[0], out[1], out[2], out[3]);
 }
-
