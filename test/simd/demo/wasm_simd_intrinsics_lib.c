@@ -822,16 +822,12 @@ void all_the_f64x2(int* in_a, int* in_b) {
   res = wasm_f64x2_min(res, b);
   res = wasm_f64x2_mul(a, res);
   res = wasm_f64x2_ne(a, res);
-
-  // this instruction had some issues with linking to roundf
   res = wasm_f64x2_nearest(a);
-
   res = wasm_f64x2_neg(a);
   res = wasm_f64x2_pmax(res, b);
   res = wasm_f64x2_pmin(res, b);
   res = wasm_f64x2_promote_low_f32x4(res);
   res = wasm_f64x2_replace_lane(res, 0, f3);
-  
   res = wasm_f64x2_splat(f0);
   res = wasm_f64x2_sqrt(res);
   res = wasm_f64x2_sub(a, res);
