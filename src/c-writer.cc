@@ -3474,8 +3474,32 @@ void CWriter::Write(const SimdLaneOpExpr& expr) {
   PushType(result_type);
 }
 
-void CWriter::Write(const SimdLoadLaneExpr& expr) {
-  UNIMPLEMENTED("SimdLoadLaneExpr - SIMD support");
+void CWriter::Write(const SimdLoadLaneExpr& expr) {  
+  const char* func = nullptr;
+  // wasm_v128_store16_lane(in_a, res, 2);
+  switch (expr.opcode) {
+  case Opcode::V128Load8Lane: func = "v128_load8_lane"; break;
+  case Opcode::V128Load16Lane: func = "v128_load16_lane"; break;
+  case Opcode::V128Load32Lane: func = "v128_load32_lane"; break;
+  case Opcode::V128Load64Lane: func = "v128_load64_lane"; break;
+  default:
+      printf("issue with SimdLoadLaneExpr opcode %s \n", expr.opcode.GetName());
+      WABT_UNREACHABLE;
+  }
+  Memory* memory = module_->memories[module_->GetMemoryIndex(expr.memidx)];
+  Type result_type = expr.opcode.GetResultType();
+  Write(StackVar(0, result_type), " = ", func, expr.val, "(&(sbx->", ExternalRef(memory->name),
+        "), (u64)(", StackVar(1), ")");
+
+  if (expr.offset != 0)
+    Write(" + ", expr.offset, "u");
+
+  Write(", ", StackVar(0) );
+  Write(", \"", GetGlobalName(func_->name), "\"");
+  Write(");", Newline());
+
+  DropTypes(2);
+  PushType(result_type);
 }
 
 void CWriter::Write(const SimdStoreLaneExpr& expr) {
@@ -3492,13 +3516,13 @@ void CWriter::Write(const SimdStoreLaneExpr& expr) {
   }
   Memory* memory = module_->memories[module_->GetMemoryIndex(expr.memidx)];
 
-  Write(func, "(&(sbx->", ExternalRef(memory->name),
+  Write(func, expr.val, "(&(sbx->", ExternalRef(memory->name),
         "), (u64)(", StackVar(1), ")");
 
   if (expr.offset != 0)
     Write(" + ", expr.offset, "u");
 
-  Write(", ", StackVar(0), ", ", expr.val );
+  Write(", ", StackVar(0) );
 
 
   Write(", \"", GetGlobalName(func_->name), "\"");
