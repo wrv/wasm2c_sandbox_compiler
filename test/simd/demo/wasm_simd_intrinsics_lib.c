@@ -1040,3 +1040,43 @@ void all_the_u64x2(int* in_a, int* in_b) {
   fprintf(stderr, "All u64x2 Operations results = (%d %d %d %d) \n", 
       out[0], out[1], out[2], out[3]);
 }
+
+void all_the_v128(int* in_a, int* in_b) {
+  int out[4];
+  v128_t a = wasm_v128_load(in_a);
+  v128_t b = wasm_v128_load(in_b);
+
+  v128_t res = wasm_v128_and(a, b);
+  res = wasm_v128_andnot(res, a);
+  bool anytrue = wasm_v128_any_true(res);
+  res = wasm_v128_bitselect(res, a, b);
+  //res = wasm_v128_load(res, a);
+  res = wasm_v128_load16_lane(in_a, res, 1);
+  res = wasm_v128_load16_splat(in_b);
+
+  res = wasm_v128_load32_lane(in_a, res, 2);
+  res = wasm_v128_load32_splat(in_b);
+  res = wasm_v128_load32_zero(in_b);
+
+  res = wasm_v128_load64_lane(in_a, res, 1);
+  res = wasm_v128_load64_splat(in_b);
+  res = wasm_v128_load64_zero(in_b);
+
+  res = wasm_v128_load8_lane(in_a, res, 2);
+  res = wasm_v128_load8_splat(in_b);
+
+  res = wasm_v128_not(res);
+  res = wasm_v128_or(res, a);
+  //res = wasm_v128_store(res, a);
+
+  wasm_v128_store16_lane(in_a, res, 2);
+  wasm_v128_store32_lane(in_a, res, 1);
+  wasm_v128_store64_lane(in_a, res, 0);
+  wasm_v128_store8_lane(in_a, res, 2);
+  res = wasm_v128_xor(res, a);
+
+
+    wasm_v128_store(out, res);
+  fprintf(stderr, "All i8x16 Operations results = (%d %d %d %d) \n", 
+      out[0], out[1], out[2], out[3]);
+}
