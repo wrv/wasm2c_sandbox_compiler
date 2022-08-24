@@ -861,7 +861,6 @@ void CWriter::Write(const Const& const_) {
 }
 
 void CWriter::WriteInitExpr(const ExprList& expr_list) {
-  printf("WriteInitExpr - hello\n"); 
   if (expr_list.empty())
     return;
 
@@ -1158,7 +1157,6 @@ void CWriter::WriteEntryFunc(const FuncDeclaration& decl,
 
 void CWriter::WriteImportFuncDeclaration(const FuncDeclaration& decl,
                                    const std::string& name) {
-  printf("WriteImportFuncDeclaration - hello\n");
   Write(ResultType(decl.sig.result_types), " ", name, "(void*");
   for (Index i = 0; i < decl.GetNumParams(); ++i) {
     Write(", ", decl.GetParamType(i));
@@ -1167,7 +1165,6 @@ void CWriter::WriteImportFuncDeclaration(const FuncDeclaration& decl,
 }
 
 void CWriter::WriteGlobals() {
-  printf("WriteGlobals - hello\n");
   Index global_index = 0;
   if (module_->globals.size() != module_->num_global_imports) {
 
@@ -1183,7 +1180,6 @@ void CWriter::WriteGlobals() {
 }
 
 void CWriter::WriteGlobalsExport() {
-  printf("WriteGlobalsExport - hello\n");
   Index global_index = 0;
   if (module_->globals.size() != module_->num_global_imports) {
 
@@ -1202,8 +1198,6 @@ void CWriter::WriteGlobalsExport() {
 }
 
 std::string CWriter::GetMainMemoryName() {
-  printf("GetMainMemoryName - hello\n");
-
   assert (!(module_->memories.size() == module_->num_memory_imports));
   assert(module_->memories.size() <= 1);
   std::string ret = GetGlobalName(module_->memories[0]->name);
@@ -1211,8 +1205,6 @@ std::string CWriter::GetMainMemoryName() {
 }
 
 void CWriter::WriteGlobalInitializers() {
-  printf("WriteGlobalInitializers - hello\n");
-
   Write(Newline(), "static void init_globals(wasm2c_sandbox_t* const sbx) ", OpenBrace());
 
   Index global_index = 0;
@@ -1252,13 +1244,10 @@ void CWriter::WriteGlobalInitializers() {
 }
 
 void CWriter::WriteGlobal(const Global& global, const std::string& name) {
-  printf("WriteGlobal - hello\n");
   Write(global.type, " ", name);
 }
 
 void CWriter::WriteMemories() {
-  printf("WriteMemories - hello\n");
-
   if (module_->memories.size() == module_->num_memory_imports)
     return;
 
@@ -1276,7 +1265,6 @@ void CWriter::WriteMemories() {
 }
 
 void CWriter::WriteMemoriesExport() {
-    printf("WriteMemoriesExport - hello\n");
   if (module_->memories.size() == module_->num_memory_imports)
     return;
 
@@ -1296,7 +1284,6 @@ void CWriter::WriteMemoriesExport() {
 }
 
 void CWriter::WriteMemory(const std::string& name) {
-  printf("WriteMemory - hello\n");
   Write("wasm_rt_memory_t ", name, ";");
 }
 
@@ -1406,7 +1393,6 @@ void CWriter::WriteDataInitializers() {
 }
 
 void CWriter::WriteElemInitializers() {
-  printf("WriteElemInitializers - hello\n"); 
   const Table* table = module_->tables.empty() ? nullptr : module_->tables[0];
 
   Write(Newline(), "static void init_table(wasm2c_sandbox_t* const sbx) ", OpenBrace());
@@ -1498,7 +1484,6 @@ void CWriter::WriteFuncs() {
   Index func_index = 0;
   for (const Func* func : module_->funcs) {
     bool is_import = func_index < module_->num_func_imports;
-    printf("Writing Func %s and is_import %d \n", func->name.c_str(), is_import);
     if (!is_import)
       Write(Newline(), *func, Newline());
     ++func_index;
@@ -1506,7 +1491,6 @@ void CWriter::WriteFuncs() {
 }
 
 void CWriter::Write(const Func& func) {
-  printf("Func writing time: %s\n", func.name.c_str());
   func_ = &func;
   // Copy symbols from global symbol table so we don't shadow them.
   local_syms_ = global_syms_;
@@ -1514,7 +1498,6 @@ void CWriter::Write(const Func& func) {
   stack_var_sym_map_.clear();
 
   std::string func_name_suffix;
-  printf("Getting global name\n");
   auto out_func_name = GetGlobalName(func.name);
 
   if (out_func_name == "w2c_dlmalloc" || out_func_name == "w2c_dlfree")
@@ -1522,33 +1505,24 @@ void CWriter::Write(const Func& func) {
     func_name_suffix = "_wrapped";
   }
 
-  printf("Writing static or export\n");
   Write(GetFuncStaticOrExport(out_func_name), ResultType(func.decl.sig.result_types), " ",
         out_func_name + func_name_suffix, "(");
-  printf("Writing params and locals\n");
   WriteParamsAndLocals();
   Write("FUNC_PROLOGUE(sbx);", Newline());
 
   stream_ = &func_stream_;
   stream_->ClearOffset();
 
-  printf("Defining local scope name\n");
   std::string label = DefineLocalScopeName(kImplicitFuncLabel);
   ResetTypeStack(0);
   std::string empty;  // Must not be temporary, since address is taken by Label.
-  printf("Pushing label\n");
   PushLabel(LabelType::Func, empty, func.decl.sig);
-  printf("Writing label: %s\n", label.c_str());
   Write(func.exprs, LabelDecl(label));
-  printf("Popping label\n");
   PopLabel();
-  printf("Resetting type stack\n");
   ResetTypeStack(0);
-  printf("Pushing the types\n");
   PushTypes(func.decl.sig.result_types);
   Write("FUNC_EPILOGUE(sbx);", Newline());
 
-  printf("Getting number of results\n");
   // Return the top of the stack implicitly.
   Index num_results = func.GetNumResults();
   if (num_results == 1) {
@@ -1567,7 +1541,6 @@ void CWriter::Write(const Func& func) {
 
   stream_ = c_stream_;
 
-  printf("Writing Stackvar declarations\n");
   WriteStackVarDeclarations();
 
   std::unique_ptr<OutputBuffer> buf = func_stream_.ReleaseOutputBuffer();
@@ -1681,9 +1654,7 @@ void CWriter::WriteStackVarDeclarations() {
 }
 
 void CWriter::Write(const ExprList& exprs) {
-  printf("Writing expression list\n");
   for (const Expr& expr : exprs) {
-    //printf("Writing expression type: %d\n", expr.type());
     switch (expr.type()) {
       case ExprType::Binary:
         Write(*cast<BinaryExpr>(&expr));
@@ -1872,12 +1843,10 @@ void CWriter::Write(const ExprList& exprs) {
       }
 
       case ExprType::Load:
-        //printf("ExprType::Load\n");
         Write(*cast<LoadExpr>(&expr));
         break;
 
       case ExprType::LocalGet: {
-        //printf("ExprType::LocalGet\n");
         const Var& var = cast<LocalGetExpr>(&expr)->var;
         PushType(func_->GetLocalType(var));
         Write(StackVar(0), " = ", var, ";", Newline());
@@ -1985,31 +1954,26 @@ void CWriter::Write(const ExprList& exprs) {
         break;
 
       case ExprType::SimdLaneOp: {
-        printf("ExprType::SimdLaneOp\n");
         Write(*cast<SimdLaneOpExpr>(&expr));
         break;
       }
 
       case ExprType::SimdLoadLane: {
-        printf("ExprType::SimdLoadLane\n");
         Write(*cast<SimdLoadLaneExpr>(&expr));
         break;
       }
 
       case ExprType::SimdStoreLane: {
-        printf("ExprType::SimdStoreLane\n");
         Write(*cast<SimdStoreLaneExpr>(&expr));
         break;
       }
 
       case ExprType::SimdShuffleOp: {
-        printf("ExprType::SimdShuffleOp\n");
         Write(*cast<SimdShuffleOpExpr>(&expr));
         break;
       }
 
       case ExprType::LoadSplat:
-        printf("ExprType::LoadSplat\n");
         Write(*cast<LoadSplatExpr>(&expr));
         break;
 
@@ -3018,7 +2982,6 @@ void CWriter::Write(const ConvertExpr& expr) {
 }
 
 void CWriter::Write(const LoadExpr& expr) {
-  printf("Load :)\n");
   const char* func = nullptr;
   switch (expr.opcode) {
     case Opcode::I32Load: func = "i32_load"; break;
@@ -3048,22 +3011,15 @@ void CWriter::Write(const LoadExpr& expr) {
       printf("issue with LoadExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
-  //printf("got func %s\n", func);
   Memory* memory = module_->memories[module_->GetMemoryIndex(expr.memidx)];
-  //printf("got memory index, getting result type \n");
   Type result_type = expr.opcode.GetResultType();
-  //printf("writing result type %s \n", result_type.GetName().c_str());
   Write(StackVar(0, result_type), " = ", func, "(&(sbx->", ExternalRef(memory->name),
         "), (u64)(", StackVar(0), ")");
-  //printf("writing expr offset \n");
   if (expr.offset != 0)
     Write(" + ", expr.offset, "u");
-  //printf("writing global name \n");
   Write(", \"", GetGlobalName(func_->name), "\"");
   Write(");", Newline());
-  //printf("Dropping types\n");
   DropTypes(1);
-  //printf("Pushing types\n");
   PushType(result_type);
 }
 
@@ -3675,38 +3631,24 @@ void CWriter::WriteCHeader() {
 
 void CWriter::WriteCSource() {
   stream_ = c_stream_;
-  printf("Writing Source Top\n");
   WriteSourceTop();
-  printf("Writing Sandbox Struct\n");
   WriteSandboxStruct();
-  printf("Writing Func Types\n");
   WriteFuncTypes();
-  printf("Writing Func Declarations\n");
   WriteFuncDeclarations(false /* for_header */);
-  printf("Writing Entry Funcs\n");
   WriteEntryFuncs();
-  printf("Writing Global Initializers\n");
   WriteGlobalInitializers();
-  printf("Writing Funcs\n");
   WriteFuncs();
-  printf("Writing Data Initializers\n");
   WriteDataInitializers();
-  printf("Writing Elem Initializers\n");
   WriteElemInitializers();
-  printf("Writing Export Lookup\n");
   WriteExportLookup();
-  printf("Writing Callback Add Remove\n");
   WriteCallbackAddRemove();
-  printf("Writing Init\n");
   WriteInit();
 }
 
 Result CWriter::WriteModule(const Module& module) {
   WABT_USE(options_);
   module_ = &module;
-  printf("Writing Header\n");
   WriteCHeader();
-  printf("Writing Source\n");
   WriteCSource();
   return result_;
 }
