@@ -1,0 +1,1631 @@
+ ------ simde_wasm_v128_load ------ 
+x86_sse2_mapping:
+  #elif defined(SIMDE_X86_SSE2_NATIVE)
+    return _mm_loadu_si128(HEDLEY_REINTERPRET_CAST(const __m128i*, mem));
+  #else
+    simde_v128_t r;
+    simde_memcpy(&r, mem, sizeof(r));
+    return r;
+  #endif
+}
+
+ ------ simde_wasm_v128_store ------ 
+x86_sse2_mapping:
+  #elif defined(SIMDE_X86_SSE2_NATIVE)
+    _mm_storeu_si128(HEDLEY_REINTERPRET_CAST(__m128i*, mem), a);
+  #else
+    simde_memcpy(mem, &a, sizeof(a));
+  #endif
+}
+
+ ------ simde_wasm_i8x16_make ------ 
+x86_sse2_mapping:
+  #elif defined(SIMDE_X86_SSE2_NATIVE)
+    return
+      _mm_setr_epi8(
+        c0, c1,  c2,  c3,  c4,  c5,  c6,  c7,
+        c8, c9, c10, c11, c12, c13, c14, c15);
+  #else
+    simde_v128_private r_;
+
+    r_.i8[ 0] =  c0;
+    r_.i8[ 1] =  c1;
+    r_.i8[ 2] =  c2;
+    r_.i8[ 3] =  c3;
+    r_.i8[ 4] =  c4;
+    r_.i8[ 5] =  c5;
+    r_.i8[ 6] =  c6;
+    r_.i8[ 7] =  c7;
+    r_.i8[ 8] =  c8;
+    r_.i8[ 9] =  c9;
+    r_.i8[10] = c10;
+    r_.i8[11] = c11;
+    r_.i8[12] = c12;
+    r_.i8[13] = c13;
+    r_.i8[14] = c14;
+    r_.i8[15] = c15;
+
+    return simde_v128_from_private(r_);
+  #endif
+}
+
+ ------ simde_wasm_i16x8_make ------ 
+x86_sse2_mapping:
+  #elif defined(SIMDE_X86_SSE2_NATIVE)
+    return _mm_setr_epi16(c0, c1, c2, c3, c4, c5, c6, c7);
+  #else
+    simde_v128_private r_;
+
+    r_.i16[0] = c0;
+    r_.i16[1] = c1;
+    r_.i16[2] = c2;
+    r_.i16[3] = c3;
+    r_.i16[4] = c4;
+    r_.i16[5] = c5;
+    r_.i16[6] = c6;
+    r_.i16[7] = c7;
+
+    return simde_v128_from_private(r_);
+  #endif
+}
+
+ ------ simde_wasm_i32x4_make ------ 
+x86_sse2_mapping:
+  #elif defined(SIMDE_X86_SSE2_NATIVE)
+    return _mm_setr_epi32(c0, c1, c2, c3);
+  #else
+    simde_v128_private r_;
+
+    r_.i32[0] = c0;
+    r_.i32[1] = c1;
+    r_.i32[2] = c2;
+    r_.i32[3] = c3;
+
+    return simde_v128_from_private(r_);
+  #endif
+}
+
+ ------ simde_wasm_i64x2_make ------ 
+x86_sse2_mapping:
+  #elif defined(SIMDE_X86_SSE2_NATIVE)
+    return _mm_set_epi64x(c1, c0);
+  #else
+    simde_v128_private r_;
+
+    r_.i64[ 0] = c0;
+    r_.i64[ 1] = c1;
+
+    return simde_v128_from_private(r_);
+  #endif
+}
+
+ ------ simde_wasm_f32x4_make ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_setr_ps(c0, c1, c2, c3);
+    #else
+      r_.f32[0] = c0;
+      r_.f32[1] = c1;
+      r_.f32[2] = c2;
+      r_.f32[3] = c3;
+    #endif
+
+    return simde_v128_from_private(r_);
+  #endif
+}
+
+ ------ simde_wasm_f64x2_make ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_set_pd(c1, c0);
+    #else
+      r_.f64[ 0] = c0;
+      r_.f64[ 1] = c1;
+    #endif
+
+    return simde_v128_from_private(r_);
+  #endif
+}
+
+ ------ simde_wasm_i8x16_const ------ 
+ ------ simde_wasm_i16x8_const ------ 
+ ------ simde_wasm_i32x4_const ------ 
+ ------ simde_wasm_i64x2_const ------ 
+ ------ simde_wasm_f32x4_const ------ 
+ ------ simde_wasm_f64x2_const ------ 
+ ------ simde_wasm_i8x16_splat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_set1_epi8(a);
+
+ ------ simde_wasm_i16x8_splat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_set1_epi16(a);
+
+ ------ simde_wasm_i32x4_splat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_set1_epi32(a);
+
+ ------ simde_wasm_i64x2_splat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE) && (!defined(HEDLEY_MSVC_VERSION) || HEDLEY_MSVC_VERSION_CHECK(19,0,0))
+      r_.sse_m128i = _mm_set1_epi64x(a);
+
+ ------ simde_wasm_f32x4_splat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_set1_ps(a);
+
+ ------ simde_wasm_f64x2_splat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_set1_pd(a);
+
+ ------ simde_wasm_v128_load8_splat ------ 
+ ------ simde_wasm_v128_load16_splat ------ 
+ ------ simde_wasm_v128_load32_splat ------ 
+ ------ simde_wasm_v128_load64_splat ------ 
+ ------ simde_wasm_i8x16_extract_lane ------ 
+x86_sse41_mapping:
+#elif defined(SIMDE_X86_SSE4_1_NATIVE)
+  #define simde_wasm_i8x16_extract_lane(a, lane) HEDLEY_STATIC_CAST(int8_t, _mm_extract_epi8(simde_v128_to_m128i(a), (lane) & 15))
+
+ ------ simde_wasm_i16x8_extract_lane ------ 
+x86_sse2_mapping:
+#elif defined(SIMDE_X86_SSE2_NATIVE)
+  #define simde_wasm_i16x8_extract_lane(a, lane) HEDLEY_STATIC_CAST(int16_t, _mm_extract_epi16((a), (lane) & 7))
+
+ ------ simde_wasm_i32x4_extract_lane ------ 
+x86_sse41_mapping:
+#elif defined(SIMDE_X86_SSE4_1_NATIVE)
+  #define simde_wasm_i32x4_extract_lane(a, lane) HEDLEY_STATIC_CAST(int32_t, _mm_extract_epi32((a), (lane) & 3))
+
+ ------ simde_wasm_i64x2_extract_lane ------ 
+x86_sse41_mapping:
+#elif defined(SIMDE_X86_SSE4_1_NATIVE) && defined(SIMDE_ARCH_AMD64)
+  #define simde_wasm_i64x2_extract_lane(a, lane) HEDLEY_STATIC_CAST(int64_t, _mm_extract_epi64((a), (lane) & 1))
+
+ ------ simde_wasm_u8x16_extract_lane ------ 
+ ------ simde_wasm_u16x8_extract_lane ------ 
+ ------ simde_wasm_f32x4_extract_lane ------ 
+x86_sse41_mapping:
+#elif defined(SIMDE_X86_SSE4_1_NATIVE)
+  #define simde_wasm_f32x4(a, lane) _mm_extract_ps(simde_v128_to_m128(a), (lane) & 3)
+
+ ------ simde_wasm_f64x2_extract_lane ------ 
+ ------ simde_wasm_i8x16_replace_lane ------ 
+x86_sse41_mapping:
+#elif defined(SIMDE_X86_SSE4_1_NATIVE)
+  #if defined(__clang__) && !SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0)
+    #define simde_wasm_i8x16_replace_lane(a, lane, value) HEDLEY_REINTERPRET_CAST(simde_v128_t, _mm_insert_epi8((a), (value), (lane) & 15))
+  #else
+    #define simde_wasm_i8x16_replace_lane(a, lane, value) _mm_insert_epi8((a), (value), (lane) & 15)
+  #endif
+
+ ------ simde_wasm_i16x8_replace_lane ------ 
+x86_sse2_mapping:
+#elif defined(SIMDE_X86_SSE2_NATIVE)
+  #define simde_wasm_i16x8_replace_lane(a, lane, value) _mm_insert_epi16((a), (value), (lane) & 7)
+
+ ------ simde_wasm_i32x4_replace_lane ------ 
+x86_sse41_mapping:
+#elif defined(SIMDE_X86_SSE4_1_NATIVE)
+  #if defined(__clang__) && !SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0)
+    #define simde_wasm_i32x4_replace_lane(a, lane, value) HEDLEY_REINTERPRET_CAST(simde_v128_t, _mm_insert_epi32((a), (value), (lane) & 3))
+  #else
+    #define simde_wasm_i32x4_replace_lane(a, lane, value) _mm_insert_epi32((a), (value), (lane) & 3)
+  #endif
+
+ ------ simde_wasm_i64x2_replace_lane ------ 
+x86_sse41_mapping:
+#elif defined(SIMDE_X86_SSE4_1_NATIVE) && defined(SIMDE_ARCH_AMD64)
+  #define simde_wasm_i64x2_replace_lane(a, lane, value) _mm_insert_epi64((a), (value), (lane) & 1)
+
+ ------ simde_wasm_f32x4_replace_lane ------ 
+ ------ simde_wasm_f64x2_replace_lane ------ 
+ ------ simde_wasm_i8x16_eq ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i16x8_eq ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i32x4_eq ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i64x2_eq ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi64(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_f32x4_eq ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_cmpeq_ps(a_.sse_m128, b_.sse_m128);
+
+ ------ simde_wasm_f64x2_eq ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_cmpeq_pd(a_.sse_m128d, b_.sse_m128d);
+
+ ------ simde_wasm_i8x16_ne ------ 
+ ------ simde_wasm_i16x8_ne ------ 
+ ------ simde_wasm_i32x4_ne ------ 
+ ------ simde_wasm_i64x2_ne ------ 
+ ------ simde_wasm_f32x4_ne ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_cmpneq_ps(a_.sse_m128, b_.sse_m128);
+
+ ------ simde_wasm_f64x2_ne ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_cmpneq_pd(a_.sse_m128d, b_.sse_m128d);
+
+ ------ simde_wasm_i8x16_lt ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_cmplt_epi8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i16x8_lt ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_cmplt_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i32x4_lt ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_cmplt_epi32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i64x2_lt ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      /* https://stackoverflow.com/a/65175746 */
+      r_.sse_m128i =
+        _mm_shuffle_epi32(
+          _mm_or_si128(
+            _mm_and_si128(
+              _mm_cmpeq_epi32(b_.sse_m128i, a_.sse_m128i),
+              _mm_sub_epi64(a_.sse_m128i, b_.sse_m128i)
+            ),
+            _mm_cmpgt_epi32(
+              b_.sse_m128i,
+              a_.sse_m128i
+            )
+          ),
+          _MM_SHUFFLE(3, 3, 1, 1)
+        );
+
+x86_sse42_mapping:
+    #elif defined(SIMDE_X86_SSE4_2_NATIVE)
+      r_.sse_m128i = _mm_cmpgt_epi64(b_.sse_m128i, a_.sse_m128i);
+
+ ------ simde_wasm_u8x16_lt ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      __m128i tmp = _mm_subs_epu8(b_.sse_m128i, a_.sse_m128i);
+      r_.sse_m128i = _mm_adds_epu8(tmp, _mm_sub_epi8(_mm_setzero_si128(), tmp));
+
+ ------ simde_wasm_u16x8_lt ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      __m128i tmp = _mm_subs_epu16(b_.sse_m128i, a_.sse_m128i);
+      r_.sse_m128i = _mm_adds_epu16(tmp, _mm_sub_epi16(_mm_setzero_si128(), tmp));
+
+ ------ simde_wasm_u32x4_lt ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_xor_si128(
+          _mm_cmpgt_epi32(b_.sse_m128i, a_.sse_m128i),
+          _mm_srai_epi32(_mm_xor_si128(b_.sse_m128i, a_.sse_m128i), 31)
+        );
+
+ ------ simde_wasm_f32x4_lt ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_cmplt_ps(a_.sse_m128, b_.sse_m128);
+
+ ------ simde_wasm_f64x2_lt ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_cmplt_pd(a_.sse_m128d, b_.sse_m128d);
+
+ ------ simde_wasm_i8x16_gt ------ 
+ ------ simde_wasm_i16x8_gt ------ 
+ ------ simde_wasm_i32x4_gt ------ 
+ ------ simde_wasm_i64x2_gt ------ 
+ ------ simde_wasm_u8x16_gt ------ 
+ ------ simde_wasm_u16x8_gt ------ 
+ ------ simde_wasm_u32x4_gt ------ 
+ ------ simde_wasm_f32x4_gt ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_cmpgt_ps(a_.sse_m128, b_.sse_m128);
+
+ ------ simde_wasm_f64x2_gt ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_cmpgt_pd(a_.sse_m128d, b_.sse_m128d);
+
+ ------ simde_wasm_i8x16_le ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi8(a_.sse_m128i, _mm_min_epi8(a_.sse_m128i, b_.sse_m128i));
+
+ ------ simde_wasm_i16x8_le ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi16(a_.sse_m128i, _mm_min_epi16(a_.sse_m128i, b_.sse_m128i));
+
+ ------ simde_wasm_i32x4_le ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi32(a_.sse_m128i, _mm_min_epi32(a_.sse_m128i, b_.sse_m128i));
+
+ ------ simde_wasm_i64x2_le ------ 
+x86_avx512vl_mapping:
+    #if defined(SIMDE_X86_AVX512VL_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi64(a_.sse_m128i, _mm_min_epi64(a_.sse_m128i, b_.sse_m128i));
+
+ ------ simde_wasm_u8x16_le ------ 
+ ------ simde_wasm_u16x8_le ------ 
+ ------ simde_wasm_u32x4_le ------ 
+ ------ simde_wasm_f32x4_le ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_cmple_ps(a_.sse_m128, b_.sse_m128);
+
+ ------ simde_wasm_f64x2_le ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_cmple_pd(a_.sse_m128d, b_.sse_m128d);
+
+ ------ simde_wasm_i8x16_ge ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi8(_mm_min_epi8(a_.sse_m128i, b_.sse_m128i), b_.sse_m128i);
+
+ ------ simde_wasm_i16x8_ge ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi16(_mm_min_epi16(a_.sse_m128i, b_.sse_m128i), b_.sse_m128i);
+
+ ------ simde_wasm_i32x4_ge ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi32(_mm_min_epi32(a_.sse_m128i, b_.sse_m128i), b_.sse_m128i);
+
+ ------ simde_wasm_i64x2_ge ------ 
+x86_avx512vl_mapping:
+    #if defined(SIMDE_X86_AVX512VL_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi64(_mm_min_epi64(a_.sse_m128i, b_.sse_m128i), b_.sse_m128i);
+
+ ------ simde_wasm_u8x16_ge ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi8(_mm_min_epu8(a_.sse_m128i, b_.sse_m128i), b_.sse_m128i);
+
+ ------ simde_wasm_u16x8_ge ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi16(_mm_min_epu16(a_.sse_m128i, b_.sse_m128i), b_.sse_m128i);
+
+ ------ simde_wasm_u32x4_ge ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cmpeq_epi32(_mm_min_epu32(a_.sse_m128i, b_.sse_m128i), b_.sse_m128i);
+
+ ------ simde_wasm_f32x4_ge ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_cmpge_ps(a_.sse_m128, b_.sse_m128);
+
+ ------ simde_wasm_f64x2_ge ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_cmpge_pd(a_.sse_m128d, b_.sse_m128d);
+
+ ------ simde_wasm_v128_not ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_xor_si128(a_.sse_m128i, _mm_set1_epi32(~INT32_C(0)));
+
+ ------ simde_wasm_v128_and ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_and_si128(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_v128_or ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_or_si128(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_v128_xor ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_xor_si128(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_v128_andnot ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_andnot_si128(b_.sse_m128i, a_.sse_m128i);
+
+ ------ simde_wasm_v128_bitselect ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_or_si128(
+          _mm_and_si128   (mask_.sse_m128i, a_.sse_m128i),
+          _mm_andnot_si128(mask_.sse_m128i, b_.sse_m128i));
+
+x86_avx512vl_mapping:
+    #if defined(SIMDE_X86_AVX512VL_NATIVE)
+      r_.sse_m128i = _mm_ternarylogic_epi32(mask_.sse_m128i, a_.sse_m128i, b_.sse_m128i, 0xca);
+
+ ------ simde_wasm_i8x16_bitmask ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r = HEDLEY_STATIC_CAST(uint32_t, _mm_movemask_epi8(a_.sse_m128i));
+
+ ------ simde_wasm_i16x8_bitmask ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r = HEDLEY_STATIC_CAST(uint32_t, _mm_movemask_epi8(_mm_packs_epi16(a_.sse_m128i, _mm_setzero_si128())));
+
+ ------ simde_wasm_i32x4_bitmask ------ 
+x86_sse_mapping:
+    #if defined(SIMDE_X86_SSE_NATIVE)
+      r = HEDLEY_STATIC_CAST(uint32_t, _mm_movemask_ps(a_.sse_m128));
+
+ ------ simde_wasm_i64x2_bitmask ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r = HEDLEY_STATIC_CAST(uint32_t, _mm_movemask_pd(a_.sse_m128d));
+
+ ------ simde_wasm_i8x16_abs ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_abs_epi8(a_.sse_m128i);
+
+ ------ simde_wasm_i16x8_abs ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_abs_epi16(a_.sse_m128i);
+
+ ------ simde_wasm_i32x4_abs ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_abs_epi32(a_.sse_m128i);
+
+ ------ simde_wasm_i64x2_abs ------ 
+x86_avx512vl_mapping:
+    #if defined(SIMDE_X86_AVX512VL_NATIVE)
+      r_.sse_m128i = _mm_abs_epi64(a_.sse_m128i);
+
+ ------ simde_wasm_f32x4_abs ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_andnot_si128(_mm_set1_epi32(HEDLEY_STATIC_CAST(int32_t, UINT32_C(1) << 31)), a_.sse_m128i);
+
+ ------ simde_wasm_f64x2_abs ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_andnot_si128(_mm_set1_epi64x(HEDLEY_STATIC_CAST(int64_t, UINT64_C(1) << 63)), a_.sse_m128i);
+
+ ------ simde_wasm_i8x16_neg ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_sub_epi8(_mm_setzero_si128(), a_.sse_m128i);
+
+ ------ simde_wasm_i16x8_neg ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_sub_epi16(_mm_setzero_si128(), a_.sse_m128i);
+
+ ------ simde_wasm_i32x4_neg ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_sub_epi32(_mm_setzero_si128(), a_.sse_m128i);
+
+ ------ simde_wasm_i64x2_neg ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_sub_epi64(_mm_setzero_si128(), a_.sse_m128i);
+
+ ------ simde_wasm_f32x4_neg ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_xor_si128(_mm_set1_epi32(HEDLEY_STATIC_CAST(int32_t, UINT32_C(1) << 31)), a_.sse_m128i);
+
+ ------ simde_wasm_f64x2_neg ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_xor_si128(_mm_set1_epi64x(HEDLEY_STATIC_CAST(int64_t, UINT64_C(1) << 63)), a_.sse_m128i);
+
+ ------ simde_wasm_v128_any_true ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r = _mm_movemask_epi8(_mm_cmpeq_epi8(a_.sse_m128i, _mm_setzero_si128())) != 0xffff;
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r = !_mm_test_all_zeros(a_.sse_m128i, _mm_set1_epi32(~INT32_C(0)));
+
+ ------ simde_wasm_i8x16_all_true ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      return _mm_movemask_epi8(_mm_cmpeq_epi8(a_.sse_m128i, _mm_setzero_si128())) == 0;
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      return _mm_test_all_zeros(_mm_cmpeq_epi8(a_.sse_m128i, _mm_set1_epi8(INT8_C(0))), _mm_set1_epi8(~INT8_C(0)));
+
+ ------ simde_wasm_i16x8_all_true ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      return _mm_movemask_epi8(_mm_cmpeq_epi16(a_.sse_m128i, _mm_setzero_si128())) == 0;
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      return _mm_test_all_zeros(_mm_cmpeq_epi16(a_.sse_m128i, _mm_setzero_si128()), _mm_set1_epi16(~INT16_C(0)));
+
+ ------ simde_wasm_i32x4_all_true ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      return _mm_movemask_ps(_mm_castsi128_ps(_mm_cmpeq_epi32(a_.sse_m128i, _mm_setzero_si128()))) == 0;
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      return _mm_test_all_zeros(_mm_cmpeq_epi32(a_.sse_m128i, _mm_setzero_si128()), _mm_set1_epi32(~INT32_C(0)));
+
+ ------ simde_wasm_i64x2_all_true ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      return _mm_movemask_pd(_mm_cmpeq_pd(a_.sse_m128d, _mm_setzero_pd())) == 0;
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      return _mm_test_all_zeros(_mm_cmpeq_epi64(a_.sse_m128i, _mm_setzero_si128()), _mm_set1_epi32(~INT32_C(0)));
+
+ ------ simde_wasm_i8x16_shl ------ 
+ ------ simde_wasm_i16x8_shl ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      return _mm_sll_epi16(a_.sse_m128i, _mm_cvtsi32_si128(count & 15));
+
+ ------ simde_wasm_i32x4_shl ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      return _mm_sll_epi32(a_.sse_m128i, _mm_cvtsi32_si128(count & 31));
+
+ ------ simde_wasm_i64x2_shl ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      return _mm_sll_epi64(a_.sse_m128i, _mm_cvtsi32_si128(count & 63));
+
+ ------ simde_wasm_i8x16_shr ------ 
+ ------ simde_wasm_i16x8_shr ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      return _mm_sra_epi16(a_.sse_m128i, _mm_cvtsi32_si128(count & 15));
+
+ ------ simde_wasm_i32x4_shr ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      return _mm_sra_epi32(a_.sse_m128i, _mm_cvtsi32_si128(count & 31));
+
+ ------ simde_wasm_i64x2_shr ------ 
+x86_avx512vl_mapping:
+    #if defined(SIMDE_X86_AVX512VL_NATIVE)
+      return _mm_sra_epi64(a_.sse_m128i, _mm_cvtsi32_si128(count & 63));
+
+ ------ simde_wasm_u8x16_shr ------ 
+ ------ simde_wasm_u16x8_shr ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      return _mm_srl_epi16(a_.sse_m128i, _mm_cvtsi32_si128(count & 15));
+
+ ------ simde_wasm_u32x4_shr ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      return _mm_srl_epi32(a_.sse_m128i, _mm_cvtsi32_si128(count & 31));
+
+ ------ simde_wasm_u64x2_shr ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      return _mm_srl_epi64(a_.sse_m128i, _mm_cvtsi32_si128(count & 63));
+
+ ------ simde_wasm_i8x16_add ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_add_epi8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i16x8_add ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_add_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i32x4_add ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_add_epi32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i64x2_add ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_add_epi64(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_f32x4_add ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_add_ps(a_.sse_m128, b_.sse_m128);
+
+ ------ simde_wasm_f64x2_add ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_add_pd(a_.sse_m128d, b_.sse_m128d);
+
+ ------ simde_wasm_i8x16_sub ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_sub_epi8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i16x8_sub ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_sub_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i32x4_sub ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_sub_epi32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i64x2_sub ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_sub_epi64(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_f32x4_sub ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_sub_ps(a_.sse_m128, b_.sse_m128);
+
+ ------ simde_wasm_f64x2_sub ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_sub_pd(a_.sse_m128d, b_.sse_m128d);
+
+ ------ simde_wasm_i16x8_mul ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_mullo_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i32x4_mul ------ 
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_mullo_epi32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i64x2_mul ------ 
+x86_avx512vl_mapping:
+    #if defined(SIMDE_X86_AVX512VL_NATIVE) && defined(SIMDE_X86_AVX512DQ_NATIVE)
+      r_.sse_m128i = _mm_mullo_epi64(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_f32x4_mul ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_mul_ps(a_.sse_m128, b_.sse_m128);
+
+ ------ simde_wasm_f64x2_mul ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_mul_pd(a_.sse_m128d, b_.sse_m128d);
+
+ ------ simde_wasm_i16x8_q15mulr_sat ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      const __m128i prod_lo = _mm_mullo_epi16(a_.sse_m128i, b_.sse_m128i);
+      const __m128i prod_hi = _mm_mulhi_epi16(a_.sse_m128i, b_.sse_m128i);
+      const __m128i tmp =
+        _mm_add_epi16(
+          _mm_avg_epu16(
+            _mm_srli_epi16(prod_lo, 14),
+            _mm_setzero_si128()
+          ),
+          _mm_add_epi16(prod_hi, prod_hi)
+        );
+      r_.sse_m128i =
+        _mm_xor_si128(
+          tmp,
+          _mm_cmpeq_epi16(_mm_set1_epi16(INT16_MAX), tmp)
+        );
+    #else
+
+x86_ssse3_mapping:
+    #elif defined(SIMDE_X86_SSSE3_NATIVE)
+      __m128i y = _mm_mulhrs_epi16(a_.sse_m128i, b_.sse_m128i);
+      __m128i tmp = _mm_cmpeq_epi16(y, _mm_set1_epi16(INT16_MAX));
+      r_.sse_m128i = _mm_xor_si128(y, tmp);
+
+ ------ simde_wasm_i8x16_min ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      __m128i m = _mm_cmplt_epi8(a_.sse_m128i, b_.sse_m128i);
+      r_.sse_m128i =
+        _mm_or_si128(
+          _mm_and_si128(m, a_.sse_m128i),
+          _mm_andnot_si128(m, b_.sse_m128i)
+        );
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_min_epi8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i16x8_min ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_min_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i32x4_min ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      __m128i m = _mm_cmplt_epi32(a_.sse_m128i, b_.sse_m128i);
+      r_.sse_m128i =
+        _mm_or_si128(
+          _mm_and_si128(m, a_.sse_m128i),
+          _mm_andnot_si128(m, b_.sse_m128i)
+        );
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_min_epi32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u8x16_min ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_min_epu8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u16x8_min ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      /* https://github.com/simd-everywhere/simde/issues/855#issuecomment-881656284 */
+      r_.sse_m128i = _mm_sub_epi16(a, _mm_subs_epu16(a_.sse_m128i, b_.sse_m128i));
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_min_epu16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u32x4_min ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      const __m128i i32_min = _mm_set1_epi32(INT32_MIN);
+      const __m128i difference = _mm_sub_epi32(a_.sse_m128i, b_.sse_m128i);
+      __m128i m =
+        _mm_cmpeq_epi32(
+          /* _mm_subs_epu32(a_.sse_m128i, b_.sse_m128i) */
+          _mm_and_si128(
+            difference,
+            _mm_xor_si128(
+              _mm_cmpgt_epi32(
+                _mm_xor_si128(difference, i32_min),
+                _mm_xor_si128(a_.sse_m128i, i32_min)
+              ),
+              _mm_set1_epi32(~INT32_C(0))
+            )
+          ),
+          _mm_setzero_si128()
+        );
+      r_.sse_m128i =
+        _mm_or_si128(
+          _mm_and_si128(m, a_.sse_m128i),
+          _mm_andnot_si128(m, b_.sse_m128i)
+        );
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_min_epu32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_f32x4_min ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      __m128 m = _mm_cmpord_ps(a_.sse_m128, b_.sse_m128);
+      r_.sse_m128 =
+        _mm_or_ps(
+          _mm_and_ps(m, _mm_min_ps(a_.sse_m128, b_.sse_m128)),
+          _mm_andnot_ps(m, _mm_set1_ps(SIMDE_MATH_NANF))
+        );
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128 = _mm_blendv_ps(
+          _mm_set1_ps(SIMDE_MATH_NANF),
+          _mm_min_ps(a_.sse_m128, b_.sse_m128),
+          _mm_cmpord_ps(a_.sse_m128, b_.sse_m128));
+
+ ------ simde_wasm_f64x2_min ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      __m128d m = _mm_cmpord_pd(a_.sse_m128d, b_.sse_m128d);
+      r_.sse_m128d =
+        _mm_or_pd(
+          _mm_and_pd(m, _mm_min_pd(a_.sse_m128d, b_.sse_m128d)),
+          _mm_andnot_pd(m, _mm_set1_pd(SIMDE_MATH_NAN))
+        );
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128d = _mm_blendv_pd(
+          _mm_set1_pd(SIMDE_MATH_NAN),
+          _mm_min_pd(a_.sse_m128d, b_.sse_m128d),
+          _mm_cmpord_pd(a_.sse_m128d, b_.sse_m128d));
+
+ ------ simde_wasm_i8x16_max ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      __m128i m = _mm_cmpgt_epi8(a_.sse_m128i, b_.sse_m128i);
+      r_.sse_m128i = _mm_or_si128(_mm_and_si128(m, a_.sse_m128i), _mm_andnot_si128(m, b_.sse_m128i));
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_max_epi8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i16x8_max ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_max_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i32x4_max ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      __m128i m = _mm_cmpgt_epi32(a_.sse_m128i, b_.sse_m128i);
+      r_.sse_m128i = _mm_or_si128(_mm_and_si128(m, a_.sse_m128i), _mm_andnot_si128(m, b_.sse_m128i));
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_max_epi32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u8x16_max ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_max_epu8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u16x8_max ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      /* https://github.com/simd-everywhere/simde/issues/855#issuecomment-881656284 */
+      r_.sse_m128i = _mm_add_epi16(b, _mm_subs_epu16(a_.sse_m128i, b_.sse_m128i));
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_max_epu16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u32x4_max ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      /* https://github.com/simd-everywhere/simde/issues/855#issuecomment-886057227 */
+      __m128i m =
+        _mm_xor_si128(
+          _mm_cmpgt_epi32(a_.sse_m128i, b_.sse_m128i),
+          _mm_srai_epi32(_mm_xor_si128(a_.sse_m128i, b_.sse_m128i), 31)
+        );
+      r_.sse_m128i = _mm_or_si128(_mm_and_si128(m, a_.sse_m128i), _mm_andnot_si128(m, b_.sse_m128i));
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_max_epu32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_f32x4_max ------ 
+x86_sse_mapping:
+    #elif defined(SIMDE_X86_SSE_NATIVE)
+      __m128 m = _mm_or_ps(_mm_cmpneq_ps(a_.sse_m128, a_.sse_m128), _mm_cmpgt_ps(a_.sse_m128, b_.sse_m128));
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128 = _mm_blendv_ps(
+          _mm_set1_ps(SIMDE_MATH_NANF),
+          _mm_max_ps(a_.sse_m128, b_.sse_m128),
+          _mm_cmpord_ps(a_.sse_m128, b_.sse_m128));
+      #if defined(SIMDE_X86_SSE4_1_NATIVE)
+        r_.ssse_m128 = _mm_blendv_ps(b_.sse_m128, a_.sse_m128, m);
+      #else
+        r_.sse_m128 =
+          _mm_or_ps(
+            _mm_and_ps(m, a_.sse_m128),
+            _mm_andnot_ps(m, b_.sse_m128)
+          );
+      #endif
+
+ ------ simde_wasm_f64x2_max ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      __m128d m = _mm_or_pd(_mm_cmpneq_pd(a_.sse_m128d, a_.sse_m128d), _mm_cmpgt_pd(a_.sse_m128d, b_.sse_m128d));
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128d = _mm_blendv_pd(
+          _mm_set1_pd(SIMDE_MATH_NAN),
+          _mm_max_pd(a_.sse_m128d, b_.sse_m128d),
+          _mm_cmpord_pd(a_.sse_m128d, b_.sse_m128d));
+      #if defined(SIMDE_X86_SSE4_1_NATIVE)
+        r_.ssse_m128d = _mm_blendv_pd(b_.sse_m128d, a_.sse_m128d, m);
+      #else
+        r_.sse_m128d =
+          _mm_or_pd(
+            _mm_and_pd(m, a_.sse_m128d),
+            _mm_andnot_pd(m, b_.sse_m128d)
+          );
+      #endif
+
+ ------ simde_wasm_i8x16_add_sat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_adds_epi8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i16x8_add_sat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_adds_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u8x16_add_sat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_adds_epu8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u16x8_add_sat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_adds_epu16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u8x16_avgr ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_avg_epu8(a_.sse_m128i, b_.sse_m128i);
+    #else
+
+ ------ simde_wasm_u16x8_avgr ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_avg_epu16(a_.sse_m128i, b_.sse_m128i);
+    #else
+
+ ------ simde_wasm_i8x16_sub_sat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_subs_epi8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i16x8_sub_sat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_subs_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u8x16_sub_sat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_subs_epu8(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u16x8_sub_sat ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_subs_epu16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_f32x4_pmin ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_min_ps(b_.sse_m128, a_.sse_m128);
+    #elif defined(SIMDE_FAST_NANS) && defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_f32 = vminq_f32(a_.neon_f32, b_.neon_f32);
+    #elif defined(SIMDE_FAST_NANS) && defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_f32 = vec_min(a_.altivec_f32, b_.altivec_f32);
+
+ ------ simde_wasm_f64x2_pmin ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_min_pd(b_.sse_m128d, a_.sse_m128d);
+    #elif defined(SIMDE_FAST_NANS) && defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f32 = vminq_f64(a_.neon_f64, b_.neon_f64);
+    #elif defined(SIMDE_FAST_NANS) && defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_f64 = vec_min(a_.altivec_f64, b_.altivec_f64);
+
+ ------ simde_wasm_f32x4_pmax ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_max_ps(b_.sse_m128, a_.sse_m128);
+
+ ------ simde_wasm_f64x2_pmax ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_max_pd(b_.sse_m128d, a_.sse_m128d);
+
+ ------ simde_wasm_f32x4_div ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_div_ps(a_.sse_m128, b_.sse_m128);
+
+ ------ simde_wasm_f64x2_div ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_div_pd(a_.sse_m128d, b_.sse_m128d);
+
+ ------ simde_wasm_i8x16_shuffle ------ 
+ ------ simde_wasm_i16x8_shuffle ------ 
+ ------ simde_wasm_i32x4_shuffle ------ 
+ ------ simde_wasm_i64x2_shuffle ------ 
+ ------ simde_wasm_i8x16_swizzle ------ 
+x86_ssse3_mapping:
+    #elif defined(SIMDE_X86_SSSE3_NATIVE)
+      /* https://github.com/WebAssembly/simd/issues/68#issuecomment-470825324 */
+      r_.sse_m128i =
+        _mm_shuffle_epi8(
+          a_.sse_m128i,
+          _mm_adds_epu8(
+            _mm_set1_epi8(0x70),
+            b_.sse_m128i));
+
+ ------ simde_wasm_i8x16_narrow_i16x8 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_packs_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_i16x8_narrow_i32x4 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_packs_epi32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u8x16_narrow_i16x8 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_packus_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_u16x8_narrow_i32x4 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      const __m128i max = _mm_set1_epi32(UINT16_MAX);
+      const __m128i tmpa = _mm_andnot_si128(_mm_srai_epi32(a_.sse_m128i, 31), a_.sse_m128i);
+      const __m128i tmpb = _mm_andnot_si128(_mm_srai_epi32(b_.sse_m128i, 31), b_.sse_m128i);
+      r_.sse_m128i =
+        _mm_packs_epi32(
+          _mm_srai_epi32(_mm_slli_epi32(_mm_or_si128(tmpa, _mm_cmpgt_epi32(tmpa, max)), 16), 16),
+          _mm_srai_epi32(_mm_slli_epi32(_mm_or_si128(tmpb, _mm_cmpgt_epi32(tmpb, max)), 16), 16)
+        );
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_packus_epi32(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_f32x4_demote_f64x2_zero ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_cvtpd_ps(a_.sse_m128d);
+
+ ------ simde_wasm_i16x8_extend_low_i8x16 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_srai_epi16(_mm_unpacklo_epi8(a_.sse_m128i, a_.sse_m128i), 8);
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepi8_epi16(a_.sse_m128i);
+
+ ------ simde_wasm_i32x4_extend_low_i16x8 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_srai_epi32(_mm_unpacklo_epi16(a_.sse_m128i, a_.sse_m128i), 16);
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepi16_epi32(a_.sse_m128i);
+
+ ------ simde_wasm_i64x2_extend_low_i32x4 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_unpacklo_epi32(a_.sse_m128i, _mm_cmpgt_epi32(_mm_setzero_si128(), a_.sse_m128i));
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepi32_epi64(a_.sse_m128i);
+
+ ------ simde_wasm_u16x8_extend_low_u8x16 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_srli_epi16(_mm_unpacklo_epi8(a_.sse_m128i, a_.sse_m128i), 8);
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepu8_epi16(a_.sse_m128i);
+
+ ------ simde_wasm_u32x4_extend_low_u16x8 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_srli_epi32(_mm_unpacklo_epi16(a_.sse_m128i, a_.sse_m128i), 16);
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepu16_epi32(a_.sse_m128i);
+
+ ------ simde_wasm_u64x2_extend_low_u32x4 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =_mm_unpacklo_epi32(a_.sse_m128i, _mm_setzero_si128());
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepu32_epi64(a_.sse_m128i);
+
+ ------ simde_wasm_f64x2_promote_low_f32x4 ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128d = _mm_cvtps_pd(a_.sse_m128);
+
+ ------ simde_wasm_i16x8_extend_high_i8x16 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_srai_epi16(_mm_unpackhi_epi8(a_.sse_m128i, a_.sse_m128i), 8);
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepi8_epi16(_mm_shuffle_epi32(a_.sse_m128i, _MM_SHUFFLE(3, 2, 3, 2)));
+
+ ------ simde_wasm_i32x4_extend_high_i16x8 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_srai_epi32(_mm_unpackhi_epi16(a_.sse_m128i, a_.sse_m128i), 16);
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepi16_epi32(_mm_shuffle_epi32(a_.sse_m128i, _MM_SHUFFLE(3, 2, 3, 2)));
+
+ ------ simde_wasm_i64x2_extend_high_i32x4 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_unpackhi_epi32(a_.sse_m128i, _mm_cmpgt_epi32(_mm_setzero_si128(), a_.sse_m128i));
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepi32_epi64(_mm_shuffle_epi32(a_.sse_m128i, _MM_SHUFFLE(3, 2, 3, 2)));
+
+ ------ simde_wasm_u16x8_extend_high_u8x16 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_srli_epi16(_mm_unpackhi_epi8(a_.sse_m128i, a_.sse_m128i), 8);
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepu8_epi16(_mm_shuffle_epi32(a_.sse_m128i, _MM_SHUFFLE(3, 2, 3, 2)));
+
+ ------ simde_wasm_u32x4_extend_high_u16x8 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_srli_epi32(_mm_unpackhi_epi16(a_.sse_m128i, a_.sse_m128i), 16);
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepu16_epi32(_mm_shuffle_epi32(a_.sse_m128i, _MM_SHUFFLE(3, 2, 3, 2)));
+
+ ------ simde_wasm_u64x2_extend_high_u32x4 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =_mm_unpackhi_epi32(a_.sse_m128i, _mm_setzero_si128());
+
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i = _mm_cvtepu32_epi64(_mm_shuffle_epi32(a_.sse_m128i, _MM_SHUFFLE(3, 2, 3, 2)));
+
+ ------ simde_wasm_i16x8_extmul_low_i8x16 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_mullo_epi16(
+          _mm_srai_epi16(_mm_unpacklo_epi8(a_.sse_m128i, a_.sse_m128i), 8),
+          _mm_srai_epi16(_mm_unpacklo_epi8(b_.sse_m128i, b_.sse_m128i), 8)
+        );
+
+ ------ simde_wasm_i32x4_extmul_low_i16x8 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_unpacklo_epi16(
+          _mm_mullo_epi16(a_.sse_m128i, b_.sse_m128i),
+          _mm_mulhi_epi16(a_.sse_m128i, b_.sse_m128i)
+        );
+
+ ------ simde_wasm_i64x2_extmul_low_i32x4 ------ 
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i =
+        _mm_mul_epi32(
+          _mm_shuffle_epi32(a_.sse_m128i, _MM_SHUFFLE(1, 1, 0, 0)),
+          _mm_shuffle_epi32(b_.sse_m128i, _MM_SHUFFLE(1, 1, 0, 0))
+        );
+
+ ------ simde_wasm_u16x8_extmul_low_u8x16 ------ 
+ ------ simde_wasm_u32x4_extmul_low_u16x8 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_unpacklo_epi16(
+          _mm_mullo_epi16(a_.sse_m128i, b_.sse_m128i),
+          _mm_mulhi_epu16(a_.sse_m128i, b_.sse_m128i)
+        );
+
+ ------ simde_wasm_u64x2_extmul_low_u32x4 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_mul_epu32(
+          _mm_shuffle_epi32(a_.sse_m128i, _MM_SHUFFLE(1, 1, 0, 0)),
+          _mm_shuffle_epi32(b_.sse_m128i, _MM_SHUFFLE(1, 1, 0, 0))
+        );
+
+ ------ simde_wasm_i16x8_extmul_high_i8x16 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_mullo_epi16(
+          _mm_srai_epi16(_mm_unpackhi_epi8(a_.sse_m128i, a_.sse_m128i), 8),
+          _mm_srai_epi16(_mm_unpackhi_epi8(b_.sse_m128i, b_.sse_m128i), 8)
+        );
+
+ ------ simde_wasm_i32x4_extmul_high_i16x8 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_unpackhi_epi16(
+          _mm_mullo_epi16(a_.sse_m128i, b_.sse_m128i),
+          _mm_mulhi_epi16(a_.sse_m128i, b_.sse_m128i)
+        );
+
+ ------ simde_wasm_i64x2_extmul_high_i32x4 ------ 
+x86_sse41_mapping:
+    #elif defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128i =
+        _mm_mul_epi32(
+          _mm_shuffle_epi32(a_.sse_m128i, _MM_SHUFFLE(3, 3, 2, 2)),
+          _mm_shuffle_epi32(b_.sse_m128i, _MM_SHUFFLE(3, 3, 2, 2))
+        );
+
+ ------ simde_wasm_u16x8_extmul_high_u8x16 ------ 
+ ------ simde_wasm_u32x4_extmul_high_u16x8 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_unpackhi_epi16(
+          _mm_mullo_epi16(a_.sse_m128i, b_.sse_m128i),
+          _mm_mulhi_epu16(a_.sse_m128i, b_.sse_m128i)
+        );
+
+ ------ simde_wasm_u64x2_extmul_high_u32x4 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_mul_epu32(
+          _mm_shuffle_epi32(a_.sse_m128i, _MM_SHUFFLE(3, 3, 2, 2)),
+          _mm_shuffle_epi32(b_.sse_m128i, _MM_SHUFFLE(3, 3, 2, 2))
+        );
+
+ ------ simde_wasm_i16x8_extadd_pairwise_i8x16 ------ 
+x86_xop_mapping:
+    #elif defined(SIMDE_X86_XOP_NATIVE)
+      r_.sse_m128i = _mm_haddw_epi8(a_.sse_m128i);
+
+x86_ssse3_mapping:
+    #elif defined(SIMDE_X86_SSSE3_NATIVE)
+      r_.sse_m128i = _mm_maddubs_epi16(_mm_set1_epi8(INT8_C(1)), a_.sse_m128i);
+
+ ------ simde_wasm_i32x4_extadd_pairwise_i16x8 ------ 
+x86_xop_mapping:
+    #elif defined(SIMDE_X86_XOP_NATIVE)
+      r_.sse_m128i = _mm_haddd_epi16(a_.sse_m128i);
+
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_madd_epi16(a_.sse_m128i, _mm_set1_epi16(INT8_C(1)));
+
+ ------ simde_wasm_u16x8_extadd_pairwise_u8x16 ------ 
+x86_xop_mapping:
+    #elif defined(SIMDE_X86_XOP_NATIVE)
+      r_.sse_m128i = _mm_haddw_epu8(a_.sse_m128i);
+
+x86_ssse3_mapping:
+    #elif defined(SIMDE_X86_SSSE3_NATIVE)
+      r_.sse_m128i = _mm_maddubs_epi16(a_.sse_m128i, _mm_set1_epi8(INT8_C(1)));
+
+ ------ simde_wasm_u32x4_extadd_pairwise_u16x8 ------ 
+x86_xop_mapping:
+    #elif defined(SIMDE_X86_XOP_NATIVE)
+      r_.sse_m128i = _mm_haddd_epu16(a_.sse_m128i);
+
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i =
+        _mm_add_epi32(
+          _mm_srli_epi32(a_.sse_m128i, 16),
+          _mm_and_si128(a_.sse_m128i, _mm_set1_epi32(INT32_C(0x0000ffff)))
+        );
+
+ ------ simde_wasm_i16x8_load8x8 ------ 
+ ------ simde_wasm_i32x4_load16x4 ------ 
+ ------ simde_wasm_i64x2_load32x2 ------ 
+ ------ simde_wasm_u16x8_load8x8 ------ 
+ ------ simde_wasm_u32x4_load16x4 ------ 
+ ------ simde_wasm_u64x2_load32x2 ------ 
+ ------ simde_wasm_v128_load32_zero ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_cvtsi32_si128(a_);
+    #else
+      r_.i32[0] = a_;
+      r_.i32[1] = 0;
+      r_.i32[2] = 0;
+      r_.i32[3] = 0;
+    #endif
+
+    return simde_v128_from_private(r_);
+  #endif
+}
+
+ ------ simde_wasm_v128_load64_zero ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE) && defined(SIMDE_ARCH_AMD64)
+      r_.sse_m128i = _mm_cvtsi64_si128(a_);
+    #else
+      r_.i64[0] = a_;
+      r_.i64[1] = 0;
+    #endif
+
+    return simde_v128_from_private(r_);
+  #endif
+}
+
+ ------ simde_wasm_v128_load8_lane ------ 
+ ------ simde_wasm_v128_load16_lane ------ 
+ ------ simde_wasm_v128_load32_lane ------ 
+ ------ simde_wasm_v128_load64_lane ------ 
+ ------ simde_wasm_v128_store8_lane ------ 
+ ------ simde_wasm_v128_store16_lane ------ 
+ ------ simde_wasm_v128_store32_lane ------ 
+ ------ simde_wasm_v128_store64_lane ------ 
+ ------ simde_wasm_f32x4_convert_i32x4 ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128 = _mm_cvtepi32_ps(a_.sse_m128i);
+
+ ------ simde_wasm_f32x4_convert_u32x4 ------ 
+ ------ simde_wasm_f64x2_convert_low_i32x4 ------ 
+ ------ simde_wasm_f64x2_convert_low_u32x4 ------ 
+ ------ simde_wasm_i32x4_trunc_sat_f32x4 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      const __m128i i32_max_mask = _mm_castps_si128(_mm_cmpgt_ps(a_.sse_m128, _mm_set1_ps(SIMDE_FLOAT32_C(2147483520.0))));
+      const __m128 clamped = _mm_max_ps(a_.sse_m128, _mm_set1_ps(HEDLEY_STATIC_CAST(simde_float32, INT32_MIN)));
+      r_.sse_m128i = _mm_cvttps_epi32(clamped);
+
+x86_sse41_mapping:
+      #if defined(SIMDE_X86_SSE4_1_NATIVE)
+        r_.sse_m128i =
+          _mm_castps_si128(
+            _mm_blendv_ps(
+              _mm_castsi128_ps(r_.sse_m128i),
+              _mm_castsi128_ps(_mm_set1_epi32(INT32_MAX)),
+              _mm_castsi128_ps(i32_max_mask)
+            )
+          );
+      #else
+        r_.sse_m128i =
+          _mm_or_si128(
+            _mm_and_si128(i32_max_mask, _mm_set1_epi32(INT32_MAX)),
+            _mm_andnot_si128(i32_max_mask, r_.sse_m128i)
+          );
+      #endif
+      r_.sse_m128i = _mm_and_si128(r_.sse_m128i, _mm_castps_si128(_mm_cmpord_ps(a_.sse_m128, a_.sse_m128)));
+
+ ------ simde_wasm_u32x4_trunc_sat_f32x4 ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+
+x86_avx512vl_mapping:
+      #if defined(SIMDE_X86_AVX512VL_NATIVE)
+        r_.sse_m128i = _mm_cvttps_epu32(a_.sse_m128);
+      #else
+        __m128 first_oob_high = _mm_set1_ps(SIMDE_FLOAT32_C(4294967296.0));
+        __m128 neg_zero_if_too_high =
+          _mm_castsi128_ps(
+            _mm_slli_epi32(
+              _mm_castps_si128(_mm_cmple_ps(first_oob_high, a_.sse_m128)),
+              31
+            )
+          );
+        r_.sse_m128i =
+          _mm_xor_si128(
+            _mm_cvttps_epi32(
+              _mm_sub_ps(a_.sse_m128, _mm_and_ps(neg_zero_if_too_high, first_oob_high))
+            ),
+            _mm_castps_si128(neg_zero_if_too_high)
+          );
+      #endif
+
+      #if !defined(SIMDE_FAST_CONVERSION_RANGE)
+        r_.sse_m128i = _mm_and_si128(r_.sse_m128i, _mm_castps_si128(_mm_cmpgt_ps(a_.sse_m128, _mm_set1_ps(SIMDE_FLOAT32_C(0.0)))));
+        r_.sse_m128i = _mm_or_si128 (r_.sse_m128i, _mm_castps_si128(_mm_cmpge_ps(a_.sse_m128, _mm_set1_ps(SIMDE_FLOAT32_C(4294967296.0)))));
+      #endif
+
+      #if !defined(SIMDE_FAST_NANS)
+        r_.sse_m128i = _mm_and_si128(r_.sse_m128i, _mm_castps_si128(_mm_cmpord_ps(a_.sse_m128, a_.sse_m128)));
+      #endif
+
+ ------ simde_wasm_i32x4_trunc_sat_f64x2_zero ------ 
+ ------ simde_wasm_u32x4_trunc_sat_f64x2_zero ------ 
+ ------ simde_wasm_i8x16_popcnt ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      __m128i tmp0 = _mm_and_si128(_mm_srli_epi16(a_.sse_m128i, 1), _mm_set1_epi8(0x55));
+      __m128i tmp1 = _mm_sub_epi8(a_.sse_m128i, tmp0);
+      tmp0 = tmp1;
+      tmp1 = _mm_and_si128(tmp1, _mm_set1_epi8(0x33));
+      tmp0 = _mm_and_si128(_mm_srli_epi16(tmp0, 2), _mm_set1_epi8(0x33));
+      tmp1 = _mm_add_epi8(tmp1, tmp0);
+      tmp0 = _mm_srli_epi16(tmp1, 4);
+      tmp1 = _mm_add_epi8(tmp1, tmp0);
+      r_.sse_m128i = _mm_and_si128(tmp1, _mm_set1_epi8(0x0f));
+
+x86_ssse3_mapping:
+    #elif defined(SIMDE_X86_SSSE3_NATIVE)
+      __m128i tmp0 = _mm_set1_epi8(0x0f);
+      __m128i tmp1 = _mm_and_si128(a_.sse_m128i, tmp0);
+      tmp0 = _mm_andnot_si128(tmp0, a_.sse_m128i);
+      __m128i y = _mm_set_epi8(4, 3, 3, 2, 3, 2, 2, 1, 3, 2, 2, 1, 2, 1, 1, 0);
+      tmp0 = _mm_srli_epi16(tmp0, 4);
+      y = _mm_shuffle_epi8(y, tmp1);
+      tmp1 = _mm_set_epi8(4, 3, 3, 2, 3, 2, 2, 1, 3, 2, 2, 1, 2, 1, 1, 0);
+      tmp1 = _mm_shuffle_epi8(tmp1, tmp0);
+      return _mm_add_epi8(y, tmp1);
+
+x86_avx2_mapping:
+    #elif defined(SIMDE_X86_AVX2_NATIVE)
+      __m128i tmp0 = _mm_set1_epi8(0x0f);
+      __m128i tmp1 = _mm_andnot_si128(tmp0, a_.sse_m128i);
+      __m128i y = _mm_and_si128(tmp0, a_.sse_m128i);
+      tmp0 = _mm_set_epi8(4, 3, 3, 2, 3, 2, 2, 1, 3, 2, 2, 1, 2, 1, 1, 0);
+      tmp1 = _mm_srli_epi16(tmp1, 4);
+      y = _mm_shuffle_epi8(tmp0, y);
+      tmp1 = _mm_shuffle_epi8(tmp0, tmp1);
+      return _mm_add_epi8(y, tmp1);
+
+x86_avx512vl_mapping:
+    #elif defined(SIMDE_X86_AVX512VL_NATIVE) && defined(SIMDE_X86_AVX512BITALG_NATIVE)
+      r_.sse_m128i = _mm_popcnt_epi8(a_.sse_m128i);
+
+ ------ simde_wasm_i32x4_dot_i16x8 ------ 
+x86_sse2_mapping:
+    #if defined(SIMDE_X86_SSE2_NATIVE)
+      r_.sse_m128i = _mm_madd_epi16(a_.sse_m128i, b_.sse_m128i);
+
+ ------ simde_wasm_f32x4_ceil ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      /* https://github.com/WebAssembly/simd/pull/232 */
+      const __m128i input_as_i32 = _mm_cvttps_epi32(a_.sse_m128);
+      const __m128i i32_min = _mm_set1_epi32(INT32_MIN);
+      const __m128i input_is_out_of_range = _mm_or_si128(_mm_cmpeq_epi32(input_as_i32, i32_min), i32_min);
+      const __m128 truncated =
+        _mm_or_ps(
+          _mm_andnot_ps(
+            _mm_castsi128_ps(input_is_out_of_range),
+            _mm_cvtepi32_ps(input_as_i32)
+          ),
+          _mm_castsi128_ps(
+            _mm_castps_si128(
+              _mm_and_ps(
+                _mm_castsi128_ps(input_is_out_of_range),
+                a_.sse_m128
+              )
+            )
+          )
+        );
+
+      const __m128 trunc_is_ge_input =
+        _mm_or_ps(
+          _mm_cmple_ps(a_.sse_m128, truncated),
+          _mm_castsi128_ps(i32_min)
+        );
+      r_.sse_m128 =
+        _mm_or_ps(
+          _mm_andnot_ps(
+            trunc_is_ge_input,
+            _mm_add_ps(truncated, _mm_set1_ps(SIMDE_FLOAT32_C(1.0)))
+          ),
+          _mm_and_ps(trunc_is_ge_input, truncated)
+        );
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128 = _mm_round_ps(a_.sse_m128, _MM_FROUND_TO_POS_INF | _MM_FROUND_NO_EXC);
+
+ ------ simde_wasm_f64x2_ceil ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      /* https://github.com/WebAssembly/simd/pull/232 */
+
+      const __m128d all_but_sign_set = _mm_castsi128_pd(_mm_set1_epi64x(INT64_C(0x7FFFFFFFFFFFFFFF)));
+      /* https://stackoverflow.com/a/55077612 explains this a bit */
+      const __m128d bignum = _mm_set1_pd(4.50359962737049600000e+15);
+      const __m128d sign_cleared = _mm_and_pd(a_.sse_m128d, all_but_sign_set);
+
+      __m128d mask =
+        _mm_and_pd(
+          _mm_cmpnle_pd(bignum, sign_cleared),
+          all_but_sign_set
+        );
+      const __m128d tmp =
+        _mm_or_pd(
+          _mm_andnot_pd(mask, a_.sse_m128d),
+          _mm_and_pd   (mask, _mm_sub_pd(_mm_add_pd(sign_cleared, bignum), bignum))
+        );
+
+      r_.sse_m128d =
+        _mm_add_pd(
+          tmp,
+          _mm_and_pd(_mm_and_pd(_mm_cmplt_pd(tmp, a_.sse_m128d), all_but_sign_set), _mm_set1_pd(1.0))
+        );
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128d = _mm_round_pd(a_.sse_m128d, _MM_FROUND_TO_POS_INF | _MM_FROUND_NO_EXC);
+
+ ------ simde_wasm_f32x4_floor ------ 
+x86_sse2_mapping:
+    #elif defined(SIMDE_X86_SSE2_NATIVE)
+      const __m128i vint_min = _mm_set1_epi32(INT_MIN);
+      const __m128i input_as_int = _mm_cvttps_epi32(a_.sse_m128);
+      const __m128 input_truncated = _mm_cvtepi32_ps(input_as_int);
+      const __m128i oor_all_or_neg = _mm_or_si128(_mm_cmpeq_epi32(input_as_int, vint_min), vint_min);
+      const __m128 tmp =
+        _mm_castsi128_ps(
+          _mm_or_si128(
+            _mm_andnot_si128(
+              oor_all_or_neg,
+              _mm_castps_si128(input_truncated)
+            ),
+            _mm_and_si128(
+              oor_all_or_neg,
+              _mm_castps_si128(a_.sse_m128)
+            )
+          )
+        );
+      r_.sse_m128 =
+        _mm_sub_ps(
+          tmp,
+          _mm_and_ps(
+            _mm_cmplt_ps(
+              a_.sse_m128,
+              tmp
+            ),
+            _mm_set1_ps(SIMDE_FLOAT32_C(1.0))
+          )
+        );
+
+x86_sse41_mapping:
+    #if defined(SIMDE_X86_SSE4_1_NATIVE)
+      r_.sse_m128 = _mm_floor_ps(a_.sse_m128);
+
+ ------ simde_wasm_f64x2_floor ------ 
+ ------ simde_wasm_f32x4_trunc ------ 
+ ------ simde_wasm_f64x2_trunc ------ 
+ ------ simde_wasm_f32x4_nearest ------ 
+ ------ simde_wasm_f64x2_nearest ------ 
+ ------ simde_wasm_f32x4_sqrt ------ 
+x86_sse_mapping:
+    #if defined(SIMDE_X86_SSE_NATIVE)
+      r_.sse_m128 = _mm_sqrt_ps(a_.sse_m128);
+
+ ------ simde_wasm_f64x2_sqrt ------ 
+x86_sse_mapping:
+    #if defined(SIMDE_X86_SSE_NATIVE)
+      r_.sse_m128d = _mm_sqrt_pd(a_.sse_m128d);
+

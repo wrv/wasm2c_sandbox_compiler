@@ -39,7 +39,7 @@ void anytrue_v128(int* in_a) {
 }
 */
 
-/*
+
 void bitselect_v128(int* in_a, int* in_b, int* in_mask) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);
@@ -53,7 +53,7 @@ void bitselect_v128(int* in_a, int* in_b, int* in_mask) {
       in_mask[0], in_mask[1], in_mask[2], in_mask[3], 
       out[0], out[1], out[2], out[3]);
 }
-*/
+
 
 /*
 // requries SimdLoadLaneExpr
@@ -69,17 +69,18 @@ void load16_lane_1_v128(int* in_a, int* in_b) {
 }
 */
 
-/*
+// requires LoadSplatExpr
 void load16_splat_v128(int* in_a) {
-  int out[4];
+  short out[8];
   v128_t res = wasm_v128_load16_splat(in_a);
   wasm_v128_store(out, res);
-  fprintf(stderr, "Load16 Splat from (%d %d %d %d) = (%d %d %d %d) \n", 
-      in_a[0], in_a[1], in_a[2], in_a[3], 
-      out[0], out[1], out[2], out[3]);
+  fprintf(stderr, "Load16 Splat from %d = (%d %d %d %d %d %d %d %d) \n", 
+      in_a[0],
+      out[0], out[1], out[2], out[3], out[4], out[5], out[6], out[7]);
 }
 
 
+/*
 void load32_lane_1_v128(int* in_a, int* in_b) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);
@@ -90,18 +91,29 @@ void load32_lane_1_v128(int* in_a, int* in_b) {
       in_b[0], 
       out[0], out[1], out[2], out[3]);
 }
-
+*/
 
 void load32_splat_v128(int* in_a) {
   int out[4];
-  v128_t res = wasm_v128_load32_splat(in_a);
+  v128_t a = wasm_v128_load32_splat(&in_a[0]);
+  v128_t b = wasm_v128_load32_splat(&in_a[1]);
+  v128_t res = wasm_i32x4_mul(a, b);
+
   wasm_v128_store(out, res);
-  fprintf(stderr, "Load32 Splat from (%d %d %d %d) = (%d %d %d %d) \n", 
-      in_a[0], in_a[1], in_a[2], in_a[3], 
+  fprintf(stderr, "Load32 Splat from %d = (%d %d %d %d) \n", 
+      in_a[0], 
+      a[0], a[1], a[2], a[3]);
+  
+  fprintf(stderr, "Load32 Splat from %d = (%d %d %d %d) \n", 
+      in_a[1], 
+      b[0], b[1], b[2], b[3]);
+
+  fprintf(stderr, "Mul(a, b) = (%d %d %d %d) \n", 
       out[0], out[1], out[2], out[3]);
+  
 }
 
-
+/*
 void load32_zero_v128(int* in_a) {
   int out[4];
   v128_t res = wasm_v128_load32_zero(in_a);
@@ -126,16 +138,16 @@ void load64_lane_1_v128(int* in_a, int* in_b) {
 }
 */
 
-/*
+
 void load64_splat_v128(int* in_a) {
-  int out[4];
+  uint64_t out[2];
   v128_t res = wasm_v128_load64_splat(in_a);
   wasm_v128_store(out, res);
-  fprintf(stderr, "Load64 Splat from (%d %d %d %d) = (%d %d %d %d) \n", 
-      in_a[0], in_a[1], in_a[2], in_a[3], 
-      out[0], out[1], out[2], out[3]);
+  fprintf(stderr, "Load64 Splat from %d = (%lu %lu) \n", 
+      in_a[0],
+      out[0], out[1]);
 }
-*/
+
 
 /*
 // Requires SimdStoreLaneExpr
@@ -164,16 +176,19 @@ void load8_lane_1_v128(int* in_a, int* in_b) {
 }
 */
 
-/*
+
 void load8_splat_v128(int* in_a) {
-  int out[4];
+  char out[16];
   v128_t res = wasm_v128_load8_splat(in_a);
   wasm_v128_store(out, res);
-  fprintf(stderr, "Load8 Splat from (%d %d %d %d) = (%d %d %d %d) \n", 
-      in_a[0], in_a[1], in_a[2], in_a[3], 
-      out[0], out[1], out[2], out[3]);
+  fprintf(stderr, "Load8 Splat from %d = (%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d) \n", 
+      in_a[0],
+      out[0],  out[1],  out[2],  out[3],
+      out[4],  out[5],  out[6],  out[7],
+      out[8],  out[9],  out[10], out[11],
+      out[12], out[13], out[14], out[15]);
 }
-*/
+
 
 void not_v128(int* in_a) {
   int out[4];
@@ -231,6 +246,7 @@ void store32_lane_1_v128(int* in_a, int* in_b) {
 */
 
 /*
+// requires i8x16_shuffle
 void store64_lane_1_v128(int* in_a, int* in_b) {
   int out[4];
   v128_t a = wasm_v128_load(in_a);

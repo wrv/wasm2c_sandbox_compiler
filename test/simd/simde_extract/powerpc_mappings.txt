@@ -1,0 +1,1197 @@
+ ------ simde_wasm_v128_load ------ 
+ ------ simde_wasm_v128_store ------ 
+ ------ simde_wasm_i8x16_make ------ 
+ ------ simde_wasm_i16x8_make ------ 
+ ------ simde_wasm_i32x4_make ------ 
+ ------ simde_wasm_i64x2_make ------ 
+ ------ simde_wasm_f32x4_make ------ 
+ ------ simde_wasm_f64x2_make ------ 
+ ------ simde_wasm_i8x16_const ------ 
+ ------ simde_wasm_i16x8_const ------ 
+ ------ simde_wasm_i32x4_const ------ 
+ ------ simde_wasm_i64x2_const ------ 
+ ------ simde_wasm_f32x4_const ------ 
+ ------ simde_wasm_f64x2_const ------ 
+ ------ simde_wasm_i8x16_splat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_i8 = vec_splats(a);
+    #else
+
+ ------ simde_wasm_i16x8_splat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_i16 = vec_splats(a);
+    #else
+
+ ------ simde_wasm_i32x4_splat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_i32 = vec_splats(a);
+    #else
+
+ ------ simde_wasm_i64x2_splat ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_i64 = vec_splats(HEDLEY_STATIC_CAST(signed long long, a));
+    #else
+
+ ------ simde_wasm_f32x4_splat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_14_NATIVE)
+      r_.altivec_f32 = vec_splats(a);
+    #else
+
+ ------ simde_wasm_f64x2_splat ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_f64 = vec_splats(a);
+    #else
+
+ ------ simde_wasm_v128_load8_splat ------ 
+ ------ simde_wasm_v128_load16_splat ------ 
+ ------ simde_wasm_v128_load32_splat ------ 
+ ------ simde_wasm_v128_load64_splat ------ 
+ ------ simde_wasm_i8x16_extract_lane ------ 
+ ------ simde_wasm_i16x8_extract_lane ------ 
+ ------ simde_wasm_i32x4_extract_lane ------ 
+ ------ simde_wasm_i64x2_extract_lane ------ 
+ ------ simde_wasm_u8x16_extract_lane ------ 
+ ------ simde_wasm_u16x8_extract_lane ------ 
+ ------ simde_wasm_f32x4_extract_lane ------ 
+ ------ simde_wasm_f64x2_extract_lane ------ 
+ ------ simde_wasm_i8x16_replace_lane ------ 
+ ------ simde_wasm_i16x8_replace_lane ------ 
+ ------ simde_wasm_i32x4_replace_lane ------ 
+ ------ simde_wasm_i64x2_replace_lane ------ 
+ ------ simde_wasm_f32x4_replace_lane ------ 
+ ------ simde_wasm_f64x2_replace_lane ------ 
+ ------ simde_wasm_i8x16_eq ------ 
+ ------ simde_wasm_i16x8_eq ------ 
+ ------ simde_wasm_i32x4_eq ------ 
+ ------ simde_wasm_i64x2_eq ------ 
+ ------ simde_wasm_f32x4_eq ------ 
+ ------ simde_wasm_f64x2_eq ------ 
+ ------ simde_wasm_i8x16_ne ------ 
+ ------ simde_wasm_i16x8_ne ------ 
+ ------ simde_wasm_i32x4_ne ------ 
+ ------ simde_wasm_i64x2_ne ------ 
+ ------ simde_wasm_f32x4_ne ------ 
+ ------ simde_wasm_f64x2_ne ------ 
+ ------ simde_wasm_i8x16_lt ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed char), vec_cmplt(a_.altivec_i8, b_.altivec_i8));
+
+ ------ simde_wasm_i16x8_lt ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed short), vec_cmplt(a_.altivec_i16, b_.altivec_i16));
+
+ ------ simde_wasm_i32x4_lt ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), vec_cmplt(a_.altivec_i32, b_.altivec_i32));
+
+ ------ simde_wasm_i64x2_lt ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(signed int) tmp =
+        vec_or(
+          vec_and(
+            HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), vec_cmpeq(b_.altivec_i32, a_.altivec_i32)),
+            HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), vec_sub(
+              HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed long long), a_.altivec_i32),
+              HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed long long), b_.altivec_i32)
+            ))
+          ),
+          vec_cmpgt(b_.altivec_i32, a_.altivec_i32)
+        );
+        r_.altivec_i32 = vec_mergeo(tmp, tmp);
+
+ ------ simde_wasm_u8x16_lt ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u8 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned char), vec_cmplt(a_.altivec_u8, b_.altivec_u8));
+
+ ------ simde_wasm_u16x8_lt ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u16 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned short), vec_cmplt(a_.altivec_u16, b_.altivec_u16));
+
+ ------ simde_wasm_u32x4_lt ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u32 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned int), vec_cmplt(a_.altivec_u32, b_.altivec_u32));
+
+ ------ simde_wasm_f32x4_lt ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_f32 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(float), vec_cmplt(a_.altivec_f32, b_.altivec_f32));
+
+ ------ simde_wasm_f64x2_lt ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_f64 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(double), vec_cmplt(a_.altivec_f64, b_.altivec_f64));
+
+ ------ simde_wasm_i8x16_gt ------ 
+ ------ simde_wasm_i16x8_gt ------ 
+ ------ simde_wasm_i32x4_gt ------ 
+ ------ simde_wasm_i64x2_gt ------ 
+ ------ simde_wasm_u8x16_gt ------ 
+ ------ simde_wasm_u16x8_gt ------ 
+ ------ simde_wasm_u32x4_gt ------ 
+ ------ simde_wasm_f32x4_gt ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_f32 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(float), vec_cmpgt(a_.altivec_f32, b_.altivec_f32));
+
+ ------ simde_wasm_f64x2_gt ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_f64 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(double), vec_cmpgt(a_.altivec_f64, b_.altivec_f64));
+
+ ------ simde_wasm_i8x16_le ------ 
+ ------ simde_wasm_i16x8_le ------ 
+ ------ simde_wasm_i32x4_le ------ 
+ ------ simde_wasm_i64x2_le ------ 
+ ------ simde_wasm_u8x16_le ------ 
+ ------ simde_wasm_u16x8_le ------ 
+ ------ simde_wasm_u32x4_le ------ 
+ ------ simde_wasm_f32x4_le ------ 
+ ------ simde_wasm_f64x2_le ------ 
+ ------ simde_wasm_i8x16_ge ------ 
+ ------ simde_wasm_i16x8_ge ------ 
+ ------ simde_wasm_i32x4_ge ------ 
+ ------ simde_wasm_i64x2_ge ------ 
+ ------ simde_wasm_u8x16_ge ------ 
+ ------ simde_wasm_u16x8_ge ------ 
+ ------ simde_wasm_u32x4_ge ------ 
+ ------ simde_wasm_f32x4_ge ------ 
+ ------ simde_wasm_f64x2_ge ------ 
+ ------ simde_wasm_v128_not ------ 
+ ------ simde_wasm_v128_and ------ 
+ ------ simde_wasm_v128_or ------ 
+ ------ simde_wasm_v128_xor ------ 
+ ------ simde_wasm_v128_andnot ------ 
+ ------ simde_wasm_v128_bitselect ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_i32 = vec_sel(b_.altivec_i32, a_.altivec_i32, mask_.altivec_u32);
+
+ ------ simde_wasm_i8x16_bitmask ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE) && defined(SIMDE_BUG_CLANG_50932)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) idx = { 120, 112, 104, 96, 88, 80, 72, 64, 56, 48, 40, 32, 24, 16, 8, 0 };
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) res = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned char), vec_bperm(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned __int128), a_.altivec_u64), idx));
+      r = HEDLEY_STATIC_CAST(uint32_t, vec_extract(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), res), 2));
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) idx = { 120, 112, 104, 96, 88, 80, 72, 64, 56, 48, 40, 32, 24, 16, 8, 0 };
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) res = vec_bperm(a_.altivec_u8, idx);
+      r = HEDLEY_STATIC_CAST(uint32_t, vec_extract(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), res), 2));
+    #else
+
+ ------ simde_wasm_i16x8_bitmask ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE) && defined(SIMDE_BUG_CLANG_50932)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) idx = { 112, 96, 80, 64, 48, 32, 16, 0, 128, 128, 128, 128, 128, 128, 128, 128 };
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) res = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned char), vec_bperm(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned __int128), a_.altivec_u64), idx));
+      r = HEDLEY_STATIC_CAST(uint32_t, vec_extract(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), res), 2));
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) idx = { 112, 96, 80, 64, 48, 32, 16, 0, 128, 128, 128, 128, 128, 128, 128, 128 };
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) res = vec_bperm(a_.altivec_u8, idx);
+      r = HEDLEY_STATIC_CAST(uint32_t, vec_extract(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), res), 2));
+    #else
+
+ ------ simde_wasm_i32x4_bitmask ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE) && defined(SIMDE_BUG_CLANG_50932)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) idx = { 96, 64, 32, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128 };
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) res = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned char), vec_bperm(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned __int128), a_.altivec_u64), idx));
+      r = HEDLEY_STATIC_CAST(uint32_t, vec_extract(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), res), 2));
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) idx = { 96, 64, 32, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128 };
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) res = vec_bperm(a_.altivec_u8, idx);
+      r = HEDLEY_STATIC_CAST(uint32_t, vec_extract(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), res), 2));
+    #else
+
+ ------ simde_wasm_i64x2_bitmask ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE) && defined(SIMDE_BUG_CLANG_50932)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) idx = { 64, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128 };
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) res = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned char), vec_bperm(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned __int128), a_.altivec_u64), idx));
+      r = HEDLEY_STATIC_CAST(uint32_t, vec_extract(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), res), 2));
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) idx = { 64, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128 };
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) res = vec_bperm(a_.altivec_u8, idx);
+      r = HEDLEY_STATIC_CAST(uint32_t, vec_extract(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed int), res), 2));
+    #else
+
+ ------ simde_wasm_i8x16_abs ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = vec_abs(a_.altivec_i8);
+    #elif defined(SIMDE_VECTOR_SCALAR)
+      __typeof__(r_.i8) mask = HEDLEY_REINTERPRET_CAST(__typeof__(mask), a_.i8 < 0);
+      r_.i8 = (-a_.i8 & mask) | (a_.i8 & ~mask);
+    #else
+
+ ------ simde_wasm_i16x8_abs ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = vec_abs(a_.altivec_i16);
+    #else
+
+ ------ simde_wasm_i32x4_abs ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 = vec_abs(a_.altivec_i32);
+
+ ------ simde_wasm_i64x2_abs ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_i64 = vec_abs(a_.altivec_i64);
+
+ ------ simde_wasm_f32x4_abs ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_f32 = vec_abs(a_.altivec_f32);
+
+ ------ simde_wasm_f64x2_abs ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_f64 = vec_abs(a_.altivec_f64);
+
+ ------ simde_wasm_i8x16_neg ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE) && (!defined(HEDLEY_GCC_VERSION) || HEDLEY_GCC_VERSION_CHECK(8,1,0))
+      r_.altivec_i8 = vec_neg(a_.altivec_i8);
+
+ ------ simde_wasm_i16x8_neg ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_i16 = vec_neg(a_.altivec_i16);
+
+ ------ simde_wasm_i32x4_neg ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_i32 = vec_neg(a_.altivec_i32);
+
+ ------ simde_wasm_i64x2_neg ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_i64 = vec_neg(a_.altivec_i64);
+
+ ------ simde_wasm_f32x4_neg ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_f32 = vec_neg(a_.altivec_f32);
+
+ ------ simde_wasm_f64x2_neg ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_f64 = vec_neg(a_.altivec_f64);
+
+ ------ simde_wasm_v128_any_true ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r = HEDLEY_STATIC_CAST(simde_bool, vec_any_ne(a_.altivec_i32, vec_splats(0)));
+    #else
+      int_fast32_t ri = 0;
+
+ ------ simde_wasm_i8x16_all_true ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      return HEDLEY_STATIC_CAST(simde_bool, vec_all_ne(a_.altivec_i8, vec_splats(HEDLEY_STATIC_CAST(signed char, 0))));
+    #else
+      int8_t r = !INT8_C(0);
+
+
+ ------ simde_wasm_i16x8_all_true ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      return HEDLEY_STATIC_CAST(simde_bool, vec_all_ne(a_.altivec_i16, vec_splats(HEDLEY_STATIC_CAST(signed short, 0))));
+    #else
+      int16_t r = !INT16_C(0);
+
+
+ ------ simde_wasm_i32x4_all_true ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      return HEDLEY_STATIC_CAST(simde_bool, vec_all_ne(a_.altivec_i32, vec_splats(HEDLEY_STATIC_CAST(signed int, 0))));
+    #else
+      int32_t r = !INT32_C(0);
+
+
+ ------ simde_wasm_i64x2_all_true ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      return HEDLEY_STATIC_CAST(simde_bool, vec_all_ne(a_.altivec_i64, HEDLEY_REINTERPRET_CAST(__typeof__(a_.altivec_i64), vec_splats(0))));
+    #else
+      int64_t r = !INT32_C(0);
+
+
+ ------ simde_wasm_i8x16_shl ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = vec_sl(a_.altivec_i8, vec_splats(HEDLEY_STATIC_CAST(unsigned char, count)));
+
+ ------ simde_wasm_i16x8_shl ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = vec_sl(a_.altivec_i16, vec_splats(HEDLEY_STATIC_CAST(unsigned short, count)));
+
+ ------ simde_wasm_i32x4_shl ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 = vec_sl(a_.altivec_i32, vec_splats(HEDLEY_STATIC_CAST(unsigned int, count)));
+
+ ------ simde_wasm_i64x2_shl ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_i64 = vec_sl(a_.altivec_i64, vec_splats(HEDLEY_STATIC_CAST(unsigned long long, count)));
+
+ ------ simde_wasm_i8x16_shr ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = vec_sra(a_.altivec_i8, vec_splats(HEDLEY_STATIC_CAST(unsigned char, count)));
+
+ ------ simde_wasm_i16x8_shr ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = vec_sra(a_.altivec_i16, vec_splats(HEDLEY_STATIC_CAST(unsigned short, count)));
+
+ ------ simde_wasm_i32x4_shr ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 = vec_sra(a_.altivec_i32, vec_splats(HEDLEY_STATIC_CAST(unsigned int, count)));
+
+ ------ simde_wasm_i64x2_shr ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_i64 = vec_sra(a_.altivec_i64, vec_splats(HEDLEY_STATIC_CAST(unsigned long long, count)));
+
+ ------ simde_wasm_u8x16_shr ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u8 = vec_sr(a_.altivec_u8, vec_splats(HEDLEY_STATIC_CAST(unsigned char, count)));
+
+ ------ simde_wasm_u16x8_shr ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = vec_sra(a_.altivec_i16, vec_splats(HEDLEY_STATIC_CAST(unsigned short, count)));
+
+ ------ simde_wasm_u32x4_shr ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 = vec_sra(a_.altivec_i32, vec_splats(HEDLEY_STATIC_CAST(unsigned int, count)));
+
+ ------ simde_wasm_u64x2_shr ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_i64 = vec_sra(a_.altivec_i64, vec_splats(HEDLEY_STATIC_CAST(unsigned long long, count)));
+
+ ------ simde_wasm_i8x16_add ------ 
+ ------ simde_wasm_i16x8_add ------ 
+ ------ simde_wasm_i32x4_add ------ 
+ ------ simde_wasm_i64x2_add ------ 
+ ------ simde_wasm_f32x4_add ------ 
+ ------ simde_wasm_f64x2_add ------ 
+ ------ simde_wasm_i8x16_sub ------ 
+ ------ simde_wasm_i16x8_sub ------ 
+ ------ simde_wasm_i32x4_sub ------ 
+ ------ simde_wasm_i64x2_sub ------ 
+ ------ simde_wasm_f32x4_sub ------ 
+ ------ simde_wasm_f64x2_sub ------ 
+ ------ simde_wasm_i16x8_mul ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 =
+        vec_pack(
+          vec_mule(a_.altivec_i16, b_.altivec_i16),
+          vec_mulo(a_.altivec_i16, b_.altivec_i16)
+        );
+
+ ------ simde_wasm_i32x4_mul ------ 
+ ------ simde_wasm_i64x2_mul ------ 
+ ------ simde_wasm_f32x4_mul ------ 
+ ------ simde_wasm_f64x2_mul ------ 
+ ------ simde_wasm_i16x8_q15mulr_sat ------ 
+ ------ simde_wasm_i8x16_min ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = vec_min(a_.altivec_i8, b_.altivec_i8);
+    #else
+
+ ------ simde_wasm_i16x8_min ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = vec_min(a_.altivec_i16, b_.altivec_i16);
+    #else
+
+ ------ simde_wasm_i32x4_min ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 = vec_min(a_.altivec_i32, b_.altivec_i32);
+    #else
+
+ ------ simde_wasm_u8x16_min ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u8 = vec_min(a_.altivec_u8, b_.altivec_u8);
+    #else
+
+ ------ simde_wasm_u16x8_min ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u16 = vec_min(a_.altivec_u16, b_.altivec_u16);
+    #else
+
+ ------ simde_wasm_u32x4_min ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_u32 = vec_min(a_.altivec_u32, b_.altivec_u32);
+    #else
+
+ ------ simde_wasm_f32x4_min ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(SIMDE_POWER_ALTIVEC_BOOL int) condition;
+      SIMDE_POWER_ALTIVEC_VECTOR(SIMDE_POWER_ALTIVEC_BOOL int) a_lt_b =
+        vec_cmpgt(b_.altivec_f32, a_.altivec_f32);
+
+
+powerpc_altivec_p8_mapping:
+      #if defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+        condition = vec_orc(a_lt_b, vec_cmpeq(a_.altivec_f32, a_.altivec_f32));
+      #else
+        SIMDE_POWER_ALTIVEC_VECTOR(SIMDE_POWER_ALTIVEC_BOOL int) a_not_nan =
+          vec_cmpeq(a_.altivec_f32, a_.altivec_f32);
+        condition = vec_or(a_lt_b, vec_nor(a_not_nan, a_not_nan));
+      #endif
+
+      r_.altivec_f32 =
+        vec_sel(
+          b_.altivec_f32,
+          a_.altivec_f32,
+          condition
+        );
+    #else
+
+ ------ simde_wasm_f64x2_min ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_f64 =
+        vec_sel(
+          b_.altivec_f64,
+          a_.altivec_f64,
+          vec_orc(
+            vec_cmpgt(b_.altivec_f64, a_.altivec_f64),
+            vec_cmpeq(a_.altivec_f64, a_.altivec_f64)
+          )
+        );
+
+ ------ simde_wasm_i8x16_max ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_i8 = vec_max(a_.altivec_i8, b_.altivec_i8);
+
+ ------ simde_wasm_i16x8_max ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_i16 = vec_max(a_.altivec_i16, b_.altivec_i16);
+
+ ------ simde_wasm_i32x4_max ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_i32 = vec_max(a_.altivec_i32, b_.altivec_i32);
+
+ ------ simde_wasm_u8x16_max ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_u8 = vec_max(a_.altivec_u8, b_.altivec_u8);
+
+ ------ simde_wasm_u16x8_max ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_u16 = vec_max(a_.altivec_u16, b_.altivec_u16);
+
+ ------ simde_wasm_u32x4_max ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_u32 = vec_max(a_.altivec_u32, b_.altivec_u32);
+
+ ------ simde_wasm_f32x4_max ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(SIMDE_POWER_ALTIVEC_BOOL int) cmpres = vec_cmpeq(a_.altivec_f32, a_.altivec_f32);
+      r_.altivec_f32 =
+        vec_sel(
+          b_.altivec_f32,
+          a_.altivec_f32,
+          vec_or(
+            vec_cmpgt(a_.altivec_f32, b_.altivec_f32),
+            vec_nor(cmpres, cmpres)
+          )
+        );
+
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_f32 =
+        vec_sel(
+          b_.altivec_f32,
+          a_.altivec_f32,
+          vec_orc(
+            vec_cmpgt(a_.altivec_f32, b_.altivec_f32),
+            vec_cmpeq(a_.altivec_f32, a_.altivec_f32)
+          )
+        );
+
+ ------ simde_wasm_f64x2_max ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(SIMDE_POWER_ALTIVEC_BOOL long long) cmpres = vec_cmpeq(a_.altivec_f64, a_.altivec_f64);
+      r_.altivec_f64 =
+        vec_sel(
+          b_.altivec_f64,
+          a_.altivec_f64,
+          vec_or(
+            vec_cmpgt(a_.altivec_f64, b_.altivec_f64),
+            vec_nor(cmpres, cmpres)
+          )
+        );
+
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_f64 =
+        vec_sel(
+          b_.altivec_f64,
+          a_.altivec_f64,
+          vec_orc(
+            vec_cmpgt(a_.altivec_f64, b_.altivec_f64),
+            vec_cmpeq(a_.altivec_f64, a_.altivec_f64)
+          )
+        );
+
+ ------ simde_wasm_i8x16_add_sat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = vec_adds(a_.altivec_i8, b_.altivec_i8);
+
+ ------ simde_wasm_i16x8_add_sat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = vec_adds(a_.altivec_i16, b_.altivec_i16);
+
+ ------ simde_wasm_u8x16_add_sat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u8 = vec_adds(a_.altivec_u8, b_.altivec_u8);
+
+ ------ simde_wasm_u16x8_add_sat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u16 = vec_adds(a_.altivec_u16, b_.altivec_u16);
+
+ ------ simde_wasm_u8x16_avgr ------ 
+ ------ simde_wasm_u16x8_avgr ------ 
+ ------ simde_wasm_i8x16_sub_sat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = vec_subs(a_.altivec_i8, b_.altivec_i8);
+
+ ------ simde_wasm_i16x8_sub_sat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = vec_subs(a_.altivec_i16, b_.altivec_i16);
+
+ ------ simde_wasm_u8x16_sub_sat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u8 = vec_subs(a_.altivec_u8, b_.altivec_u8);
+
+ ------ simde_wasm_u16x8_sub_sat ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u16 = vec_subs(a_.altivec_u16, b_.altivec_u16);
+
+ ------ simde_wasm_f32x4_pmin ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_f32 =
+        vec_sel(
+          a_.altivec_f32,
+          b_.altivec_f32,
+          vec_cmpgt(a_.altivec_f32, b_.altivec_f32)
+        );
+    #else
+
+ ------ simde_wasm_f64x2_pmin ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_f32 =
+        vec_sel(
+          a_.altivec_f32,
+          b_.altivec_f32,
+          vec_cmpgt(a_.altivec_f32, b_.altivec_f32)
+        );
+    #else
+
+ ------ simde_wasm_f32x4_pmax ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_14_NATIVE)
+      r_.altivec_f32 = vec_sel(a_.altivec_f32, b_.altivec_f32, vec_cmplt(a_.altivec_f32, b_.altivec_f32));
+
+ ------ simde_wasm_f64x2_pmax ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_f64 = vec_sel(a_.altivec_f64, b_.altivec_f64, vec_cmplt(a_.altivec_f64, b_.altivec_f64));
+
+ ------ simde_wasm_f32x4_div ------ 
+ ------ simde_wasm_f64x2_div ------ 
+ ------ simde_wasm_i8x16_shuffle ------ 
+ ------ simde_wasm_i16x8_shuffle ------ 
+ ------ simde_wasm_i32x4_shuffle ------ 
+ ------ simde_wasm_i64x2_shuffle ------ 
+ ------ simde_wasm_i8x16_swizzle ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = vec_perm(
+        a_.altivec_i8,
+        a_.altivec_i8,
+        b_.altivec_u8
+      );
+      r_.altivec_i8 = vec_and(r_.altivec_i8, vec_cmple(b_.altivec_u8, vec_splat_u8(15)));
+    #else
+
+ ------ simde_wasm_i8x16_narrow_i16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = vec_packs(a_.altivec_i16, b_.altivec_i16);
+
+ ------ simde_wasm_i16x8_narrow_i32x4 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = vec_packs(a_.altivec_i32, b_.altivec_i32);
+
+ ------ simde_wasm_u8x16_narrow_i16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u8 = vec_packsu(a_.altivec_i16, b_.altivec_i16);
+
+ ------ simde_wasm_u16x8_narrow_i32x4 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u16 = vec_packsu(a_.altivec_i32, b_.altivec_i32);
+
+ ------ simde_wasm_f32x4_demote_f64x2_zero ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_f32 = vec_floate(a_.altivec_f64);
+
+powerpc_altivec_p8_mapping:
+      #if defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+        r_.altivec_f32 =
+          HEDLEY_REINTERPRET_CAST(
+            SIMDE_POWER_ALTIVEC_VECTOR(float),
+            vec_pack(
+              HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(long long), r_.altivec_f32),
+              HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(long long), vec_splat_s32(0))
+            )
+          );
+      #else
+        const SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) perm = {
+          0x00, 0x01, 0x02, 0x03, /* 0 */
+          0x08, 0x09, 0x0a, 0x0b, /* 2 */
+          0x10, 0x11, 0x12, 0x13, /* 4 */
+          0x18, 0x19, 0x1a, 0x1b  /* 6 */
+        };
+        r_.altivec_f32 = vec_perm(r_.altivec_f32, HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(float), vec_splat_s32(0)), perm);
+      #endif
+    #elif HEDLEY_HAS_BUILTIN(__builtin_shufflevector) && HEDLEY_HAS_BUILTIN(__builtin_convertvector)
+      float __attribute__((__vector_size__(8))) z = { 0.0f, 0.0f };
+      r_.f32 = __builtin_shufflevector(__builtin_convertvector(a_.f64, __typeof__(z)), z, 0, 1, 2, 3);
+    #else
+      r_.f32[0] = HEDLEY_STATIC_CAST(simde_float32, a_.f64[0]);
+      r_.f32[1] = HEDLEY_STATIC_CAST(simde_float32, a_.f64[1]);
+      r_.f32[2] = SIMDE_FLOAT32_C(0.0);
+      r_.f32[3] = SIMDE_FLOAT32_C(0.0);
+    #endif
+
+    return simde_v128_from_private(r_);
+  #endif
+}
+
+ ------ simde_wasm_i16x8_extend_low_i8x16 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 =
+        vec_sra(
+          HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(short), vec_mergeh(a_.altivec_i8, a_.altivec_i8)),
+          vec_splats(HEDLEY_STATIC_CAST(unsigned short, 8)
+        )
+      );
+
+ ------ simde_wasm_i32x4_extend_low_i16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 =
+        vec_sra(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(int), vec_mergeh(a_.altivec_i16, a_.altivec_i16)),
+        vec_splats(HEDLEY_STATIC_CAST(unsigned int, 16))
+      );
+
+ ------ simde_wasm_i64x2_extend_low_i32x4 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 =
+        vec_mergeh(
+          a_.altivec_i32,
+          HEDLEY_REINTERPRET_CAST(
+            SIMDE_POWER_ALTIVEC_VECTOR(int),
+            vec_cmpgt(vec_splat_s32(0), a_.altivec_i32)
+          )
+        );
+
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_i64 =
+        vec_sra(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(long long), vec_mergeh(a_.altivec_i32, a_.altivec_i32)),
+        vec_splats(HEDLEY_STATIC_CAST(unsigned long long, 32))
+      );
+
+ ------ simde_wasm_u16x8_extend_low_u8x16 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = vec_mergeh(a_.altivec_i8, vec_splat_s8(0));
+
+ ------ simde_wasm_u32x4_extend_low_u16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = vec_mergeh(a_.altivec_i16, vec_splat_s16(0));
+
+ ------ simde_wasm_u64x2_extend_low_u32x4 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 = vec_mergeh(a_.altivec_i32, vec_splat_s32(0));
+
+ ------ simde_wasm_f64x2_promote_low_f32x4 ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_f64 = vec_unpackh(a_.altivec_f32);
+    #elif HEDLEY_HAS_BUILTIN(__builtin_shufflevector) && HEDLEY_HAS_BUILTIN(__builtin_convertvector)
+      r_.f64 = __builtin_convertvector(__builtin_shufflevector(a_.f32, a_.f32, 0, 1), __typeof__(r_.f64));
+    #else
+      r_.f64[0] = HEDLEY_STATIC_CAST(simde_float64, a_.f32[0]);
+      r_.f64[1] = HEDLEY_STATIC_CAST(simde_float64, a_.f32[1]);
+    #endif
+
+    return simde_v128_from_private(r_);
+  #endif
+}
+
+ ------ simde_wasm_i16x8_extend_high_i8x16 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 =
+        vec_sra(
+          HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(short), vec_mergel(a_.altivec_i8, a_.altivec_i8)),
+          vec_splats(HEDLEY_STATIC_CAST(unsigned short, 8)
+        )
+      );
+
+ ------ simde_wasm_i32x4_extend_high_i16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 =
+        vec_sra(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(int), vec_mergel(a_.altivec_i16, a_.altivec_i16)),
+        vec_splats(HEDLEY_STATIC_CAST(unsigned int, 16))
+      );
+
+ ------ simde_wasm_i64x2_extend_high_i32x4 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 =
+        vec_mergel(
+          a_.altivec_i32,
+          HEDLEY_REINTERPRET_CAST(
+            SIMDE_POWER_ALTIVEC_VECTOR(int),
+            vec_cmpgt(vec_splat_s32(0), a_.altivec_i32)
+          )
+        );
+
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_i64 =
+        vec_sra(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(long long), vec_mergel(a_.altivec_i32, a_.altivec_i32)),
+        vec_splats(HEDLEY_STATIC_CAST(unsigned long long, 32))
+      );
+
+ ------ simde_wasm_u16x8_extend_high_u8x16 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i8 = vec_mergel(a_.altivec_i8, vec_splat_s8(0));
+
+ ------ simde_wasm_u32x4_extend_high_u16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 = vec_mergel(a_.altivec_i16, vec_splat_s16(0));
+
+ ------ simde_wasm_u64x2_extend_high_u32x4 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 = vec_mergel(a_.altivec_i32, vec_splat_s32(0));
+
+ ------ simde_wasm_i16x8_extmul_low_i8x16 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(signed char) ashuf;
+      SIMDE_POWER_ALTIVEC_VECTOR(signed char) bshuf;
+
+
+powerpc_altivec_p8_mapping:
+      #if defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+        ashuf = vec_mergeh(a_.altivec_i8, a_.altivec_i8);
+        bshuf = vec_mergeh(b_.altivec_i8, b_.altivec_i8);
+      #else
+        SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) perm = {
+          0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7
+        };
+        ashuf = vec_perm(a_.altivec_i8, a_.altivec_i8, perm);
+        bshuf = vec_perm(b_.altivec_i8, b_.altivec_i8, perm);
+      #endif
+
+      r_.altivec_i16 = vec_mule(ashuf, bshuf);
+
+ ------ simde_wasm_i32x4_extmul_low_i16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(signed short) ashuf;
+      SIMDE_POWER_ALTIVEC_VECTOR(signed short) bshuf;
+
+
+powerpc_altivec_p8_mapping:
+      #if defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+        ashuf = vec_mergeh(a_.altivec_i16, a_.altivec_i16);
+        bshuf = vec_mergeh(b_.altivec_i16, b_.altivec_i16);
+      #else
+        SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) perm = {
+          0, 1, 0, 1,
+          2, 3, 2, 3,
+          4, 5, 4, 5,
+          6, 7, 6, 7
+        };
+        ashuf = vec_perm(a_.altivec_i16, a_.altivec_i16, perm);
+        bshuf = vec_perm(b_.altivec_i16, b_.altivec_i16, perm);
+      #endif
+
+      r_.altivec_i32 = vec_mule(ashuf, bshuf);
+
+ ------ simde_wasm_i64x2_extmul_low_i32x4 ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(signed int) ashuf;
+      SIMDE_POWER_ALTIVEC_VECTOR(signed int) bshuf;
+
+
+powerpc_altivec_p8_mapping:
+      #if defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+        ashuf = vec_mergeh(a_.altivec_i32, a_.altivec_i32);
+        bshuf = vec_mergeh(b_.altivec_i32, b_.altivec_i32);
+      #else
+        SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) perm = {
+          0, 1, 2, 3, 0, 1, 2, 3,
+          4, 5, 6, 7, 4, 5, 6, 7
+        };
+        ashuf = vec_perm(a_.altivec_i32, a_.altivec_i32, perm);
+        bshuf = vec_perm(b_.altivec_i32, b_.altivec_i32, perm);
+      #endif
+
+      r_.altivec_i64 = vec_mule(ashuf, bshuf);
+
+ ------ simde_wasm_u16x8_extmul_low_u8x16 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) ashuf;
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) bshuf;
+
+
+powerpc_altivec_p8_mapping:
+      #if defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+        ashuf = vec_mergeh(a_.altivec_u8, a_.altivec_u8);
+        bshuf = vec_mergeh(b_.altivec_u8, b_.altivec_u8);
+      #else
+        SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) perm = {
+          0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7
+        };
+        ashuf = vec_perm(a_.altivec_u8, a_.altivec_u8, perm);
+        bshuf = vec_perm(b_.altivec_u8, b_.altivec_u8, perm);
+      #endif
+
+      r_.altivec_u16 = vec_mule(ashuf, bshuf);
+
+ ------ simde_wasm_u32x4_extmul_low_u16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned short) ashuf;
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned short) bshuf;
+
+
+powerpc_altivec_p8_mapping:
+      #if defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+        ashuf = vec_mergeh(a_.altivec_u16, a_.altivec_u16);
+        bshuf = vec_mergeh(b_.altivec_u16, b_.altivec_u16);
+      #else
+        SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) perm = {
+          0, 1, 0, 1,
+          2, 3, 2, 3,
+          4, 5, 4, 5,
+          6, 7, 6, 7
+        };
+        ashuf = vec_perm(a_.altivec_u16, a_.altivec_u16, perm);
+        bshuf = vec_perm(b_.altivec_u16, b_.altivec_u16, perm);
+      #endif
+
+      r_.altivec_u32 = vec_mule(ashuf, bshuf);
+
+ ------ simde_wasm_u64x2_extmul_low_u32x4 ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned int) ashuf;
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned int) bshuf;
+
+
+powerpc_altivec_p8_mapping:
+      #if defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+        ashuf = vec_mergeh(a_.altivec_u32, a_.altivec_u32);
+        bshuf = vec_mergeh(b_.altivec_u32, b_.altivec_u32);
+      #else
+        SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) perm = {
+          0, 1, 2, 3, 0, 1, 2, 3,
+          4, 5, 6, 7, 4, 5, 6, 7
+        };
+        ashuf = vec_perm(a_.altivec_u32, a_.altivec_u32, perm);
+        bshuf = vec_perm(b_.altivec_u32, b_.altivec_u32, perm);
+      #endif
+
+      r_.altivec_u64 = vec_mule(ashuf, bshuf);
+
+ ------ simde_wasm_i16x8_extmul_high_i8x16 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i16 =
+        vec_mule(
+          vec_mergel(a_.altivec_i8, a_.altivec_i8),
+          vec_mergel(b_.altivec_i8, b_.altivec_i8)
+        );
+
+ ------ simde_wasm_i32x4_extmul_high_i16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 =
+        vec_mule(
+          vec_mergel(a_.altivec_i16, a_.altivec_i16),
+          vec_mergel(b_.altivec_i16, b_.altivec_i16)
+        );
+
+ ------ simde_wasm_i64x2_extmul_high_i32x4 ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(signed int) ashuf;
+      SIMDE_POWER_ALTIVEC_VECTOR(signed int) bshuf;
+
+
+powerpc_altivec_p8_mapping:
+      #if defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+        ashuf = vec_mergel(a_.altivec_i32, a_.altivec_i32);
+        bshuf = vec_mergel(b_.altivec_i32, b_.altivec_i32);
+      #else
+        SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) perm = {
+           8,  9, 10, 11,  8,  9, 10, 11,
+          12, 13, 14, 15, 12, 13, 14, 15
+        };
+        ashuf = vec_perm(a_.altivec_i32, a_.altivec_i32, perm);
+        bshuf = vec_perm(b_.altivec_i32, b_.altivec_i32, perm);
+      #endif
+
+      r_.altivec_i64 = vec_mule(ashuf, bshuf);
+
+ ------ simde_wasm_u16x8_extmul_high_u8x16 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u16 =
+        vec_mule(
+          vec_mergel(a_.altivec_u8, a_.altivec_u8),
+          vec_mergel(b_.altivec_u8, b_.altivec_u8)
+        );
+
+ ------ simde_wasm_u32x4_extmul_high_u16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_u32 =
+        vec_mule(
+          vec_mergel(a_.altivec_u16, a_.altivec_u16),
+          vec_mergel(b_.altivec_u16, b_.altivec_u16)
+        );
+
+ ------ simde_wasm_u64x2_extmul_high_u32x4 ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_u64 =
+        vec_mule(
+          vec_mergel(a_.altivec_u32, a_.altivec_u32),
+          vec_mergel(b_.altivec_u32, b_.altivec_u32)
+        );
+
+ ------ simde_wasm_i16x8_extadd_pairwise_i8x16 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(signed char) one = vec_splat_s8(1);
+      r_.altivec_i16 =
+        vec_add(
+          vec_mule(a_.altivec_i8, one),
+          vec_mulo(a_.altivec_i8, one)
+        );
+
+ ------ simde_wasm_i32x4_extadd_pairwise_i16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(signed short) one = vec_splat_s16(1);
+      r_.altivec_i32 =
+        vec_add(
+          vec_mule(a_.altivec_i16, one),
+          vec_mulo(a_.altivec_i16, one)
+        );
+
+ ------ simde_wasm_u16x8_extadd_pairwise_u8x16 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) one = vec_splat_u8(1);
+      r_.altivec_u16 =
+        vec_add(
+          vec_mule(a_.altivec_u8, one),
+          vec_mulo(a_.altivec_u8, one)
+        );
+
+ ------ simde_wasm_u32x4_extadd_pairwise_u16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(unsigned short) one = vec_splat_u16(1);
+      r_.altivec_u32 =
+        vec_add(
+          vec_mule(a_.altivec_u16, one),
+          vec_mulo(a_.altivec_u16, one)
+        );
+
+ ------ simde_wasm_i16x8_load8x8 ------ 
+ ------ simde_wasm_i32x4_load16x4 ------ 
+ ------ simde_wasm_i64x2_load32x2 ------ 
+ ------ simde_wasm_u16x8_load8x8 ------ 
+ ------ simde_wasm_u32x4_load16x4 ------ 
+ ------ simde_wasm_u64x2_load32x2 ------ 
+ ------ simde_wasm_v128_load32_zero ------ 
+ ------ simde_wasm_v128_load64_zero ------ 
+ ------ simde_wasm_v128_load8_lane ------ 
+ ------ simde_wasm_v128_load16_lane ------ 
+ ------ simde_wasm_v128_load32_lane ------ 
+ ------ simde_wasm_v128_load64_lane ------ 
+ ------ simde_wasm_v128_store8_lane ------ 
+ ------ simde_wasm_v128_store16_lane ------ 
+ ------ simde_wasm_v128_store32_lane ------ 
+ ------ simde_wasm_v128_store64_lane ------ 
+ ------ simde_wasm_f32x4_convert_i32x4 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      HEDLEY_DIAGNOSTIC_PUSH
+      #if HEDLEY_HAS_WARNING("-Wc11-extensions")
+        #pragma clang diagnostic ignored "-Wc11-extensions"
+      #endif
+      r_.altivec_f32 = vec_ctf(a_.altivec_i32, 0);
+      HEDLEY_DIAGNOSTIC_POP
+
+ ------ simde_wasm_f32x4_convert_u32x4 ------ 
+ ------ simde_wasm_f64x2_convert_low_i32x4 ------ 
+ ------ simde_wasm_f64x2_convert_low_u32x4 ------ 
+ ------ simde_wasm_i32x4_trunc_sat_f32x4 ------ 
+ ------ simde_wasm_u32x4_trunc_sat_f32x4 ------ 
+ ------ simde_wasm_i32x4_trunc_sat_f64x2_zero ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      SIMDE_POWER_ALTIVEC_VECTOR(double) in_not_nan =
+        vec_and(a_.altivec_f64, vec_cmpeq(a_.altivec_f64, a_.altivec_f64));
+      r_.altivec_i32 = vec_signede(in_not_nan);
+
+powerpc_altivec_p8_mapping:
+      #if defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+        r_.altivec_i32 =
+          vec_pack(
+            HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(long long), r_.altivec_i32),
+            HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(long long), vec_splat_s32(0))
+          );
+      #else
+        SIMDE_POWER_ALTIVEC_VECTOR(unsigned char) perm = {
+           0,  1,  2,  3,  4,  5,  6,  7,
+          16, 17, 18, 19, 20, 21, 22, 23
+        };
+        r_.altivec_i32 =
+          HEDLEY_REINTERPRET_CAST(
+            SIMDE_POWER_ALTIVEC_VECTOR(signed int),
+            vec_perm(
+              HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed char), r_.altivec_i32),
+              vec_splat_s8(0),
+              perm
+            )
+          );
+      #endif
+    #else
+
+ ------ simde_wasm_u32x4_trunc_sat_f64x2_zero ------ 
+ ------ simde_wasm_i8x16_popcnt ------ 
+powerpc_altivec_p8_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P8_NATIVE)
+      r_.altivec_i8 = HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(signed char), vec_popcnt(HEDLEY_REINTERPRET_CAST(SIMDE_POWER_ALTIVEC_VECTOR(unsigned char), a_.altivec_i8)));
+    #else
+
+ ------ simde_wasm_i32x4_dot_i16x8 ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_i32 = vec_msum(a_.altivec_i16, b_.altivec_i16, vec_splats(0));
+
+zarch_zvector_13_mapping:
+    #elif defined(SIMDE_ZARCH_ZVECTOR_13_NATIVE)
+      r_.altivec_i32 = vec_mule(a_.altivec_i16, b_.altivec_i16) + vec_mulo(a_.altivec_i16, b_.altivec_i16);
+
+ ------ simde_wasm_f32x4_ceil ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE)
+      r_.altivec_f32 = vec_ceil(a_.altivec_f32);
+    #else
+
+ ------ simde_wasm_f64x2_ceil ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_f64 = vec_ceil(a_.altivec_f64);
+    #else
+
+ ------ simde_wasm_f32x4_floor ------ 
+powerpc_altivec_p6_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P6_NATIVE) || defined(SIMDE_ZARCH_ZVECTOR_14_NATIVE)
+      r_.altivec_f32 = vec_floor(a_.altivec_f32);
+    #else
+
+ ------ simde_wasm_f64x2_floor ------ 
+ ------ simde_wasm_f32x4_trunc ------ 
+ ------ simde_wasm_f64x2_trunc ------ 
+ ------ simde_wasm_f32x4_nearest ------ 
+ ------ simde_wasm_f64x2_nearest ------ 
+ ------ simde_wasm_f32x4_sqrt ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_f32 = vec_sqrt(a_.altivec_f32);
+    #else
+
+ ------ simde_wasm_f64x2_sqrt ------ 
+powerpc_altivec_p7_mapping:
+    #elif defined(SIMDE_POWER_ALTIVEC_P7_NATIVE)
+      r_.altivec_f64 = vec_sqrt(a_.altivec_f64);
+    #else
+

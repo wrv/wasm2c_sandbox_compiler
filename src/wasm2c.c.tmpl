@@ -233,6 +233,23 @@ DEFINE_STORE(i64_store32, u32, u64);
 DEFINE_SIMD_LOAD(v128_load, __m128i, __m128i, __m128i);
 DEFINE_SIMD_STORE(v128_store, __m128i, __m128i); 
 
+
+static inline __m128i v128_load8_splat(u8 v1) {
+  return  _mm_set1_epi8(v1);
+}
+
+static inline __m128i v128_load16_splat(u16 v1) {
+  return  _mm_set1_epi16(v1);
+}
+
+static inline __m128i v128_load32_splat(u32 v1) {
+  return  _mm_set1_epi32(v1);
+}
+
+static inline __m128i v128_load64_splat(u64 v1) {
+  return  _mm_set1_epi64x(v1);
+}
+
 /* I32X4 AVX Operations */
 static inline __m128i I32X4_ABS(__m128i v1) {
   return  _mm_abs_epi32(v1);
@@ -336,6 +353,12 @@ static inline __m128i V128_NOT(__m128i v1) {
 
 static inline __m128i V128_XOR(__m128i v1, __m128i v2) {
   return  _mm_xor_si128(v1, v2);
+}
+
+
+static inline __m128i V128_BITSELECT(__m128i v1, __m128i v2, __m128i mask) {
+  return V128_OR(V128_AND(v1, mask), V128_AND(v2, V128_NOT(mask)));
+  //return  _mm_blendv_epi8(v1, v2, mask); // Unfortunately blendv doesn't work at bit-granularity
 }
 
 

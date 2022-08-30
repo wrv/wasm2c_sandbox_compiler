@@ -343,6 +343,11 @@ int main(int argc, char** argv) {
   w2c_lt_i32x4(sbx_instance, sbx_in_b, sbx_in_a);
   w2c_lt_i32x4(sbx_instance, sbx_in_a, sbx_in_a);
   w2c_lt_i32x4(sbx_instance, sbx_in_a_alt, sbx_in_a);
+
+  w2c_load8_splat_v128(sbx_instance, sbx_in_a);
+  w2c_load16_splat_v128(sbx_instance, sbx_in_a);
+  w2c_load32_splat_v128(sbx_instance, sbx_in_a_alt);
+  w2c_load64_splat_v128(sbx_instance, sbx_in_b);
   
   
   /* Destroy the sandbox instance */

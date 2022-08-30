@@ -2740,7 +2740,7 @@ void CWriter::Write(const TernaryExpr& expr) {
   switch (expr.opcode) {
     case Opcode::V128BitSelect: {
       Type result_type = expr.opcode.GetResultType();
-      Write(StackVar(2, result_type), " = ", "v128.bitselect", "(", StackVar(0),
+      Write(StackVar(2, result_type), " = ", "V128_BITSELECT", "(", StackVar(0),
             ", ", StackVar(1), ", ", StackVar(2), ");", Newline());
       DropTypes(3);
       PushType(result_type);
@@ -2790,11 +2790,31 @@ void CWriter::Write(const SimdLaneOpExpr& expr) {
 }
 
 void CWriter::Write(const SimdLoadLaneExpr& expr) {
-  UNIMPLEMENTED("SimdLoadLaneExpr - SIMD support");
+  //Type result_type = expr.opcode.GetResultType();
+  
+  switch (expr.opcode) {
+    case Opcode::V128Store8Lane:
+    case Opcode::V128Store16Lane:
+    case Opcode::V128Store32Lane:
+    case Opcode::V128Store64Lane:
+    default:
+      printf("issue with SimdLoadLaneExpr opcode %s \n", expr.opcode.GetName());
+      WABT_UNREACHABLE;
+  }
 }
 
 void CWriter::Write(const SimdStoreLaneExpr& expr) {
-  UNIMPLEMENTED("SimdStoreLaneExpr - SIMD support");
+  //Type result_type = expr.opcode.GetResultType();
+
+  switch (expr.opcode) {
+    case Opcode::V128Load8Lane:
+    case Opcode::V128Load16Lane:
+    case Opcode::V128Load32Lane:
+    case Opcode::V128Load64Lane:
+    default:
+      printf("issue with SimdLoadLaneExpr opcode %s \n", expr.opcode.GetName());
+      WABT_UNREACHABLE;
+  }
 }
 
 void CWriter::Write(const SimdShuffleOpExpr& expr) {
@@ -2809,15 +2829,46 @@ void CWriter::Write(const SimdShuffleOpExpr& expr) {
 
 void CWriter::Write(const LoadSplatExpr& expr) {
   assert(module_->memories.size() == 1);
-  Memory* memory = module_->memories[0];
+  //Memory* memory = module_->memories[0];
 
   Type result_type = expr.opcode.GetResultType();
-  Write(StackVar(0, result_type), " = ", expr.opcode.GetName(), "(",
-        ExternalPtr(memory->name), ", (u64)(", StackVar(0));
-  if (expr.offset != 0)
-    Write(" + ", expr.offset);
-  Write("));", Newline());
-  DropTypes(1);
+  std::string opcode_function;
+
+  switch(expr.opcode) {
+    case Opcode::V128Load8Splat:
+      Write(StackVar(0, result_type), " = v128_load8_splat((u8)(", StackVar(0));
+      if (expr.offset != 0)
+        Write(" + ", expr.offset);
+      Write("));", Newline());
+      DropTypes(1);
+      break;
+    case Opcode::V128Load16Splat:
+      Write(StackVar(0, result_type), " = v128_load16_splat((u16)(", StackVar(0));
+      if (expr.offset != 0)
+        Write(" + ", expr.offset);
+      Write("));", Newline());
+      DropTypes(1);
+      break;
+    case Opcode::V128Load32Splat:
+      Write(StackVar(0, result_type), " = v128_load32_splat((u32)(", StackVar(0));
+      if (expr.offset != 0)
+        Write(" + ", expr.offset);
+      Write("));", Newline());
+      DropTypes(1);
+      break;
+    case Opcode::V128Load64Splat:
+      Write(StackVar(0, result_type), " = v128_load64_splat((u64)(", StackVar(0));
+      if (expr.offset != 0)
+        Write(" + ", expr.offset);
+      Write("));", Newline());
+      DropTypes(1);
+      break;
+    default:
+      printf("issue with LoadSplatExpr opcode %s \n", expr.opcode.GetName());
+      WABT_UNREACHABLE;
+  }
+
+
   PushType(result_type);
 }
 

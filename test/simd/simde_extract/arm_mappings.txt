@@ -1,0 +1,1190 @@
+ ------ simde_wasm_v128_load ------ 
+ ------ simde_wasm_v128_store ------ 
+ ------ simde_wasm_i8x16_make ------ 
+ ------ simde_wasm_i16x8_make ------ 
+ ------ simde_wasm_i32x4_make ------ 
+ ------ simde_wasm_i64x2_make ------ 
+ ------ simde_wasm_f32x4_make ------ 
+ ------ simde_wasm_f64x2_make ------ 
+ ------ simde_wasm_i8x16_const ------ 
+ ------ simde_wasm_i16x8_const ------ 
+ ------ simde_wasm_i32x4_const ------ 
+ ------ simde_wasm_i64x2_const ------ 
+ ------ simde_wasm_f32x4_const ------ 
+ ------ simde_wasm_f64x2_const ------ 
+ ------ simde_wasm_i8x16_splat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vdupq_n_s8(a);
+
+ ------ simde_wasm_i16x8_splat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vdupq_n_s16(a);
+
+ ------ simde_wasm_i32x4_splat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vdupq_n_s32(a);
+
+ ------ simde_wasm_i64x2_splat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i64 = vdupq_n_s64(a);
+
+ ------ simde_wasm_f32x4_splat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_f32 = vdupq_n_f32(a);
+
+ ------ simde_wasm_f64x2_splat ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f64 = vdupq_n_f64(a);
+
+ ------ simde_wasm_v128_load8_splat ------ 
+ ------ simde_wasm_v128_load16_splat ------ 
+ ------ simde_wasm_v128_load32_splat ------ 
+ ------ simde_wasm_v128_load64_splat ------ 
+ ------ simde_wasm_i8x16_extract_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+  #define simde_wasm_i8x16_extract_lane(a, lane) vgetq_lane_s8(simde_v128_to_neon_i8(a), (lane) & 15)
+#endif
+
+ ------ simde_wasm_i16x8_extract_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_i16x8_extract_lane(a, lane) vgetq_lane_s16(simde_v128_to_neon_i16(a), (lane) & 7)
+#endif
+
+ ------ simde_wasm_i32x4_extract_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_i32x4_extract_lane(a, lane) vgetq_lane_s32(simde_v128_to_neon_i32(a), (lane) & 3)
+#endif
+
+ ------ simde_wasm_i64x2_extract_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_i64x2_extract_lane(a, lane) vgetq_lane_s64(simde_v128_to_neon_i64(a), (lane) & 1)
+#endif
+
+ ------ simde_wasm_u8x16_extract_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+  #define simde_wasm_u8x16_extract_lane(a, lane) vgetq_lane_u8(simde_v128_to_neon_u8(a), (lane) & 15)
+#endif
+
+ ------ simde_wasm_u16x8_extract_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_u16x8_extract_lane(a, lane) vgetq_lane_u16(simde_v128_to_neon_u16(a), (lane) & 7)
+#endif
+
+ ------ simde_wasm_f32x4_extract_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_f32x4_extract_lane(a, lane) vgetq_lane_f32(simde_v128_to_neon_f32(a), (lane) & 3)
+#endif
+
+ ------ simde_wasm_f64x2_extract_lane ------ 
+arm_neon_a64v8_mapping:
+#elif defined(SIMDE_ARM_NEON_A64V8_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_f64x2_extract_lane(a, lane) vgetq_lane_f64(simde_v128_to_neon_f64(a), (lane) & 1)
+#endif
+
+ ------ simde_wasm_i8x16_replace_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+  #define simde_wasm_i8x16_replace_lane(a, lane, value) simde_v128_from_neon_i8(vsetq_lane_s8((value), simde_v128_to_neon_i8(a), (lane) & 15))
+#endif
+
+ ------ simde_wasm_i16x8_replace_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_i16x8_replace_lane(a, lane, value) simde_v128_from_neon_i16(vsetq_lane_s16((value), simde_v128_to_neon_i16(a), (lane) & 7))
+#endif
+
+ ------ simde_wasm_i32x4_replace_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_i32x4_replace_lane(a, lane, value) simde_v128_from_neon_i32(vsetq_lane_s32((value), simde_v128_to_neon_i32(a), (lane) & 3))
+#endif
+
+ ------ simde_wasm_i64x2_replace_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_i64x2_replace_lane(a, lane, value) simde_v128_from_neon_i64(vsetq_lane_s64((value), simde_v128_to_neon_i64(a), (lane) & 1))
+#endif
+
+ ------ simde_wasm_f32x4_replace_lane ------ 
+arm_neon_a32v7_mapping:
+#elif defined(SIMDE_ARM_NEON_A32V7_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_f32x4_replace_lane(a, lane, value) simde_v128_from_neon_f32(vsetq_lane_f32((value), simde_v128_to_neon_f32(a), (lane) & 3))
+#endif
+
+ ------ simde_wasm_f64x2_replace_lane ------ 
+arm_neon_a64v8_mapping:
+#elif defined(SIMDE_ARM_NEON_A64V8_NATIVE) && !defined(SIMDE_BUG_CLANG_BAD_VGET_SET_LANE_TYPES)
+  #define simde_wasm_f64x2_replace_lane(a, lane, value) simde_v128_from_neon_f64(vsetq_lane_f64((value), simde_v128_to_neon_f64(a), (lane) & 1))
+#endif
+
+ ------ simde_wasm_i8x16_eq ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vceqq_s8(a_.neon_i8, b_.neon_i8);
+
+ ------ simde_wasm_i16x8_eq ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vceqq_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_i32x4_eq ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vceqq_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_i64x2_eq ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u64 = vceqq_s64(a_.neon_i64, b_.neon_i64);
+
+ ------ simde_wasm_f32x4_eq ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vceqq_f32(a_.neon_f32, b_.neon_f32);
+
+ ------ simde_wasm_f64x2_eq ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u64 = vceqq_f64(a_.neon_f64, b_.neon_f64);
+
+ ------ simde_wasm_i8x16_ne ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vmvnq_u8(vceqq_s8(a_.neon_i8, b_.neon_i8));
+
+ ------ simde_wasm_i16x8_ne ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vmvnq_u16(vceqq_s16(a_.neon_i16, b_.neon_i16));
+
+ ------ simde_wasm_i32x4_ne ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vmvnq_u32(vceqq_s32(a_.neon_i32, b_.neon_i32));
+
+ ------ simde_wasm_i64x2_ne ------ 
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u32 = vmvnq_u32(vreinterpretq_u32_u64(vceqq_s64(a_.neon_i64, b_.neon_i64)));
+
+ ------ simde_wasm_f32x4_ne ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vmvnq_u32(vceqq_f32(a_.neon_f32, b_.neon_f32));
+
+ ------ simde_wasm_f64x2_ne ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u32 = vmvnq_u32(vreinterpretq_u32_u64(vceqq_f64(a_.neon_f64, b_.neon_f64)));
+
+ ------ simde_wasm_i8x16_lt ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vcltq_s8(a_.neon_i8, b_.neon_i8);
+
+ ------ simde_wasm_i16x8_lt ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vcltq_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_i32x4_lt ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcltq_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_i64x2_lt ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      int32x4_t tmp = vorrq_s32(
+        vandq_s32(
+          vreinterpretq_s32_u32(vceqq_s32(b_.neon_i32, a_.neon_i32)),
+          vsubq_s32(a_.neon_i32, b_.neon_i32)
+        ),
+        vreinterpretq_s32_u32(vcgtq_s32(b_.neon_i32, a_.neon_i32))
+      );
+      int32x4x2_t trn = vtrnq_s32(tmp, tmp);
+      r_.neon_i32 = trn.val[1];
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u64 = vcltq_s64(a_.neon_i64, b_.neon_i64);
+
+ ------ simde_wasm_u8x16_lt ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vcltq_u8(a_.neon_u8, b_.neon_u8);
+
+ ------ simde_wasm_u16x8_lt ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vcltq_u16(a_.neon_u16, b_.neon_u16);
+
+ ------ simde_wasm_u32x4_lt ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcltq_u32(a_.neon_u32, b_.neon_u32);
+
+ ------ simde_wasm_f32x4_lt ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcltq_f32(a_.neon_f32, b_.neon_f32);
+
+ ------ simde_wasm_f64x2_lt ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u64 = vcltq_f64(a_.neon_f64, b_.neon_f64);
+
+ ------ simde_wasm_i8x16_gt ------ 
+ ------ simde_wasm_i16x8_gt ------ 
+ ------ simde_wasm_i32x4_gt ------ 
+ ------ simde_wasm_i64x2_gt ------ 
+ ------ simde_wasm_u8x16_gt ------ 
+ ------ simde_wasm_u16x8_gt ------ 
+ ------ simde_wasm_u32x4_gt ------ 
+ ------ simde_wasm_f32x4_gt ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcgtq_f32(a_.neon_f32, b_.neon_f32);
+
+ ------ simde_wasm_f64x2_gt ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u64 = vcgtq_f64(a_.neon_f64, b_.neon_f64);
+
+ ------ simde_wasm_i8x16_le ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vcleq_s8(a_.neon_i8, b_.neon_i8);
+
+ ------ simde_wasm_i16x8_le ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vcleq_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_i32x4_le ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcleq_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_i64x2_le ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u64 = vcleq_s64(a_.neon_i64, b_.neon_i64);
+
+ ------ simde_wasm_u8x16_le ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vcleq_u8(a_.neon_u8, b_.neon_u8);
+
+ ------ simde_wasm_u16x8_le ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vcleq_u16(a_.neon_u16, b_.neon_u16);
+
+ ------ simde_wasm_u32x4_le ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcleq_u32(a_.neon_u32, b_.neon_u32);
+
+ ------ simde_wasm_f32x4_le ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcleq_f32(a_.neon_f32, b_.neon_f32);
+
+ ------ simde_wasm_f64x2_le ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u64 = vcleq_f64(a_.neon_f64, b_.neon_f64);
+
+ ------ simde_wasm_i8x16_ge ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vcgeq_s8(a_.neon_i8, b_.neon_i8);
+
+ ------ simde_wasm_i16x8_ge ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vcgeq_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_i32x4_ge ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcgeq_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_i64x2_ge ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u64 = vcgeq_s64(a_.neon_i64, b_.neon_i64);
+
+ ------ simde_wasm_u8x16_ge ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vcgeq_u8(a_.neon_u8, b_.neon_u8);
+
+ ------ simde_wasm_u16x8_ge ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vcgeq_u16(a_.neon_u16, b_.neon_u16);
+
+ ------ simde_wasm_u32x4_ge ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcgeq_u32(a_.neon_u32, b_.neon_u32);
+
+ ------ simde_wasm_f32x4_ge ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcgeq_f32(a_.neon_f32, b_.neon_f32);
+
+ ------ simde_wasm_f64x2_ge ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u64 = vcgeq_f64(a_.neon_f64, b_.neon_f64);
+
+ ------ simde_wasm_v128_not ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vmvnq_s32(a_.neon_i32);
+
+ ------ simde_wasm_v128_and ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vandq_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_v128_or ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vorrq_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_v128_xor ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = veorq_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_v128_andnot ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vbicq_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_v128_bitselect ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vbslq_s32(mask_.neon_u32, a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_i8x16_bitmask ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      /* https://github.com/WebAssembly/simd/pull/201#issue-380682845 */
+      static const uint8_t md[16] = {
+        1 << 0, 1 << 1, 1 << 2, 1 << 3,
+        1 << 4, 1 << 5, 1 << 6, 1 << 7,
+        1 << 0, 1 << 1, 1 << 2, 1 << 3,
+        1 << 4, 1 << 5, 1 << 6, 1 << 7,
+      };
+
+      /* Extend sign bit over entire lane */
+      uint8x16_t extended = vreinterpretq_u8_s8(vshrq_n_s8(a_.neon_i8, 7));
+      /* Clear all but the bit we're interested in. */
+      uint8x16_t masked = vandq_u8(vld1q_u8(md), extended);
+      /* Alternate bytes from low half and high half */
+      uint8x8x2_t tmp = vzip_u8(vget_low_u8(masked), vget_high_u8(masked));
+      uint16x8_t x = vreinterpretq_u16_u8(vcombine_u8(tmp.val[0], tmp.val[1]));
+
+arm_neon_a64v8_mapping:
+      #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+        r = vaddvq_u16(x);
+      #else
+        uint64x2_t t64 = vpaddlq_u32(vpaddlq_u16(x));
+        r =
+          HEDLEY_STATIC_CAST(uint32_t, vgetq_lane_u64(t64, 0)) +
+          HEDLEY_STATIC_CAST(uint32_t, vgetq_lane_u64(t64, 1));
+      #endif
+
+ ------ simde_wasm_i16x8_bitmask ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      static const uint16_t md[8] = {
+        1 << 0, 1 << 1, 1 << 2, 1 << 3,
+        1 << 4, 1 << 5, 1 << 6, 1 << 7,
+      };
+
+      uint16x8_t extended = vreinterpretq_u16_s16(vshrq_n_s16(a_.neon_i16, 15));
+      uint16x8_t masked = vandq_u16(vld1q_u16(md), extended);
+
+arm_neon_a64v8_mapping:
+      #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+        r = vaddvq_u16(masked);
+      #else
+        uint64x2_t t64 = vpaddlq_u32(vpaddlq_u16(masked));
+        r =
+          HEDLEY_STATIC_CAST(uint32_t, vgetq_lane_u64(t64, 0)) +
+          HEDLEY_STATIC_CAST(uint32_t, vgetq_lane_u64(t64, 1));
+      #endif
+
+ ------ simde_wasm_i32x4_bitmask ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      static const uint32_t md[4] = {
+        1 << 0, 1 << 1, 1 << 2, 1 << 3
+      };
+
+      uint32x4_t extended = vreinterpretq_u32_s32(vshrq_n_s32(a_.neon_i32, 31));
+      uint32x4_t masked = vandq_u32(vld1q_u32(md), extended);
+
+arm_neon_a64v8_mapping:
+      #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+        r = HEDLEY_STATIC_CAST(uint32_t, vaddvq_u32(masked));
+      #else
+        uint64x2_t t64 = vpaddlq_u32(masked);
+        r =
+          HEDLEY_STATIC_CAST(uint32_t, vgetq_lane_u64(t64, 0)) +
+          HEDLEY_STATIC_CAST(uint32_t, vgetq_lane_u64(t64, 1));
+      #endif
+
+ ------ simde_wasm_i64x2_bitmask ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      HEDLEY_DIAGNOSTIC_PUSH
+      SIMDE_DIAGNOSTIC_DISABLE_VECTOR_CONVERSION_
+      uint64x2_t shifted = vshrq_n_u64(a_.neon_u64, 63);
+      r =
+        HEDLEY_STATIC_CAST(uint32_t, vgetq_lane_u64(shifted, 0)) +
+        (HEDLEY_STATIC_CAST(uint32_t, vgetq_lane_u64(shifted, 1)) << 1);
+      HEDLEY_DIAGNOSTIC_POP
+
+ ------ simde_wasm_i8x16_abs ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vabsq_s8(a_.neon_i8);
+
+ ------ simde_wasm_i16x8_abs ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vabsq_s16(a_.neon_i16);
+
+ ------ simde_wasm_i32x4_abs ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_i32 = vabsq_s32(a_.neon_i32);
+
+ ------ simde_wasm_i64x2_abs ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_i64 = vabsq_s64(a_.neon_i64);
+
+ ------ simde_wasm_f32x4_abs ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_f32 = vabsq_f32(a_.neon_f32);
+
+ ------ simde_wasm_f64x2_abs ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f64 = vabsq_f64(a_.neon_f64);
+
+ ------ simde_wasm_i8x16_neg ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vnegq_s8(a_.neon_i8);
+
+ ------ simde_wasm_i16x8_neg ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vnegq_s16(a_.neon_i16);
+
+ ------ simde_wasm_i32x4_neg ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vnegq_s32(a_.neon_i32);
+
+ ------ simde_wasm_i64x2_neg ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_i64 = vnegq_s64(a_.neon_i64);
+
+ ------ simde_wasm_f32x4_neg ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_f32 = vnegq_f32(a_.neon_f32);
+
+ ------ simde_wasm_f64x2_neg ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f64 = vnegq_f64(a_.neon_f64);
+
+ ------ simde_wasm_v128_any_true ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      uint32x2_t tmp = vpmax_u32(vget_low_u32(a_.u32), vget_high_u32(a_.u32));
+      r  = vget_lane_u32(tmp, 0);
+      r |= vget_lane_u32(tmp, 1);
+      r = !!r;
+
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r = !!vmaxvq_u32(a_.neon_u32);
+
+ ------ simde_wasm_i8x16_all_true ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      uint8x16_t zeroes = vdupq_n_u8(0);
+      uint8x16_t false_set = vceqq_u8(a_.neon_u8, vdupq_n_u8(0));
+      uint32x4_t d_all_true = vceqq_u32(vreinterpretq_u32_u8(false_set), vreinterpretq_u32_u8(zeroes));
+      uint32x2_t q_all_true = vpmin_u32(vget_low_u32(d_all_true), vget_high_u32(d_all_true));
+
+      return !!(
+        vget_lane_u32(q_all_true, 0) &
+        vget_lane_u32(q_all_true, 1));
+
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      return !vmaxvq_u8(vceqzq_u8(a_.neon_u8));
+
+ ------ simde_wasm_i16x8_all_true ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      uint16x8_t zeroes = vdupq_n_u16(0);
+      uint16x8_t false_set = vceqq_u16(a_.neon_u16, vdupq_n_u16(0));
+      uint32x4_t d_all_true = vceqq_u32(vreinterpretq_u32_u16(false_set), vreinterpretq_u32_u16(zeroes));
+      uint32x2_t q_all_true = vpmin_u32(vget_low_u32(d_all_true), vget_high_u32(d_all_true));
+
+      return !!(
+        vget_lane_u32(q_all_true, 0) &
+        vget_lane_u32(q_all_true, 1));
+
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      return !vmaxvq_u16(vceqzq_u16(a_.neon_u16));
+
+ ------ simde_wasm_i32x4_all_true ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      uint32x4_t d_all_true = vmvnq_u32(vceqq_u32(a_.neon_u32, vdupq_n_u32(0)));
+      uint32x2_t q_all_true = vpmin_u32(vget_low_u32(d_all_true), vget_high_u32(d_all_true));
+
+      return !!(
+        vget_lane_u32(q_all_true, 0) &
+        vget_lane_u32(q_all_true, 1));
+
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      return !vmaxvq_u32(vceqzq_u32(a_.neon_u32));
+
+ ------ simde_wasm_i64x2_all_true ------ 
+ ------ simde_wasm_i8x16_shl ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vshlq_s8(a_.neon_i8, vdupq_n_s8(HEDLEY_STATIC_CAST(int8_t, count)));
+
+ ------ simde_wasm_i16x8_shl ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vshlq_s16(a_.neon_i16, vdupq_n_s16(HEDLEY_STATIC_CAST(int16_t, count)));
+
+ ------ simde_wasm_i32x4_shl ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vshlq_s32(a_.neon_i32, vdupq_n_s32(HEDLEY_STATIC_CAST(int32_t, count)));
+
+ ------ simde_wasm_i64x2_shl ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i64 = vshlq_s64(a_.neon_i64, vdupq_n_s64(HEDLEY_STATIC_CAST(int64_t, count)));
+
+ ------ simde_wasm_i8x16_shr ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vshlq_s8(a_.neon_i8, vdupq_n_s8(HEDLEY_STATIC_CAST(int8_t, -count)));
+
+ ------ simde_wasm_i16x8_shr ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vshlq_s16(a_.neon_i16, vdupq_n_s16(HEDLEY_STATIC_CAST(int16_t, -count)));
+
+ ------ simde_wasm_i32x4_shr ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vshlq_s32(a_.neon_i32, vdupq_n_s32(HEDLEY_STATIC_CAST(int32_t, -count)));
+
+ ------ simde_wasm_i64x2_shr ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i64 = vshlq_s64(a_.neon_i64, vdupq_n_s64(HEDLEY_STATIC_CAST(int64_t, -count)));
+
+ ------ simde_wasm_u8x16_shr ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vshlq_u8(a_.neon_u8, vdupq_n_s8(HEDLEY_STATIC_CAST(int8_t, -count)));
+
+ ------ simde_wasm_u16x8_shr ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vshlq_u16(a_.neon_u16, vdupq_n_s16(HEDLEY_STATIC_CAST(int16_t, -count)));
+
+ ------ simde_wasm_u32x4_shr ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vshlq_u32(a_.neon_u32, vdupq_n_s32(HEDLEY_STATIC_CAST(int32_t, -count)));
+
+ ------ simde_wasm_u64x2_shr ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u64 = vshlq_u64(a_.neon_u64, vdupq_n_s64(HEDLEY_STATIC_CAST(int64_t, -count)));
+
+ ------ simde_wasm_i8x16_add ------ 
+ ------ simde_wasm_i16x8_add ------ 
+ ------ simde_wasm_i32x4_add ------ 
+ ------ simde_wasm_i64x2_add ------ 
+ ------ simde_wasm_f32x4_add ------ 
+ ------ simde_wasm_f64x2_add ------ 
+ ------ simde_wasm_i8x16_sub ------ 
+ ------ simde_wasm_i16x8_sub ------ 
+ ------ simde_wasm_i32x4_sub ------ 
+ ------ simde_wasm_i64x2_sub ------ 
+ ------ simde_wasm_f32x4_sub ------ 
+ ------ simde_wasm_f64x2_sub ------ 
+ ------ simde_wasm_i16x8_mul ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vmulq_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_i32x4_mul ------ 
+ ------ simde_wasm_i64x2_mul ------ 
+ ------ simde_wasm_f32x4_mul ------ 
+ ------ simde_wasm_f64x2_mul ------ 
+ ------ simde_wasm_i16x8_q15mulr_sat ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vqrdmulhq_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_i8x16_min ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vminq_s8(a_.neon_i8, b_.neon_i8);
+
+ ------ simde_wasm_i16x8_min ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vminq_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_i32x4_min ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vminq_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_u8x16_min ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vminq_u8(a_.neon_u8, b_.neon_u8);
+
+ ------ simde_wasm_u16x8_min ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vminq_u16(a_.neon_u16, b_.neon_u16);
+
+ ------ simde_wasm_u32x4_min ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vminq_u32(a_.neon_u32, b_.neon_u32);
+
+ ------ simde_wasm_f32x4_min ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_f32 = vminq_f32(a_.neon_f32, b_.neon_f32);
+
+ ------ simde_wasm_f64x2_min ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f64 = vminq_f64(a_.neon_f64, b_.neon_f64);
+    #else
+
+ ------ simde_wasm_i8x16_max ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vmaxq_s8(a_.neon_i8, b_.neon_i8);
+
+ ------ simde_wasm_i16x8_max ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vmaxq_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_i32x4_max ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vmaxq_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_u8x16_max ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vmaxq_u8(a_.neon_u8, b_.neon_u8);
+
+ ------ simde_wasm_u16x8_max ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vmaxq_u16(a_.neon_u16, b_.neon_u16);
+
+ ------ simde_wasm_u32x4_max ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vmaxq_u32(a_.neon_u32, b_.neon_u32);
+
+ ------ simde_wasm_f32x4_max ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_f32 = vmaxq_f32(a_.neon_f32, b_.neon_f32);
+
+ ------ simde_wasm_f64x2_max ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f64 = vmaxq_f64(a_.neon_f64, b_.neon_f64);
+
+ ------ simde_wasm_i8x16_add_sat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vqaddq_s8(a_.neon_i8, b_.neon_i8);
+
+ ------ simde_wasm_i16x8_add_sat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vqaddq_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_u8x16_add_sat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vqaddq_u8(a_.neon_u8, b_.neon_u8);
+
+ ------ simde_wasm_u16x8_add_sat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vqaddq_u16(a_.neon_u16, b_.neon_u16);
+
+ ------ simde_wasm_u8x16_avgr ------ 
+ ------ simde_wasm_u16x8_avgr ------ 
+ ------ simde_wasm_i8x16_sub_sat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vqsubq_s8(a_.neon_i8, b_.neon_i8);
+
+ ------ simde_wasm_i16x8_sub_sat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vqsubq_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_u8x16_sub_sat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 = vqsubq_u8(a_.neon_u8, b_.neon_u8);
+
+ ------ simde_wasm_u16x8_sub_sat ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vqsubq_u16(a_.neon_u16, b_.neon_u16);
+
+ ------ simde_wasm_f32x4_pmin ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_f32 =
+        vbslq_f32(
+          vcltq_f32(b_.neon_f32, a_.neon_f32),
+          b_.neon_f32,
+          a_.neon_f32
+        );
+
+ ------ simde_wasm_f64x2_pmin ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f64 =
+        vbslq_f64(
+          vcltq_f64(b_.neon_f64, a_.neon_f64),
+          b_.neon_f64,
+          a_.neon_f64
+        );
+
+ ------ simde_wasm_f32x4_pmax ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_f32 = vbslq_f32(vcltq_f32(a_.neon_f32, b_.neon_f32), b_.neon_f32, a_.neon_f32);
+
+ ------ simde_wasm_f64x2_pmax ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f64 = vbslq_f64(vcltq_f64(a_.neon_f64, b_.neon_f64), b_.neon_f64, a_.neon_f64);
+
+ ------ simde_wasm_f32x4_div ------ 
+ ------ simde_wasm_f64x2_div ------ 
+ ------ simde_wasm_i8x16_shuffle ------ 
+ ------ simde_wasm_i16x8_shuffle ------ 
+ ------ simde_wasm_i32x4_shuffle ------ 
+ ------ simde_wasm_i64x2_shuffle ------ 
+ ------ simde_wasm_i8x16_swizzle ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      int8x8x2_t tmp = { { vget_low_s8(a_.neon_i8), vget_high_s8(a_.neon_i8) } };
+      r_.neon_i8 = vcombine_s8(
+        vtbl2_s8(tmp, vget_low_s8(b_.neon_i8)),
+        vtbl2_s8(tmp, vget_high_s8(b_.neon_i8))
+      );
+
+ ------ simde_wasm_i8x16_narrow_i16x8 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vcombine_s8(vqmovn_s16(a_.neon_i16), vqmovn_s16(b_.neon_i16));
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_i8 = vqmovn_high_s16(vqmovn_s16(a_.neon_i16), b_.neon_i16);
+
+ ------ simde_wasm_i16x8_narrow_i32x4 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vcombine_s16(vqmovn_s32(a_.neon_i32), vqmovn_s32(b_.neon_i32));
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_i16 = vqmovn_high_s32(vqmovn_s32(a_.neon_i32), b_.neon_i32);
+
+ ------ simde_wasm_u8x16_narrow_i16x8 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u8 =
+        vcombine_u8(
+          vqmovun_s16(a_.neon_i16),
+          vqmovun_s16(b_.neon_i16)
+        );
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      #if defined(SIMDE_BUG_CLANG_46840)
+        r_.neon_u8 = vqmovun_high_s16(vreinterpret_s8_u8(vqmovun_s16(a_.neon_i16)), b_.neon_i16);
+      #else
+        r_.neon_u8 = vqmovun_high_s16(vqmovun_s16(a_.neon_i16), b_.neon_i16);
+      #endif
+
+ ------ simde_wasm_u16x8_narrow_i32x4 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 =
+        vcombine_u16(
+          vqmovun_s32(a_.neon_i32),
+          vqmovun_s32(b_.neon_i32)
+        );
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      #if defined(SIMDE_BUG_CLANG_46840)
+        r_.neon_u16 = vqmovun_high_s32(vreinterpret_s16_u16(vqmovun_s32(a_.neon_i32)), b_.neon_i32);
+      #else
+        r_.neon_u16 = vqmovun_high_s32(vqmovun_s32(a_.neon_i32), b_.neon_i32);
+      #endif
+
+ ------ simde_wasm_f32x4_demote_f64x2_zero ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f32 = vcombine_f32(vcvt_f32_f64(a_.neon_f64), vdup_n_f32(0.0f));
+
+ ------ simde_wasm_i16x8_extend_low_i8x16 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vmovl_s8(vget_low_s8(a_.neon_i8));
+
+ ------ simde_wasm_i32x4_extend_low_i16x8 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vmovl_s16(vget_low_s16(a_.neon_i16));
+
+ ------ simde_wasm_i64x2_extend_low_i32x4 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i64 = vmovl_s32(vget_low_s32(a_.neon_i32));
+
+ ------ simde_wasm_u16x8_extend_low_u8x16 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vmovl_u8(vget_low_u8(a_.neon_u8));
+
+ ------ simde_wasm_u32x4_extend_low_u16x8 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vmovl_u16(vget_low_u16(a_.neon_u16));
+
+ ------ simde_wasm_u64x2_extend_low_u32x4 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u64 = vmovl_u32(vget_low_u32(a_.neon_u32));
+
+ ------ simde_wasm_f64x2_promote_low_f32x4 ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f64 = vcvt_f64_f32(vget_low_f32(a_.neon_f32));
+
+ ------ simde_wasm_i16x8_extend_high_i8x16 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vmovl_s8(vget_high_s8(a_.neon_i8));
+
+ ------ simde_wasm_i32x4_extend_high_i16x8 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vmovl_s16(vget_high_s16(a_.neon_i16));
+
+ ------ simde_wasm_i64x2_extend_high_i32x4 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i64 = vmovl_s32(vget_high_s32(a_.neon_i32));
+
+ ------ simde_wasm_u16x8_extend_high_u8x16 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vmovl_u8(vget_high_u8(a_.neon_u8));
+
+ ------ simde_wasm_u32x4_extend_high_u16x8 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vmovl_u16(vget_high_u16(a_.neon_u16));
+
+ ------ simde_wasm_u64x2_extend_high_u32x4 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u64 = vmovl_u32(vget_high_u32(a_.neon_u32));
+
+ ------ simde_wasm_i16x8_extmul_low_i8x16 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vmull_s8(vget_low_s8(a_.neon_i8), vget_low_s8(b_.neon_i8));
+
+ ------ simde_wasm_i32x4_extmul_low_i16x8 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vmull_s16(vget_low_s16(a_.neon_i16), vget_low_s16(b_.neon_i16));
+
+ ------ simde_wasm_i64x2_extmul_low_i32x4 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i64 = vmull_s32(vget_low_s32(a_.neon_i32), vget_low_s32(b_.neon_i32));
+
+ ------ simde_wasm_u16x8_extmul_low_u8x16 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vmull_u8(vget_low_u8(a_.neon_u8), vget_low_u8(b_.neon_u8));
+
+ ------ simde_wasm_u32x4_extmul_low_u16x8 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vmull_u16(vget_low_u16(a_.neon_u16), vget_low_u16(b_.neon_u16));
+
+ ------ simde_wasm_u64x2_extmul_low_u32x4 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u64 = vmull_u32(vget_low_u32(a_.neon_u32), vget_low_u32(b_.neon_u32));
+
+ ------ simde_wasm_i16x8_extmul_high_i8x16 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vmull_s8(vget_high_s8(a_.neon_i8), vget_high_s8(b_.neon_i8));
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_i16 = vmull_high_s8(a_.neon_i8, b_.neon_i8);
+
+ ------ simde_wasm_i32x4_extmul_high_i16x8 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vmull_s16(vget_high_s16(a_.neon_i16), vget_high_s16(b_.neon_i16));
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_i32 = vmull_high_s16(a_.neon_i16, b_.neon_i16);
+
+ ------ simde_wasm_i64x2_extmul_high_i32x4 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i64 = vmull_s32(vget_high_s32(a_.neon_i32), vget_high_s32(b_.neon_i32));
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_i64 = vmull_high_s32(a_.neon_i32, b_.neon_i32);
+
+ ------ simde_wasm_u16x8_extmul_high_u8x16 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vmull_u8(vget_high_u8(a_.neon_u8), vget_high_u8(b_.neon_u8));
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u16 = vmull_high_u8(a_.neon_u8, b_.neon_u8);
+
+ ------ simde_wasm_u32x4_extmul_high_u16x8 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vmull_u16(vget_high_u16(a_.neon_u16), vget_high_u16(b_.neon_u16));
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u32 = vmull_high_u16(a_.neon_u16, b_.neon_u16);
+
+ ------ simde_wasm_u64x2_extmul_high_u32x4 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u64 = vmull_u32(vget_high_u32(a_.neon_u32), vget_high_u32(b_.neon_u32));
+
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u64 = vmull_high_u32(a_.neon_u32, b_.neon_u32);
+
+ ------ simde_wasm_i16x8_extadd_pairwise_i8x16 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i16 = vpaddlq_s8(a_.neon_i8);
+
+ ------ simde_wasm_i32x4_extadd_pairwise_i16x8 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vpaddlq_s16(a_.neon_i16);
+
+ ------ simde_wasm_u16x8_extadd_pairwise_u8x16 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u16 = vpaddlq_u8(a_.neon_u8);
+
+ ------ simde_wasm_u32x4_extadd_pairwise_u16x8 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vpaddlq_u16(a_.neon_u16);
+
+ ------ simde_wasm_i16x8_load8x8 ------ 
+ ------ simde_wasm_i32x4_load16x4 ------ 
+ ------ simde_wasm_i64x2_load32x2 ------ 
+ ------ simde_wasm_u16x8_load8x8 ------ 
+ ------ simde_wasm_u32x4_load16x4 ------ 
+ ------ simde_wasm_u64x2_load32x2 ------ 
+ ------ simde_wasm_v128_load32_zero ------ 
+ ------ simde_wasm_v128_load64_zero ------ 
+ ------ simde_wasm_v128_load8_lane ------ 
+ ------ simde_wasm_v128_load16_lane ------ 
+ ------ simde_wasm_v128_load32_lane ------ 
+ ------ simde_wasm_v128_load64_lane ------ 
+ ------ simde_wasm_v128_store8_lane ------ 
+ ------ simde_wasm_v128_store16_lane ------ 
+ ------ simde_wasm_v128_store32_lane ------ 
+ ------ simde_wasm_v128_store64_lane ------ 
+ ------ simde_wasm_f32x4_convert_i32x4 ------ 
+arm_neon_a32v7_nn_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7)
+      r_.neon_f32 = vcvtq_f32_s32(a_.neon_i32);
+
+ ------ simde_wasm_f32x4_convert_u32x4 ------ 
+ ------ simde_wasm_f64x2_convert_low_i32x4 ------ 
+ ------ simde_wasm_f64x2_convert_low_u32x4 ------ 
+ ------ simde_wasm_i32x4_trunc_sat_f32x4 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i32 = vcvtq_s32_f32(a_.neon_f32);
+
+ ------ simde_wasm_u32x4_trunc_sat_f32x4 ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_u32 = vcvtq_u32_f32(a_.neon_f32);
+
+ ------ simde_wasm_i32x4_trunc_sat_f64x2_zero ------ 
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_i32 = vcombine_s32(vqmovn_s64(vcvtq_s64_f64(a_.neon_f64)), vdup_n_s32(INT32_C(0)));
+
+ ------ simde_wasm_u32x4_trunc_sat_f64x2_zero ------ 
+arm_neon_a64v8_mapping:
+    #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_u32 = vcombine_u32(vqmovn_u64(vcvtq_u64_f64(a_.neon_f64)), vdup_n_u32(UINT32_C(0)));
+    #else
+
+ ------ simde_wasm_i8x16_popcnt ------ 
+arm_neon_a32v7_mapping:
+    #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      r_.neon_i8 = vcntq_s8(a_.neon_i8);
+
+ ------ simde_wasm_i32x4_dot_i16x8 ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      int32x4_t pl = vmull_s16(vget_low_s16(a_.neon_i16),  vget_low_s16(b_.neon_i16));
+      int32x4_t ph = vmull_s16(vget_high_s16(a_.neon_i16), vget_high_s16(b_.neon_i16));
+      int32x2_t rl = vpadd_s32(vget_low_s32(pl), vget_high_s32(pl));
+      int32x2_t rh = vpadd_s32(vget_low_s32(ph), vget_high_s32(ph));
+      r_.neon_i32 = vcombine_s32(rl, rh);
+
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      int32x4_t pl = vmull_s16(vget_low_s16(a_.neon_i16),  vget_low_s16(b_.neon_i16));
+      int32x4_t ph = vmull_high_s16(a_.neon_i16, b_.neon_i16);
+      r_.neon_i32 = vpaddq_s32(pl, ph);
+
+ ------ simde_wasm_f32x4_ceil ------ 
+arm_neon_a32v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V8_NATIVE)
+      r_.neon_f32 = vrndpq_f32(a_.neon_f32);
+
+ ------ simde_wasm_f64x2_ceil ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f64 = vrndpq_f64(a_.neon_f64);
+
+ ------ simde_wasm_f32x4_floor ------ 
+arm_neon_a32v7_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V7_NATIVE)
+      const int32x4_t input_as_int = vcvtq_s32_f32(a_.f32);
+      const float32x4_t input_truncated = vcvtq_f32_s32(input_as_int);
+      const float32x4_t tmp =
+        vbslq_f32(
+          vbicq_u32(
+            vcagtq_f32(
+              vreinterpretq_f32_u32(vdupq_n_u32(UINT32_C(0x4B000000))),
+              a_.f32
+            ),
+            vdupq_n_u32(UINT32_C(0x80000000))
+          ),
+          input_truncated,
+          a_.f32);
+      r_.neon_f32 =
+        vsubq_f32(
+          tmp,
+          vreinterpretq_f32_u32(
+            vandq_u32(
+              vcgtq_f32(
+                tmp,
+                a_.f32
+              ),
+              vdupq_n_u32(UINT32_C(0x3F800000))
+            )
+          )
+        );
+
+arm_neon_a32v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A32V8_NATIVE)
+      r_.neon_f32 = vrndmq_f32(a_.f32);
+
+ ------ simde_wasm_f64x2_floor ------ 
+ ------ simde_wasm_f32x4_trunc ------ 
+ ------ simde_wasm_f64x2_trunc ------ 
+ ------ simde_wasm_f32x4_nearest ------ 
+ ------ simde_wasm_f64x2_nearest ------ 
+ ------ simde_wasm_f32x4_sqrt ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f32 = vsqrtq_f32(a_.neon_f32);
+
+ ------ simde_wasm_f64x2_sqrt ------ 
+arm_neon_a64v8_mapping:
+    #elif defined(SIMDE_ARM_NEON_A64V8_NATIVE)
+      r_.neon_f64 = vsqrtq_f64(a_.neon_f64);
+
