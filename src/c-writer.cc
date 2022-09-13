@@ -1151,6 +1151,7 @@ void CWriter::WriteGlobalsExport() {
 }
 
 std::string CWriter::GetMainMemoryName() {
+  printf("memsize: %lu ; numimports: %d\n", module_->memories.size(), module_->num_memory_imports);
   assert (!(module_->memories.size() == module_->num_memory_imports));
   assert(module_->memories.size() <= 1);
   std::string ret = GetGlobalName(module_->memories[0]->name);
@@ -3566,7 +3567,30 @@ void CWriter::Write(const LoadSplatExpr& expr) {
 }
 
 void CWriter::Write(const LoadZeroExpr& expr) {
-  UNIMPLEMENTED("LoadZeroExpr - SIMD support");
+  assert(module_->memories.size() == 1);
+  Memory* memory = module_->memories[0];
+
+  const char* func = nullptr;
+  switch (expr.opcode) {
+    /* SIMD V128 LoadZero Opcodes */
+    case Opcode::V128Load32Zero: func = "v128_load32_zero"; break;
+    case Opcode::V128Load64Zero: func = "v128_load64_zero"; break;
+
+    default:
+      printf("issue with LoadZeroExpr opcode %s \n", expr.opcode.GetName());
+      WABT_UNREACHABLE;
+  }
+
+  //Memory* memory = module_->memories[module_->GetMemoryIndex(expr.memidx)];
+  Type result_type = expr.opcode.GetResultType();
+  Write(StackVar(0, result_type), " = ", func, "(&(sbx->", ExternalRef(memory->name),
+        "), (u64)(", StackVar(0), ")");
+  if (expr.offset != 0)
+    Write(" + ", expr.offset, "u");
+  Write(", \"", GetGlobalName(func_->name), "\"");
+  Write(");", Newline());
+  DropTypes(1);
+  PushType(result_type);
 }
 
 void CWriter::WriteCHeader() {
