@@ -229,7 +229,7 @@ function(sanitizer NAME FLAGS)
   endif ()
 endfunction()
 sanitizer(USE_ASAN "-fsanitize=address")
-sanitizer(USE_MSAN "-fsanitize=memory")
+sanitizer(USE_MSAN "-fsanitize=memory -fsanitize-recover=memory -fsanitize-memory-track-origins")
 sanitizer(USE_LSAN "-fsanitize=leak")
 
 if (USE_UBSAN)

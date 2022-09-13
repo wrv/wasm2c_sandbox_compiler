@@ -797,60 +797,13 @@ void CWriter::Write(const Const& const_) {
     }
 
     case Type::V128: {
-      switch (const_.lane_type()) {
-        case Type::I8:
-        case Type::I8U: // NOTE: can't find a separate unsigned i8 create
-          Writef("simde_wasm_i8x16_const(%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)", 
-                    const_.v128_lane<int8_t>(0),  const_.v128_lane<int8_t>(1), 
-                    const_.v128_lane<int8_t>(2),  const_.v128_lane<int8_t>(3), 
-                    const_.v128_lane<int8_t>(4),  const_.v128_lane<int8_t>(5), 
-                    const_.v128_lane<int8_t>(6),  const_.v128_lane<int8_t>(7), 
-                    const_.v128_lane<int8_t>(8),  const_.v128_lane<int8_t>(9), 
-                    const_.v128_lane<int8_t>(10), const_.v128_lane<int8_t>(11), 
-                    const_.v128_lane<int8_t>(12), const_.v128_lane<int8_t>(13), 
-                    const_.v128_lane<int8_t>(14), const_.v128_lane<int8_t>(15)); 
-          break;
-        case Type::I16: 
-          Writef("simde_wasm_i16x8_const(%d, %d, %d, %d, %d, %d, %d, %d)", 
-                    const_.v128_lane<int16_t>(0), const_.v128_lane<int16_t>(1), 
-                    const_.v128_lane<int16_t>(2), const_.v128_lane<int16_t>(3), 
-                    const_.v128_lane<int16_t>(4), const_.v128_lane<int16_t>(5), 
-                    const_.v128_lane<int16_t>(6), const_.v128_lane<int16_t>(7)); 
-          break;
-        case Type::I32:
-          Writef("simde_wasm_i32x4_const(%u, %u, %u, %u)", 
-                    const_.v128_lane<int32_t>(0), const_.v128_lane<int32_t>(1), 
-                    const_.v128_lane<int32_t>(2), const_.v128_lane<int32_t>(3)); 
-          break;
-        case Type::I64: 
-          Writef("simde_wasm_i64x2_const(%lu, %lu)", 
-                    const_.v128_lane<int64_t>(0), const_.v128_lane<int64_t>(1)); 
-          break;
-        case Type::F32: 
-          Writef("simde_wasm_f32x4_const(%d, %d, %d, %d)", 
-                    const_.v128_lane<int32_t>(0), const_.v128_lane<int32_t>(1), 
-                    const_.v128_lane<int32_t>(2), const_.v128_lane<int32_t>(3)); 
-          break;
-        case Type::F64: 
-          Writef("simde_wasm_f64x2_const(%ld, %ld)", 
-                    const_.v128_lane<int64_t>(0), const_.v128_lane<int64_t>(1));
-          break;
-        case Type::V128:
-          printf("v128 type of lane\n");
-          WABT_UNREACHABLE;
-          break;
-        case Type::I16U:
-          printf("i16u type of lane\n");
-          WABT_UNREACHABLE;
-          break;
-        case Type::I32U:
-          printf("i32u type of lane\n");
-          WABT_UNREACHABLE;
-          break;
-        default: 
-          printf("issue Type::V128 Const Lane %s\n", const_.lane_type().GetName().c_str()); 
-          WABT_UNREACHABLE;
-      }
+      // NOTE: lane_type() doesn't seem to get set when reading from a binary WASM
+      //       file, so we'll just default to i32x4 constant type for now
+      
+        Writef("simde_wasm_i32x4_const(0x%08x, 0x%08x, 0x%08x, 0x%08x)", 
+                  const_.vec128().u32(0), const_.vec128().u32(1), 
+                  const_.vec128().u32(2), const_.vec128().u32(3)); 
+      
       break;
     }
 
