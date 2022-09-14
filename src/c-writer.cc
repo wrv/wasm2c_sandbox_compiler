@@ -1151,7 +1151,6 @@ void CWriter::WriteGlobalsExport() {
 }
 
 std::string CWriter::GetMainMemoryName() {
-  printf("memsize: %lu ; numimports: %d\n", module_->memories.size(), module_->num_memory_imports);
   assert (!(module_->memories.size() == module_->num_memory_imports));
   assert(module_->memories.size() <= 1);
   std::string ret = GetGlobalName(module_->memories[0]->name);
