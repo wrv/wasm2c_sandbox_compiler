@@ -114,7 +114,7 @@ int GetShiftMask(Type type) {
   switch (type) {
     case Type::I32: return 31;
     case Type::I64: return 63;
-    default: printf("issue with GetShiftMask %s \n", type.GetName().c_str()); WABT_UNREACHABLE; return 0;
+    default: WABT_UNREACHABLE; return 0;
   }
 }
 
@@ -174,12 +174,8 @@ class CWriter {
                                std::string_view mangled_field_name);
   std::string DefineGlobalScopeName(const std::string&, bool prefix = false);
   std::string DefineLocalScopeName(const std::string&);
-<<<<<<< HEAD
   std::string DefineGlobalVarName(const std::string& name);
-  std::string DefineStackVarName(Index, Type, string_view);
-=======
   std::string DefineStackVarName(Index, Type, std::string_view);
->>>>>>> Rebase rlbox wasm2c against main a8f401d5
 
   void Indent(int size = INDENT_SIZE);
   void Dedent(int size = INDENT_SIZE);
@@ -398,7 +394,7 @@ char CWriter::MangleType(Type type) {
     case Type::F32: return 'f';
     case Type::F64: return 'd';
     case Type::V128: return 'o'; // take the builtin unsigned __int128 letter from here: https://itanium-cxx-abi.github.io/cxx-abi/abi-mangling.html 
-    default: printf("issue with MangleType %s \n", type.GetName().c_str()); WABT_UNREACHABLE;
+    default: WABT_UNREACHABLE;
   }
 }
 
@@ -701,7 +697,6 @@ void CWriter::Write(Type type) {
     case Type::F64: Write("f64"); break;
     case Type::V128: Write("v128"); break;
     default:
-      printf("issue with Type %s\n", type.GetName().c_str()); 
       WABT_UNREACHABLE;
   }
 }
@@ -714,7 +709,6 @@ void CWriter::Write(TypeEnum type) {
     case Type::F64: Write("WASM_RT_F64"); break;
     case Type::V128: Write("WASM_RT_V128"); break;
     default:
-      printf("issue with TypeEnum %s\n", type.type.GetName().c_str()); 
       WABT_UNREACHABLE;
   }
 }
@@ -724,7 +718,6 @@ void CWriter::Write(SignedType type) {
     case Type::I32: Write("s32"); break;
     case Type::I64: Write("s64"); break;
     default:
-      printf("issue with SignedType %s\n", type.type.GetName().c_str()); 
       WABT_UNREACHABLE;
   }
 }
@@ -808,7 +801,6 @@ void CWriter::Write(const Const& const_) {
     }
 
     default:
-      printf("issue with Const %s\n", const_.type().GetName().c_str()); 
       WABT_UNREACHABLE;
   }
 }
@@ -829,7 +821,6 @@ void CWriter::WriteInitExpr(const ExprList& expr_list) {
       break;
 
     default:
-      printf("issue with ExprList\n"); 
       WABT_UNREACHABLE;
   }
 }
@@ -996,7 +987,6 @@ void CWriter::WriteImports() {
       }
 
       default:
-        printf("issue with ExternalKind\n"); 
         WABT_UNREACHABLE;
     }
 
@@ -1563,10 +1553,12 @@ void CWriter::WriteLocals(const std::vector<std::string>& index_to_name) {
             Write(Newline());
         }
 
-        Write(DefineLocalScopeName(index_to_name[num_params + local_index]));
-        // skip initializing vector types
-        if (type != Type::V128) {
-          Write(" = 0");
+        Write(DefineLocalScopeName(index_to_name[num_params + local_index]), 
+            " = ");
+        if (type == Type::V128) {
+          Write("simde_wasm_i64x2_make(0, 0)");
+        } else {
+          Write("0");
         }
         ++count;
       }
@@ -1852,7 +1844,6 @@ void CWriter::Write(const ExprList& exprs) {
       case ExprType::RefFunc:
       case ExprType::RefNull:
       case ExprType::RefIsNull:
-        printf("ExprType2 unimplemented");
         UNIMPLEMENTED("...");
         break;
 
@@ -1951,7 +1942,6 @@ void CWriter::Write(const ExprList& exprs) {
       case ExprType::Throw:
       case ExprType::Try:
       case ExprType::CallRef:
-        printf("ExprType::UNIMPLEMENTED\n");
         UNIMPLEMENTED("...");
         break;
     }
@@ -2472,7 +2462,6 @@ void CWriter::Write(const BinaryExpr& expr) {
       break;
 
     default:
-      printf("issue with BinaryExpr %s\n", expr.opcode.GetName()); 
       WABT_UNREACHABLE;
   }
 }
@@ -2742,7 +2731,6 @@ void CWriter::Write(const CompareExpr& expr) {
       break;
 
     default:
-      printf("issue with CompareExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
 }
@@ -2929,7 +2917,6 @@ void CWriter::Write(const ConvertExpr& expr) {
       break;
 
     default:
-      printf("issue with ConvertExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
 }
@@ -2961,7 +2948,6 @@ void CWriter::Write(const LoadExpr& expr) {
     case Opcode::V128Load32X2U: func = "u64x2_load32x2"; break;
 
     default:
-      printf("issue with LoadExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
   Memory* memory = module_->memories[module_->GetMemoryIndex(expr.memidx)];
@@ -2991,7 +2977,6 @@ void CWriter::Write(const StoreExpr& expr) {
     case Opcode::V128Store: func = "v128_store"; break;
 
     default:
-      printf("issue with StorExpr opcode %s\n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
 
@@ -3334,7 +3319,6 @@ void CWriter::Write(const UnaryExpr& expr) {
       break;
 
     default:
-      printf("issue with UnaryExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
 }
@@ -3343,14 +3327,13 @@ void CWriter::Write(const TernaryExpr& expr) {
   switch (expr.opcode) {
     case Opcode::V128BitSelect: {
       Type result_type = expr.opcode.GetResultType();
-      Write(StackVar(2, result_type), " = ", "simde_wasm_v128_bitselect", "(", StackVar(0),
-            ", ", StackVar(1), ", ", StackVar(2), ");", Newline());
+      Write(StackVar(2, result_type), " = ", "simde_wasm_v128_bitselect", "(", 
+            StackVar(2), ", ", StackVar(1), ", ", StackVar(0), ");", Newline());
       DropTypes(3);
       PushType(result_type);
       break;
     }
     default:
-      printf("issue with TernaryExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
 }
@@ -3450,7 +3433,6 @@ void CWriter::Write(const SimdLaneOpExpr& expr) {
       break;
     }
     default:
-      printf("issue with SimdLaneOpExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
 
@@ -3466,12 +3448,11 @@ void CWriter::Write(const SimdLoadLaneExpr& expr) {
   case Opcode::V128Load32Lane: func = "v128_load32_lane"; break;
   case Opcode::V128Load64Lane: func = "v128_load64_lane"; break;
   default:
-      printf("issue with SimdLoadLaneExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
   Memory* memory = module_->memories[module_->GetMemoryIndex(expr.memidx)];
   Type result_type = expr.opcode.GetResultType();
-  Write(StackVar(0, result_type), " = ", func, expr.val, "(&(sbx->", ExternalRef(memory->name),
+  Write(StackVar(1, result_type), " = ", func, expr.val, "(&(sbx->", ExternalRef(memory->name),
         "), (u64)(", StackVar(1), ")");
 
   if (expr.offset != 0)
@@ -3494,7 +3475,6 @@ void CWriter::Write(const SimdStoreLaneExpr& expr) {
   case Opcode::V128Store32Lane: func = "v128_store32_lane"; break;
   case Opcode::V128Store64Lane: func = "v128_store64_lane"; break;
   default:
-      printf("issue with SimdStoreLaneExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
   Memory* memory = module_->memories[module_->GetMemoryIndex(expr.memidx)];
@@ -3520,14 +3500,17 @@ void CWriter::Write(const SimdShuffleOpExpr& expr) {
   switch (expr.opcode) {
     case Opcode::I8X16Shuffle: {
       Write(StackVar(1, result_type), " = simde_wasm_i8x16_shuffle(",
-        StackVar(1), ", ", StackVar(0), ", ",
-        expr.val.u8(0), ", ",  expr.val.u8(1), ", ",  expr.val.u8(2), ", ",  expr.val.u8(3), ", ", expr.val.u8(4), ", ",  expr.val.u8(5), ", ",  expr.val.u8(6), ", ",  expr.val.u8(7),  ", ", 
-        expr.val.u8(8), ", ",  expr.val.u8(9), ", ",  expr.val.u8(10), ", ", expr.val.u8(11), ", ", expr.val.u8(12), ", ", expr.val.u8(13), ", ", expr.val.u8(14), ", ", expr.val.u8(15), ");", Newline());
+            StackVar(1), ", ", StackVar(0), ", ", expr.val.u8(0), ", ",  
+            expr.val.u8(1), ", ",  expr.val.u8(2), ", ",  expr.val.u8(3), ", ", 
+            expr.val.u8(4), ", ",  expr.val.u8(5), ", ",  expr.val.u8(6), ", ",  
+            expr.val.u8(7),  ", ", expr.val.u8(8), ", ",  expr.val.u8(9), ", ",  
+            expr.val.u8(10), ", ", expr.val.u8(11), ", ", expr.val.u8(12), ", ", 
+            expr.val.u8(13), ", ", expr.val.u8(14), ", ", expr.val.u8(15), ");", 
+            Newline());
       DropTypes(2);
       break;
     }
     default:
-      printf("issue with SimdShuffleOpExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
 
@@ -3547,7 +3530,6 @@ void CWriter::Write(const LoadSplatExpr& expr) {
     case Opcode::V128Load32Splat: func = "v128_load32_splat"; break;
     case Opcode::V128Load64Splat: func = "v128_load64_splat"; break;
     default:
-      printf("issue with LoadSplatExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
 
@@ -3571,12 +3553,10 @@ void CWriter::Write(const LoadZeroExpr& expr) {
 
   const char* func = nullptr;
   switch (expr.opcode) {
-    /* SIMD V128 LoadZero Opcodes */
     case Opcode::V128Load32Zero: func = "v128_load32_zero"; break;
     case Opcode::V128Load64Zero: func = "v128_load64_zero"; break;
 
     default:
-      printf("issue with LoadZeroExpr opcode %s \n", expr.opcode.GetName());
       WABT_UNREACHABLE;
   }
 

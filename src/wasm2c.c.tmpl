@@ -219,44 +219,41 @@ DEFINE_STORE(i64_store8, u8, u64);
 DEFINE_STORE(i64_store16, u16, u64);
 DEFINE_STORE(i64_store32, u32, u64);
 
-// <AVX_SIMD>
-// TODO: specify different SIMD libraries: x86 SSE and AVX or ARM NEON
 
-#define DEFINE_SIMD_LOAD(name, t1, t2, t3)                                          \
-  static inline t3 name(wasm_rt_memory_t* mem, u64 addr, const char* func_name) {   \
-    MEMCHECK(mem, addr, t1);                                                        \
-    t1 result = simde_wasm_v128_load((simde_v128_t*) MEM_ACCESS_REF(mem, addr));              \
-    WASM2C_SHADOW_MEMORY_LOAD(mem, func_name, addr, sizeof(t1));                    \
-    return (t3)(t2)result;                                                          \
+#define DEFINE_SIMD_LOAD(name, t1, t2, t3)                                        \
+  static inline t3 name(wasm_rt_memory_t* mem, u64 addr, const char* func_name) { \
+    MEMCHECK(mem, addr, t1);                                                      \
+    t1 result = simde_wasm_v128_load((simde_v128_t*) MEM_ACCESS_REF(mem, addr));  \
+    WASM2C_SHADOW_MEMORY_LOAD(mem, func_name, addr, sizeof(t1));                  \
+    return (t3)(t2)result;                                                        \
   }
 
-#define DEFINE_SIMD_LOAD_FUNC(name, func, t1, t2, t3)                                          \
-  static inline t3 name(wasm_rt_memory_t* mem, u64 addr, const char* func_name) {   \
-    MEMCHECK(mem, addr, t1);                                                        \
-    t1 result = func ((simde_v128_t*) MEM_ACCESS_REF(mem, addr));              \
-    WASM2C_SHADOW_MEMORY_LOAD(mem, func_name, addr, sizeof(t1));                    \
-    return (t3)(t2)result;                                                          \
+#define DEFINE_SIMD_LOAD_FUNC(name, func, t1, t2, t3)                             \
+  static inline t3 name(wasm_rt_memory_t* mem, u64 addr, const char* func_name) { \
+    MEMCHECK(mem, addr, t1);                                                      \
+    t1 result = func ((simde_v128_t*) MEM_ACCESS_REF(mem, addr));                 \
+    WASM2C_SHADOW_MEMORY_LOAD(mem, func_name, addr, sizeof(t1));                  \
+    return (t3)(t2)result;                                                        \
   }
 
-#define DEFINE_SIMD_LOAD_LANE(name, func, t1, t2, t3, lane)                                          \
+#define DEFINE_SIMD_LOAD_LANE(name, func, t1, t2, t3, lane)                               \
   static inline t3 name(wasm_rt_memory_t* mem, u64 addr, t1 vec, const char* func_name) { \
-    MEMCHECK(mem, addr, t1);                                                        \
-    t1 result = func ((simde_v128_t*) MEM_ACCESS_REF(mem, addr), vec, lane);        \
-    WASM2C_SHADOW_MEMORY_LOAD(mem, func_name, addr, sizeof(t1));                    \
-    return (t3)(t2)result;                                                          \
+    MEMCHECK(mem, addr, t1);                                                              \
+    t1 result = func ((simde_v128_t*) MEM_ACCESS_REF(mem, addr), vec, lane);              \
+    WASM2C_SHADOW_MEMORY_LOAD(mem, func_name, addr, sizeof(t1));                          \
+    return (t3)(t2)result;                                                                \
   }
-
 
 
 #define DEFINE_SIMD_STORE(name, t1, t2)                                                       \
   static inline void name(wasm_rt_memory_t* mem, u64 addr, t2 value, const char* func_name) { \
     MEMCHECK(mem, addr, t1);                                                                  \
     t1 wrapped = (t1)value;                                                                   \
-    simde_wasm_v128_store((simde_v128_t*) MEM_ACCESS_REF(mem, addr), wrapped);                          \
+    simde_wasm_v128_store((simde_v128_t*) MEM_ACCESS_REF(mem, addr), wrapped);                \
     WASM2C_SHADOW_MEMORY_STORE(mem, func_name, addr, sizeof(t1));                             \
   }
 
-#define DEFINE_SIMD_STORE_LANE(name, func, t1, t2, lane)                                                       \
+#define DEFINE_SIMD_STORE_LANE(name, func, t1, t2, lane)                                      \
   static inline void name(wasm_rt_memory_t* mem, u64 addr, t2 value, const char* func_name) { \
     MEMCHECK(mem, addr, t1);                                                                  \
     t1 wrapped = (t1)value;                                                                   \
@@ -276,10 +273,8 @@ DEFINE_SIMD_LOAD_FUNC(i32x4_load16x4, simde_wasm_i32x4_load16x4, simde_v128_t, s
 DEFINE_SIMD_LOAD_FUNC(u32x4_load16x4, simde_wasm_u32x4_load16x4, simde_v128_t, simde_v128_t, simde_v128_t);
 DEFINE_SIMD_LOAD_FUNC(i64x2_load32x2, simde_wasm_i64x2_load32x2, simde_v128_t, simde_v128_t, simde_v128_t);
 DEFINE_SIMD_LOAD_FUNC(u64x2_load32x2, simde_wasm_u64x2_load32x2, simde_v128_t, simde_v128_t, simde_v128_t);
-
 DEFINE_SIMD_LOAD_FUNC(v128_load32_zero, simde_wasm_v128_load32_zero, simde_v128_t, simde_v128_t, simde_v128_t);
 DEFINE_SIMD_LOAD_FUNC(v128_load64_zero, simde_wasm_v128_load64_zero, simde_v128_t, simde_v128_t, simde_v128_t);
-
 DEFINE_SIMD_LOAD_LANE(v128_load8_lane0, simde_wasm_v128_load8_lane, simde_v128_t, simde_v128_t, simde_v128_t, 0);
 DEFINE_SIMD_LOAD_LANE(v128_load8_lane1, simde_wasm_v128_load8_lane, simde_v128_t, simde_v128_t, simde_v128_t, 1);
 DEFINE_SIMD_LOAD_LANE(v128_load8_lane2, simde_wasm_v128_load8_lane, simde_v128_t, simde_v128_t, simde_v128_t, 2);
@@ -311,10 +306,7 @@ DEFINE_SIMD_LOAD_LANE(v128_load32_lane3, simde_wasm_v128_load32_lane, simde_v128
 DEFINE_SIMD_LOAD_LANE(v128_load64_lane0, simde_wasm_v128_load64_lane, simde_v128_t, simde_v128_t, simde_v128_t, 0);
 DEFINE_SIMD_LOAD_LANE(v128_load64_lane1, simde_wasm_v128_load64_lane, simde_v128_t, simde_v128_t, simde_v128_t, 1);
 
-
-
 DEFINE_SIMD_STORE(v128_store, simde_v128_t, simde_v128_t); 
-
 DEFINE_SIMD_STORE_LANE(v128_store8_lane0, simde_wasm_v128_store8_lane, simde_v128_t, simde_v128_t, 0);
 DEFINE_SIMD_STORE_LANE(v128_store8_lane1, simde_wasm_v128_store8_lane, simde_v128_t, simde_v128_t, 1);
 DEFINE_SIMD_STORE_LANE(v128_store8_lane2, simde_wasm_v128_store8_lane, simde_v128_t, simde_v128_t, 2);
